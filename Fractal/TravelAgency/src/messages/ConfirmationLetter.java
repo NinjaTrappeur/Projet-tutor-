@@ -6,21 +6,16 @@
 
 package messages;
 
-import message.IOffer;
-import message.IOfferPack;
+import message.IConfirmationLetter;
 
 /**
  *
  * @author ninjatrappeur
  */
-public class OfferPack implements IOfferPack {
-    @Override
-    public IOffer lowestPrice(){
-        return new Offer(100, "Hôtel de Rogé");
-    }
+public class ConfirmationLetter implements IConfirmationLetter{
     
     @Override
     public Type getType() {
-        return Type.OFFER_PACK;
+        return Type.CONFIRM_LETTER;
     }
 }

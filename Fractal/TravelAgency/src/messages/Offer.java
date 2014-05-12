@@ -30,4 +30,8 @@ public class Offer implements IOffer{
     public String companyName() {
         return _name;
     }
+    @Override
+    public Type getType() {
+        return Type.OFFER;
+    }
 }

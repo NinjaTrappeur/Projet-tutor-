@@ -40,4 +40,8 @@ public class OfferRequest implements IOfferRequest {
     public String placeName(){
         return "Palavas les flots";
     }
+    @Override
+    public Type getType() {
+        return Type.OFFER_REQUEST;
+    }
 }
