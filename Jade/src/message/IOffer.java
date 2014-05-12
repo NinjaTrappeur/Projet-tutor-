@@ -13,4 +13,5 @@ package message;
 public interface IOffer
 {
     public float price();
+    public String companyName();
 }
