@@ -14,7 +14,7 @@ import jade.util.leap.Serializable;
  */
 public interface IMessage extends Serializable
 {
-    public enum Type {QUIT_REQUEST, OFFER_REQUEST, OFFER_PACK, CONFIRM_LETTER, OFFER};
+    public enum Type {QUIT_REQUEST, OFFER_REQUEST, OFFER_PACK, RESERVATION_REQUEST, CONFIRM_LETTER, OFFER};
     
     public Type getType();
 }
