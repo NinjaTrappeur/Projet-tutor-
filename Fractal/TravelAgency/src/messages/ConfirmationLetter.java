@@ -18,4 +18,9 @@ public class ConfirmationLetter implements IConfirmationLetter{
     public Type getType() {
         return Type.CONFIRM_LETTER;
     }
+    
+    @Override
+    public String toString() {
+        return "Confirmation Letter.";
+    }
 }

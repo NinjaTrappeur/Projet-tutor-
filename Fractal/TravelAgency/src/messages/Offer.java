@@ -34,4 +34,9 @@ public class Offer implements IOffer{
     public Type getType() {
         return Type.OFFER;
     }
+    
+    @Override
+    public String toString() {
+        return "Offer from " + _name + " :" + _price + "€.";
+    }
 }

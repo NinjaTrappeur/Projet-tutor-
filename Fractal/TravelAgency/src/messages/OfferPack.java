@@ -14,6 +14,12 @@ import message.IOfferPack;
  * @author ninjatrappeur
  */
 public class OfferPack implements IOfferPack {
+    private final IOffer _bestOffer;
+    
+    public OfferPack(IOffer bestOffer) {
+        _bestOffer = bestOffer;
+    }
+    
     @Override
     public IOffer lowestPrice(){
         return new Offer(100, "Hôtel de Rogé");
@@ -22,5 +28,10 @@ public class OfferPack implements IOfferPack {
     @Override
     public Type getType() {
         return Type.OFFER_PACK;
+    }
+    
+    @Override
+    public String toString() {
+        return "Lowest offer: " + _bestOffer.toString();
     }
 }

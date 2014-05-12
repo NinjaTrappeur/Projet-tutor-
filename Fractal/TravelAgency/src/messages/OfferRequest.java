@@ -14,34 +14,56 @@ import message.IOfferRequest;
  * @author ninjatrappeur
  */
 public class OfferRequest implements IOfferRequest {
-    @Override
+    
+    private final int _highestPrice;
+    private final int _lowestPrice;
+    private final String _clientName;
+    private final Date _departureDate;
+    private final Date _returnDate;
+    private final String _placeName;
+    
+    public OfferRequest (int hp, int lp, String name, Date dd, Date rd, String place) {
+        _highestPrice = hp;
+        _lowestPrice = lp;
+        _clientName = name;
+        _departureDate = dd;
+        _returnDate = rd;
+        _placeName = place;
+    }
     public int highestPrice() {
-        return 300;
+        return _highestPrice;
     }
     
     @Override
     public int lowestPrice() {
-        return 100;
+        return _lowestPrice;
     }
     
     @Override
     public String clientName() {
-        return "Bill Murray";
+        return _clientName;
     }
     @Override
     public Date departureDate() {
-        return new Date();  
+        return _departureDate;  
     }
     @Override
     public Date returnDate() {
-        return new Date();
+        return _returnDate;
     }
     @Override
     public String placeName(){
-        return "Palavas les flots";
+        return _placeName;
     }
     @Override
     public Type getType() {
         return Type.OFFER_REQUEST;
+    }
+    
+    @Override
+    public String toString() {
+        return "Offer request from " + _clientName + "between " + _departureDate.toString() +
+                " and " + _returnDate + " at " + _placeName + " from " + _lowestPrice + " to " + _highestPrice
+                + ".";
     }
 }
