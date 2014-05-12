@@ -8,7 +8,7 @@ package travelagency;
 
 import message.IConfirmationLetter;
 import message.IOffer;
-import message.IRequestOffer;
+import message.IOfferRequest;
 import message.IOfferPack;
 
 /**
@@ -17,6 +17,6 @@ import message.IOfferPack;
  */
 public interface ITravelAgency
 {
-    public IOfferPack requestProposal(IRequestOffer offerRequest);
+    public IOfferPack requestProposal(IOfferRequest offerRequest);
     public IConfirmationLetter reserveOffer(IOffer offer);
 }

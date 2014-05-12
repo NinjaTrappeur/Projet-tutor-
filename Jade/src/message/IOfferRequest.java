@@ -10,7 +10,7 @@ package message;
  *
  * @author josuah
  */
-public interface IRequestOffer
+public interface IOfferRequest
 {
     
 }

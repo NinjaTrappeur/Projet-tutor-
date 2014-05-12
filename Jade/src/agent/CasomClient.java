@@ -9,7 +9,7 @@ package agent;
 import java.util.ArrayList;
 import message.IOffer;
 import message.IOfferPack;
-import message.IRequestOffer;
+import message.IOfferRequest;
 import travelagency.ITravelAgency;
 
 /**
@@ -25,7 +25,7 @@ public class CasomClient extends jade.core.Agent
     {
     }
     
-    private void resquestOffer(IRequestOffer offerRequest)
+    private void resquestOffer(IOfferRequest offerRequest)
     {
         IOffer currentOffer;
         IOffer bestOffer = null;
