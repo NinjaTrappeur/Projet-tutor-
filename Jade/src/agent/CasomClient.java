@@ -55,21 +55,22 @@ public class CasomClient extends jade.core.Agent
             {
                 Object content = msg.getContent();
                 if(content instanceof IMessage)
-                
-                switch(((IMessage)content).getType())
                 {
-                    case QUIT_REQUEST: // Received quit order from view agent
-                        _quit = true;
-                        _searchRunning = false;
-                        break;
-                    case OFFER_REQUEST : // New offer request from view (user demand)
-                        offerRequest = (IOfferRequest)content;
-                        this.addBehaviour(new RequestOfferBehaviour(this, offerRequest));
-                        this.addBehaviour(new WaitOffersBehaviour(this, offerRequest));
-                        break;
-                    case CONFIRM_LETTER : 
-                        this.addBehaviour(new FinalizeBehaviour(this, (IConfirmationLetter)content));
-                        break;
+                    switch(((IMessage)content).getType())
+                    {
+                        case QUIT_REQUEST: // Received quit order from view agent
+                            _quit = true;
+                            _searchRunning = false;
+                            break;
+                        case OFFER_REQUEST : // New offer request from view (user demand)
+                            offerRequest = (IOfferRequest)content;
+                            this.addBehaviour(new RequestOfferBehaviour(this, offerRequest));
+                            this.addBehaviour(new WaitOffersBehaviour(this, offerRequest));
+                            break;
+                        case CONFIRM_LETTER : 
+                            this.addBehaviour(new FinalizeBehaviour(this, (IConfirmationLetter)content));
+                            break;
+                    }
                 }
             }
         }

@@ -6,6 +6,7 @@
 
 package agent;
 
+import behaviour.OutputUpdaterBehaviour;
 import jade.core.AID;
 import jade.domain.DFService;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
@@ -63,6 +64,8 @@ public class ClientView extends jade.core.Agent
         }
             
         _ui.setVisible(true);
+        
+        this.addBehaviour(new OutputUpdaterBehaviour(this));
     }
     
     public ClientViewForm getForm()

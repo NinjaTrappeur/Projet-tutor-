@@ -39,45 +39,60 @@ public class WaitOffersBehaviour extends Behaviour
     @Override
     public boolean done()
     {
-        boolean done = 0.001F * System.currentTimeMillis() >= _startTime + _offerRequest.timeGuard();
-        
-        if(done && _myAgent.getBestOffer() != null)
+        if(_myAgent.isSearchRunning())
         {
-            ACLMessage msg = new ACLMessage(ACLMessage.AGREE);
-            msg.addReceiver(_myAgent.getBestOffer().getAgency());
-            try
+            boolean done = 0.001F * System.currentTimeMillis() >= _startTime + _offerRequest.timeGuard();
+
+            if(done && _myAgent.getBestOffer() != null)
             {
-                msg.setContentObject(new ReservationRequest(_myAgent.getBestOffer()));
+                ACLMessage msg = new ACLMessage(ACLMessage.AGREE);
+                msg.addReceiver(_myAgent.getBestOffer().getAgency());
+                try
+                {
+                    msg.setContentObject(new ReservationRequest(_myAgent.getBestOffer()));
+                }
+                catch (IOException ex)
+                {
+                    System.err.println("WaitOffersBehaviour::done : acl content setting error. "+ex.getLocalizedMessage());
+                    Logger.getLogger(WaitOffersBehaviour.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                _myAgent.send(msg);
             }
-            catch (IOException ex)
-            {
-                System.err.println("WaitOffersBehaviour::done : acl content setting error. "+ex.getLocalizedMessage());
-                Logger.getLogger(WaitOffersBehaviour.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-            _myAgent.send(msg);
+
+            return done;
         }
         
-        return done;
+        else
+            return true;
     }
     
     @Override
     public void action()
     {
-        ACLMessage msg = _myAgent.receive();
-        try {
-            Object content = msg.getContentObject();
-            if(content instanceof IMessage)
+        if(_myAgent.isSearchRunning())
+        {
+            ACLMessage msg = _myAgent.receive();
+            if(msg != null)
             {
-                if(((IMessage)content).getType() == IMessage.Type.OFFER_PACK)
+                try
                 {
-                    IOffer offer = ((IOfferPack)content).lowestPrice();
-                    if(offer.price() < _myAgent.getBestOffer().price())
-                        _myAgent.setBestOffer(offer);
+                    Object content = msg.getContentObject();
+                    if(content instanceof IMessage)
+                    {
+                        if(((IMessage)content).getType() == IMessage.Type.OFFER_PACK)
+                        {
+                            IOffer offer = ((IOfferPack)content).lowestPrice();
+                            if(offer.price() < _myAgent.getBestOffer().price())
+                                _myAgent.setBestOffer(offer);
+                        }
+                    }
+                }
+                catch (UnreadableException ex)
+                {
+                    Logger.getLogger(WaitOffersBehaviour.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-        } catch (UnreadableException ex) {
-            Logger.getLogger(WaitOffersBehaviour.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

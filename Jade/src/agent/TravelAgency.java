@@ -44,14 +44,16 @@ public class TravelAgency extends jade.core.Agent
             {
                 Object content = msg.getContentObject();
                 if(content instanceof IMessage)
-                switch(((IMessage)content).getType())
                 {
-                    case OFFER_REQUEST : 
-                        this.addBehaviour(new StubOfferResponseBehaviour(msg, (IOfferRequest)content));
-                        break;
-                    case RESERVATION_REQUEST :
-                        this.addBehaviour(new StubReservationResponse(msg, (IReservationRequest)content));
-                        break;
+                    switch(((IMessage)content).getType())
+                    {
+                        case OFFER_REQUEST : 
+                            this.addBehaviour(new StubOfferResponseBehaviour(msg, (IOfferRequest)content));
+                            break;
+                        case RESERVATION_REQUEST :
+                            this.addBehaviour(new StubReservationResponse(msg, (IReservationRequest)content));
+                            break;
+                    }
                 }
             }
             catch (UnreadableException ex)

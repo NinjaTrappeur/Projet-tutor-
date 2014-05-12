@@ -158,11 +158,6 @@ public class ClientViewForm extends javax.swing.JFrame
         jLabel2.setText("Date");
 
         _departureCity.setText("Pau");
-        _departureCity.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                _departureCityActionPerformed(evt);
-            }
-        });
 
         _departureDay.setModel(new javax.swing.SpinnerNumberModel(1, 1, 31, 1));
 
@@ -393,10 +388,6 @@ public class ClientViewForm extends javax.swing.JFrame
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void _departureCityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__departureCityActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event__departureCityActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField _arrivalCity;

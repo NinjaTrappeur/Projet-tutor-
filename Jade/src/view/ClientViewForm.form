@@ -161,9 +161,6 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Pau"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="_departureCityActionPerformed"/>
-              </Events>
             </Component>
             <Component class="javax.swing.JSpinner" name="_departureDay">
               <Properties>
