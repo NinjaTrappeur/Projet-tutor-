@@ -6,10 +6,12 @@
 
 package travelagency;
 
+import message.ConfirmationLetter;
 import message.IConfirmationLetter;
 import message.IOffer;
-import messages.ConfirmationLetter;
 import travelagency.interfaces.IVacationReservationManager;
+import org.objectweb.fractal.fraclet.annotations.Component;
+import org.objectweb.fractal.fraclet.annotations.Interface;
 
 
 @Component(provides=@Interface(name="vacationReservationManager", signature = travelagency.interfaces.IVacationReservationManager.class))

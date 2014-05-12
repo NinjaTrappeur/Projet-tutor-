@@ -5,8 +5,8 @@ import message.IConfirmationLetter;
 import message.IOffer;
 import message.IOfferPack;
 import message.IOfferRequest;
-import messages.Offer;
-import messages.OfferRequest;
+import message.Offer;
+import message.OfferRequest;
 import org.objectweb.fractal.fraclet.annotations.Component;
 import org.objectweb.fractal.fraclet.annotations.Interface;
 import org.objectweb.fractal.fraclet.annotations.Requires;
@@ -22,7 +22,7 @@ public class WebServiceProxy implements ITravelAgency, Runnable {
     @Override
     public void run() {
         System.out.println("vacation offer browser: " + requestProposal(new OfferRequest(10,10,"ets",
-        new Date(), new Date(), "hola")).toString());
+        new Date(), new Date(), "hola", 1000)).toString());
         System.out.println("vacationReservation: " + reserveOffer(new Offer(10, "couco")).toString());
     }
     
