@@ -10,7 +10,7 @@ package message;
  *
  * @author josuah
  */
-public interface RequestOffer
+public interface IOffer
 {
-    
+    public float price();
 }

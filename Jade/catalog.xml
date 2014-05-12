@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="file:/home/josuah/Documents/projet_tutore/Projet-tutor-/Jade/src/service/web/AddTwoInteger.wsdl" uri="xml-resources/web-service-references/AddTwoInteger/wsdl/AddTwoInteger.wsdl"/>
+    <system systemId="file:/home/josuah/Documents/projet_tutore/Projet-tutor-/Jade/src/service/web/AddTwoInteger_schema1.xsd" uri="xml-resources/web-service-references/AddTwoInteger/wsdl/AddTwoInteger_schema1.xsd"/>
+    <system systemId="file:/home/josuah/Documents/projet_tutore/Projet-tutor-/Jade/src/service/web/addTwoInteger.wsdl" uri="xml-resources/web-service-references/addTwoInteger/wsdl/addTwoInteger.wsdl"/>
+    <system systemId="http://josuah-k43sj:8080/SimpleWebService/addTwoInteger?WSDL" uri="xml-resources/web-service-references/addTwoInteger/wsdl/josuah-k43sj_8080/SimpleWebService/addTwoInteger.wsdl"/>
+    <system systemId="http://josuah-k43sj:8080/SimpleWebService/addTwoInteger?xsd=1" uri="xml-resources/web-service-references/addTwoInteger/wsdl/josuah-k43sj_8080/SimpleWebService/addTwoInteger.xsd_1.xsd"/>
+</catalog>
