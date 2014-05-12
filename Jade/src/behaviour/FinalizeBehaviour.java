@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import message.IConfirmationLetter;
-import view.ClientView;
+import agent.ClientView;
 
 /**
  *

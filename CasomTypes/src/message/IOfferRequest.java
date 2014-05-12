@@ -18,7 +18,7 @@ public interface IOfferRequest extends IMessage
     public Date departureDate();
     public Date returnDate();
     public String placeName();
-    public int lowestPrice();
-    public int highestPrice();
+    public float lowestPrice();
+    public float highestPrice();
     public float timeGuard();
 }

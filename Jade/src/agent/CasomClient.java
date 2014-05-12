@@ -27,6 +27,13 @@ public class CasomClient extends jade.core.Agent
     private boolean _booked;
     private IOffer _bestOffer;
     
+    public static final String ServiceDescription;
+    
+    static
+    {
+        ServiceDescription = "Casom-Client-Agent";
+    }
+    
     public CasomClient()
     {
         super();
