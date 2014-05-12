@@ -6,16 +6,11 @@
 
 package message;
 
-import jade.core.AID;
-
 /**
  *
  * @author josuah
  */
-public interface IOffer  extends IMessage
+public interface IReservationRequest extends IMessage
 {
-    public float price();
-    public String companyName();
-    public void setAgency(AID agency);
-    public AID getAgency();
+    public IOffer getOffer();
 }

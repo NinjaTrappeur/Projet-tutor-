@@ -17,6 +17,7 @@ import message.IMessage;
 import message.IOffer;
 import message.IOfferPack;
 import message.IOfferRequest;
+import message.ReservationRequest;
 
 /**
  *
@@ -43,13 +44,17 @@ public class WaitOffersBehaviour extends Behaviour
         if(done && _myAgent.getBestOffer() != null)
         {
             ACLMessage msg = new ACLMessage(ACLMessage.AGREE);
-            msg.addReceiver(null); ////////
-            try {
-                msg.setContentObject(_myAgent.getBestOffer());
-            } catch (IOException ex) {
+            msg.addReceiver(_myAgent.getBestOffer().getAgency());
+            try
+            {
+                msg.setContentObject(new ReservationRequest(_myAgent.getBestOffer()));
+            }
+            catch (IOException ex)
+            {
                 System.err.println("WaitOffersBehaviour::done : acl content setting error. "+ex.getLocalizedMessage());
                 Logger.getLogger(WaitOffersBehaviour.class.getName()).log(Level.SEVERE, null, ex);
             }
+            
             _myAgent.send(msg);
         }
         

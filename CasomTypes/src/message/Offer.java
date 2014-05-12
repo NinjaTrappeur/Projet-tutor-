@@ -6,6 +6,7 @@
 
 package message;
 
+import jade.core.AID;
 import message.IOffer;
 
 /**
@@ -38,5 +39,16 @@ public class Offer implements IOffer{
     @Override
     public String toString() {
         return "Offer from " + _name + " :" + _price + "€.";
+    }
+    @Override
+    public void setAgency(AID agency)
+    {
+        
+    }
+    
+    @Override
+    public AID getAgency()
+    {
+        return null;
     }
 }

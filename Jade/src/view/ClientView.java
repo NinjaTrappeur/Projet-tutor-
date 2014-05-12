@@ -14,6 +14,13 @@ import message.IOfferRequest;
  */
 public class ClientView
 {
+    public final static String ServiceDescription;
+    
+    static
+    {
+        ServiceDescription = "Casom-View-Agent";
+    }
+    
     public IOfferRequest getOfferRequest()
     {
         return null;

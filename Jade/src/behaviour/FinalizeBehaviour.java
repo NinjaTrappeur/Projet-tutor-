@@ -7,7 +7,6 @@
 package behaviour;
 
 import agent.CasomClient;
-import agent.TravelAgency;
 import jade.core.AID;
 import jade.domain.DFService;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
@@ -17,49 +16,52 @@ import jade.lang.acl.ACLMessage;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import message.IOfferRequest;
+import message.IConfirmationLetter;
+import view.ClientView;
 
 /**
  *
  * @author josuah
  */
-public class RequestOfferBehaviour extends jade.core.behaviours.OneShotBehaviour
+public class FinalizeBehaviour extends jade.core.behaviours.OneShotBehaviour
 {
-    private CasomClient _myAgent;
-    private IOfferRequest _offerRequest;
+    CasomClient _myAgent;
+    IConfirmationLetter _confirmationLetter;
     
-    public RequestOfferBehaviour(CasomClient myAgent, IOfferRequest offerRequest)
+    public FinalizeBehaviour(CasomClient myAgent, IConfirmationLetter confirmationLetter)
     {
         _myAgent = myAgent;
-        _myAgent.setBooked(false);
-        _myAgent.setSearchRuinning(true);
+        _confirmationLetter = confirmationLetter;
     }
     
     /**
-     * Lookup travel agencies agents from DF and send them the OfferRequest message received from the View Agent.
+     * Lookup View agents from the DF and send them the confirmation letter received from the travel agency.
      */
     @Override
     public void action()
     {
-        AID agency;
+        AID view;
         DFAgentDescription template = new DFAgentDescription();
         ServiceDescription sd = new ServiceDescription();
         
-        // Template for searching TravelAgency agents from DF
-        sd.setType(TravelAgency.ServiceDescription);
+        // Template for searching View agents from DF
+        sd.setType(ClientView.ServiceDescription);
         template.addServices(sd);
-        ACLMessage msg = new ACLMessage(ACLMessage.REQUEST);
         
         try
         {
-            msg.setContentObject(_offerRequest);
+            ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
+            msg.setContentObject(_confirmationLetter);
+            
             DFAgentDescription[] result = DFService.search(myAgent, template); // !!! this myAgent is different (Jade stuffs)
             
             for(int i = 0; i < result.length; ++i)
             {
-                agency = result[i].getName();
-                msg.addReceiver(agency);
+                view = result[i].getName();
+                msg.addReceiver(view);
             }
+            
+            _myAgent.send(msg);
         }
         catch (FIPAException fe)
         {
@@ -68,10 +70,8 @@ public class RequestOfferBehaviour extends jade.core.behaviours.OneShotBehaviour
         }
         catch (IOException ex)
         {
-            System.err.println("RequestOfferBehaviour::action : message sending error. "+ex.getLocalizedMessage());
-            Logger.getLogger(RequestOfferBehaviour.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("FinalizeBehaviour::action : ACL message content setting error. "+ex.getLocalizedMessage());
+            Logger.getLogger(FinalizeBehaviour.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        _myAgent.send(msg);
     }
 }
