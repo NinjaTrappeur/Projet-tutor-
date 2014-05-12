@@ -15,7 +15,7 @@
 	* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 -->
 
-<project name="Vacation agency" default="run" basedir=".">
+<project name="Helloworld Fraclet" default="run" basedir=".">
 	<description>
         simple example build file
     </description>
@@ -26,17 +26,17 @@
 	<property name="build" location="build" />
 	<property name="dist" location="dist" />
 	
-	<condition property="lib" value="../../lib">
+	<condition property="lib" value="${env.FRACTAL_HOME}/lib">
 		<and>
 			<not>
-		      		<available file="../lib/"/>
+				<available file="../../lib/"/>
 		    	</not>	
 		 </and>
 	</condition>
 		
-	<condition property="lib" value="../lib">
+	<condition property="lib" value="../../lib">
 		 <and>
-		      	<available file="../lib/"/>
+			 <available file="../../lib/"/>
 		 </and>
 	</condition>
 	
@@ -113,7 +113,7 @@
 		<mkdir dir="${dist}" />
 
 		<!-- Put everything in ${build} into the MyProject-${DSTAMP}.jar file -->
-		<jar jarfile="${dist}/travelAgency.jar" basedir="${build}" />
+		<jar jarfile="${dist}/helloworld.jar" basedir="${build}" />
 	</target>
 	
 	<target name="run" depends="compile">

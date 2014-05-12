@@ -14,7 +14,7 @@ import org.objectweb.fractal.fraclet.annotations.Component;
 import org.objectweb.fractal.fraclet.annotations.Interface;
 
 
-@Component(provides=@Interface(name="vacationReservationManager", signature = travelagency.interfaces.IVacationReservationManager.class))
+@Component(provides=@Interface(name="reserveOffer", signature = travelagency.interfaces.IVacationReservationManager.class))
 public class VacationReservationManager implements IVacationReservationManager{
         @Override
         public IConfirmationLetter reserveOffer(IOffer offer) {
