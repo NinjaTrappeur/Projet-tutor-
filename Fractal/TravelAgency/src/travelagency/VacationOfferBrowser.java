@@ -8,6 +8,7 @@ package travelagency;
 
 import message.IOfferPack;
 import message.IOfferRequest;
+import messages.Offer;
 import messages.OfferPack;
 import travelagency.interfaces.IVacationOfferBrowser;
 
@@ -16,6 +17,6 @@ public class VacationOfferBrowser implements IVacationOfferBrowser{
     
     @Override
     public IOfferPack getProposals(IOfferRequest offerRequest) {
-        return new OfferPack();
+        return new OfferPack(new Offer(100, "Bruce Willis"));
     }
 }
