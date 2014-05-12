@@ -26,7 +26,7 @@ public class WebServiceProxy implements ITravelAgency, Runnable {
         System.out.println("vacationReservation: " + reserveOffer(new Offer(10, "couco")).toString());
     }
     
-    @Requires(name = "vacationOfferBrowser")
+    @Requires(name = "getProposals")
     private IVacationOfferBrowser _vacationOfferBrowser;
     
     @Requires(name = "vacationReservationManager")

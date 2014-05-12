@@ -14,7 +14,7 @@ import travelagency.interfaces.IVacationOfferBrowser;
 import org.objectweb.fractal.fraclet.annotations.Component;
 import org.objectweb.fractal.fraclet.annotations.Interface;
 
-@Component(provides=@Interface(name="vacationOfferBrowser", signature = travelagency.interfaces.IVacationOfferBrowser.class))
+@Component(provides=@Interface(name="getProposals", signature = travelagency.interfaces.IVacationOfferBrowser.class))
 public class VacationOfferBrowser implements IVacationOfferBrowser{
     
     @Override

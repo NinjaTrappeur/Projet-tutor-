@@ -2,14 +2,14 @@
 <!DOCTYPE definition PUBLIC "-//objectweb.org//DTD Fractal ADL 2.0//EN" "classpath://org/objectweb/fractal/adl/xml/basic.dtd">
 
 
-<definition name = "travelagency.TravelAgency">
+<definition name = "travelagency.travelAgency">
 	<interface name="r" role="server" signature="java.lang.Runnable" />
 	<component name="vacationOfferBrowser" definition="travelagency.VacationOfferBrowser" />
-	<component name="vacationReservationManger" definition="travelagency.VacationReservationManager" />
+	<component name="vacationReservationManager" definition="travelagency.VacationReservationManager" />
 	<component name="webServiceProxy" definition="travelagency.WebServiceProxy" />
 	<binding client="this.r" server="webServiceProxy.r" />
-	<binding client="webServiceProxy.vacationOfferBrowser" server="vacationOfferBrowser.vacationOfferBrowser" />
-        <binding client="webServiceProxy.vacationReservationManager" server="vacationReservationManager.vacationReservationManager" />
+	<binding client="webServiceProxy.getProposals" server="vacationOfferBrowser.getProposals" />
+        <binding client="webServiceProxy.vacationReservationManager" server="vacationReservationManager.reserveOffer" />
 </definition>
 
 
