@@ -10,7 +10,7 @@ package message;
  *
  * @author josuah
  */
-public interface IOfferPack
+public interface IOfferPack extends IMessage
 {
     public IOffer lowestPrice();
 }

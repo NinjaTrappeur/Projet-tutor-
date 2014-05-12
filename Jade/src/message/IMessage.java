@@ -10,8 +10,9 @@ package message;
  *
  * @author josuah
  */
-public interface IOffer  extends IMessage
+public interface IMessage
 {
-    public float price();
-    public String companyName();
+    public enum Type {CONFIRM_LETTER, OFFER, OFFER_REQUEST, OFFER_PACK};
+    
+    public Type getType();
 }

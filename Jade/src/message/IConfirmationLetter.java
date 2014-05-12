@@ -10,7 +10,7 @@ package message;
  *
  * @author josuah
  */
-public interface IConfirmationLetter
+public interface IConfirmationLetter extends IMessage
 {
     
 }

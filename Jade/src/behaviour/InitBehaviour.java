@@ -19,12 +19,16 @@ public class InitBehaviour extends CyclicBehaviour
     
     public void setOfferRequest(IOfferRequest offerRequest)
     {
-        
+        _offerRequest = offerRequest;
     }
     
     @Override
     public void action()
     {
-        
+        if(_offerRequest != null)
+        {
+            
+            
+        }
     }
 }

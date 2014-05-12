@@ -12,7 +12,7 @@ import java.util.Date;
  *
  * @author josuah
  */
-public interface IOfferRequest
+public interface IOfferRequest extends IMessage
 {
     public String clientName();
     public Date departureDate();
