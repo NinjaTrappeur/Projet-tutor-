@@ -6,11 +6,18 @@
 
 package message;
 
+import java.util.Date;
+
 /**
  *
  * @author josuah
  */
 public interface IOfferRequest
 {
-    
+    public String clientName();
+    public Date departureDate();
+    public Date returnDate();
+    public String placeName();
+    public int lowestPrice();
+    public int highestPrice();
 }
