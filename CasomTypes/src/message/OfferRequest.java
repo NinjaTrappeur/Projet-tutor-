@@ -4,10 +4,9 @@
  * and open the template in the editor.
  */
 
-package messages;
+package message;
 
 import java.util.Date;
-import message.IOfferRequest;
 
 /**
  *
@@ -21,14 +20,21 @@ public class OfferRequest implements IOfferRequest {
     private final Date _departureDate;
     private final Date _returnDate;
     private final String _placeName;
+    private final float _timeGuard;
     
-    public OfferRequest (int hp, int lp, String name, Date dd, Date rd, String place) {
+    @Override
+    public float timeGuard() {
+        return _timeGuard;
+    }
+    
+    public OfferRequest (int hp, int lp, String name, Date dd, Date rd, String place, float tg) {
         _highestPrice = hp;
         _lowestPrice = lp;
         _clientName = name;
         _departureDate = dd;
         _returnDate = rd;
         _placeName = place;
+        _timeGuard = tg;
     }
     public int highestPrice() {
         return _highestPrice;
