@@ -6,14 +6,14 @@
 
 package behaviour;
 
-import jade.core.behaviours.CyclicBehaviour;
+import jade.core.behaviours.OneShotBehaviour;
 import message.IOfferRequest;
 
 /**
  *
  * @author josuah
  */
-public class InitBehaviour extends CyclicBehaviour
+public class InitBehaviour extends OneShotBehaviour
 {
     IOfferRequest _offerRequest;
     

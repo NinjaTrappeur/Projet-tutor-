@@ -20,4 +20,5 @@ public interface IOfferRequest extends IMessage
     public String placeName();
     public int lowestPrice();
     public int highestPrice();
+    public float timeGuard();
 }

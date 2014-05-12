@@ -6,8 +6,11 @@
 
 package agent;
 
+import behaviour.*;
+import jade.core.AID;
 import jade.lang.acl.ACLMessage;
 import java.util.ArrayList;
+import message.IMessage;
 import message.IOffer;
 import message.IOfferPack;
 import message.IOfferRequest;
@@ -19,12 +22,15 @@ import travelagency.ITravelAgency;
  */
 public class CasomClient extends jade.core.Agent
 {
-    private ArrayList<ITravelAgency> _agencies;
+    ArrayList<AID> _agencies;
     private boolean _quit;
+    private boolean _searchRunning;
+    private IOffer _bestOffer;
     
     public CasomClient()
     {
         _quit = false;
+        _searchRunning = false;
     }
     
     @Override
@@ -36,27 +42,39 @@ public class CasomClient extends jade.core.Agent
             if(msg != null)
             {
                 Object content = msg.getContent();
+                if(content instanceof IMessage)
+                
+                switch(((IMessage)content).getType())
+                {
+                    case QUIT_REQUEST: // Received quit order from view agent
+                        _quit = true;
+                        _searchRunning = false;
+                        break;
+                    case OFFER_REQUEST : // New offer request from view (user demand)
+                        this.addBehaviour(new RequestOfferBehaviour(this, (IOfferRequest)content));
+                        this.addBehaviour(new WaitOffersBehaviour(this, (IOfferRequest)content));
+                        break;
+                    case OFFER_PACK :
+                        break;
+                    case CONFIRM_LETTER : 
+                        break;
+                }
             }
         }
     }
     
-    private void resquestOffer(IOfferRequest offerRequest)
+    public void setBestOffer(IOffer offer)
     {
-        IOffer currentOffer;
-        IOffer bestOffer = null;
-        
-        for(ITravelAgency agency : _agencies)
-        {
-            IOfferPack offers = agency.requestProposal(offerRequest);
-            
-            currentOffer = offers.lowestPrice();
-            
-            if(bestOffer == null)
-                bestOffer = currentOffer;
-            else if(currentOffer.price() < bestOffer.price())
-            {
-                bestOffer = currentOffer;
-            }
-        }
+        _bestOffer = offer;
+    }
+    
+    public IOffer getBestOffer()
+    {
+        return _bestOffer;
+    }
+    
+    public ArrayList<AID> getAgencies()
+    {
+        return _agencies;
     }
 }

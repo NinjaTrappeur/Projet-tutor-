@@ -6,13 +6,15 @@
 
 package message;
 
+import jade.util.leap.Serializable;
+
 /**
  *
  * @author josuah
  */
-public interface IMessage
+public interface IMessage extends Serializable
 {
-    public enum Type {CONFIRM_LETTER, OFFER, OFFER_REQUEST, OFFER_PACK};
+    public enum Type {QUIT_REQUEST, OFFER_REQUEST, OFFER_PACK, CONFIRM_LETTER, OFFER};
     
     public Type getType();
 }
