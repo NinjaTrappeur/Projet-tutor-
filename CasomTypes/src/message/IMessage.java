@@ -6,7 +6,7 @@
 
 package message;
 
-import jade.util.leap.Serializable;
+import java.io.Serializable;
 
 /**
  *
