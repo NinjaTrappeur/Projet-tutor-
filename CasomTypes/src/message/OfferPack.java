@@ -4,8 +4,9 @@
  * and open the template in the editor.
  */
 
-package messages;
+package message;
 
+import message.Offer;
 import message.IOffer;
 import message.IOfferPack;
 

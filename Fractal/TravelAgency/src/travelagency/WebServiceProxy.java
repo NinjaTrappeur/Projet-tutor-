@@ -10,6 +10,8 @@ import messages.OfferRequest;
 import org.objectweb.fractal.fraclet.annotations.Component;
 import org.objectweb.fractal.fraclet.annotations.Interface;
 import org.objectweb.fractal.fraclet.annotations.Requires;
+import travelagency.interfaces.IVacationOfferBrowser;
+import travelagency.interfaces.IVacationReservationManager;
 
 @Component(provides=@Interface(name="r", signature = java.lang.Runnable.class))
 public class WebServiceProxy implements ITravelAgency, Runnable {
@@ -25,10 +27,10 @@ public class WebServiceProxy implements ITravelAgency, Runnable {
     }
     
     @Requires(name = "vacationOfferBrowser")
-    private _vacationOfferBrowser;
+    private IVacationOfferBrowser _vacationOfferBrowser;
     
     @Requires(name = "vacationReservationManager")
-    private _vacationReservationManager;
+    private IVacationReservationManager _vacationReservationManager;
     
     @Override
     public IOfferPack requestProposal(IOfferRequest offerRequest) {
