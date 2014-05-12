@@ -8,9 +8,11 @@ package travelagency;
 
 import message.IOfferPack;
 import message.IOfferRequest;
-import messages.Offer;
-import messages.OfferPack;
+import message.Offer;
+import message.OfferPack;
 import travelagency.interfaces.IVacationOfferBrowser;
+import org.objectweb.fractal.fraclet.annotations.Component;
+import org.objectweb.fractal.fraclet.annotations.Interface;
 
 @Component(provides=@Interface(name="vacationOfferBrowser", signature = travelagency.interfaces.IVacationOfferBrowser.class))
 public class VacationOfferBrowser implements IVacationOfferBrowser{
