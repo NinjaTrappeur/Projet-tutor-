@@ -6,6 +6,7 @@
 
 package agent;
 
+import jade.lang.acl.ACLMessage;
 import java.util.ArrayList;
 import message.IOffer;
 import message.IOfferPack;
@@ -19,10 +20,24 @@ import travelagency.ITravelAgency;
 public class CasomClient extends jade.core.Agent
 {
     private ArrayList<ITravelAgency> _agencies;
+    private boolean _quit;
+    
+    public CasomClient()
+    {
+        _quit = false;
+    }
     
     @Override
     public void setup()
     {
+        while(!_quit)
+        {
+            ACLMessage msg = receive();
+            if(msg != null)
+            {
+                Object content = msg.getContent();
+            }
+        }
     }
     
     private void resquestOffer(IOfferRequest offerRequest)

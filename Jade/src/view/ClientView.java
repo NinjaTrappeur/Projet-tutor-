@@ -4,14 +4,18 @@
  * and open the template in the editor.
  */
 
-package message;
+package view;
+
+import message.IOfferRequest;
 
 /**
  *
  * @author josuah
  */
-public interface IOffer  extends IMessage
+public class ClientView
 {
-    public float price();
-    public String companyName();
+    public IOfferRequest getOfferRequest()
+    {
+        return null;
+    }
 }
