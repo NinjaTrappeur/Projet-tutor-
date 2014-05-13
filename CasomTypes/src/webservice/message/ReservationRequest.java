@@ -1,8 +1,8 @@
 package webservice.message;
 
 public class ReservationRequest {
-        Offer offer;
-        String type;
+        private Offer offer;
+        private String type;
     
     public ReservationRequest(Offer coffer)
     {
@@ -18,5 +18,19 @@ public class ReservationRequest {
     public Offer getOffer()
     {
         return offer;
+    }
+
+    /**
+     * @param offer the offer to set
+     */
+    public void setOffer(Offer offer) {
+        this.offer = offer;
+    }
+
+    /**
+     * @param type the type to set
+     */
+    public void setType(String type) {
+        this.type = type;
     }
 }

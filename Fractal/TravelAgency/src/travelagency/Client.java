@@ -30,8 +30,8 @@ public class Client implements Runnable{
     @Override
     public void run() {
         WsLink webServiceLink = new WsLink(this);
-        Endpoint.publish("http://localhost:8080/Ws", webServiceLink);
-        System.out.println("Webservice lancé sur http://localhost:8080/Ws");
+        Endpoint.publish("http://10.8.2.129:8000/Ws", webServiceLink);
+        System.out.println("Webservice lancé sur http://localhost:8000/Ws");
 //        System.out.println("Émmission d'une requête d'offres.");
 //        IOfferPack offer = _getOfferInterface.getProposals(new OfferRequest(100, 200, "toto", new Date(), new Date(), "", 0));
 //        System.out.println("Résultat: " + offer.toString());

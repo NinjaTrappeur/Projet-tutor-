@@ -67,4 +67,60 @@ public class OfferRequest {
                 " and " + returnDate + " at " + placeName + " from " + lowestPrice + " to " + highestPrice
                 + ".";
     }
+
+    /**
+     * @param highestPrice the highestPrice to set
+     */
+    public void setHighestPrice(float highestPrice) {
+        this.highestPrice = highestPrice;
+    }
+
+    /**
+     * @param lowestPrice the lowestPrice to set
+     */
+    public void setLowestPrice(float lowestPrice) {
+        this.lowestPrice = lowestPrice;
+    }
+
+    /**
+     * @param clientName the clientName to set
+     */
+    public void setClientName(String clientName) {
+        this.clientName = clientName;
+    }
+
+    /**
+     * @param departureDate the departureDate to set
+     */
+    public void setDepartureDate(Date departureDate) {
+        this.departureDate = departureDate;
+    }
+
+    /**
+     * @param returnDate the returnDate to set
+     */
+    public void setReturnDate(Date returnDate) {
+        this.returnDate = returnDate;
+    }
+
+    /**
+     * @param placeName the placeName to set
+     */
+    public void setPlaceName(String placeName) {
+        this.placeName = placeName;
+    }
+
+    /**
+     * @param type the type to set
+     */
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    /**
+     * @param timeGuard the timeGuard to set
+     */
+    public void setTimeGuard(float timeGuard) {
+        this.timeGuard = timeGuard;
+    }
 }

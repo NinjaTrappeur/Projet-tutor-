@@ -23,12 +23,23 @@ public class Offer {
         type = "OFFER";
     }
     
+    public void setPrice(float cprice) {
+        price = cprice;
+    }
+    
     public float getPrice() {
         return price;
     }
     
+    public void setName(String cname) {
+        name = cname;
+    }
     public String getName() {
         return name;
+    }
+    
+    public void setType(String ctype) {
+        type = ctype;
     }
     public String getType() {
         return type;
@@ -47,4 +58,19 @@ public class Offer {
     {
         return agency;
     }
+
+    /**
+     * @param price the price to set
+     */
+
+
+    /**
+     * @param name the name to set
+     */
+
+
+    /**
+     * @param type the type to set
+     */
+
 }

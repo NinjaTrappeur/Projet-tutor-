@@ -2,7 +2,7 @@ package webservice.message;
 
 
 public class OfferPack {
-    private final Offer bestOffer;
+    private Offer bestOffer;
     private String type;
     
     public OfferPack(Offer cbestOffer) {
@@ -20,6 +20,20 @@ public class OfferPack {
     
     @Override
     public String toString() {
-        return "Lowest offer: " + bestOffer.toString();
+        return "Lowest offer: " + getBestOffer().toString();
+    }
+
+    /**
+     * @param bestOffer the bestOffer to set
+     */
+    public void setBestOffer(Offer bestOffer) {
+        this.bestOffer = bestOffer;
+    }
+
+    /**
+     * @param type the type to set
+     */
+    public void setType(String type) {
+        this.type = type;
     }
 }
