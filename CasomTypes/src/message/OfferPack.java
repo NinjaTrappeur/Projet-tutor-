@@ -6,10 +6,13 @@
 
 package message;
 
+import javax.jws.WebService;
+
 /**
  *
  * @author ninjatrappeur
  */
+@WebService
 public class OfferPack implements IOfferPack {
     private final IOffer _bestOffer;
     

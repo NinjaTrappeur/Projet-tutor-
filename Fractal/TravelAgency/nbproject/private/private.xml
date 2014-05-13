@@ -3,11 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/ninjatrappeur/Cours/M1S2/PojetTutoré/final/Fractal/TravelAgency/src/travelagency/TravelAgency.java</file>
-            <file>file:/home/ninjatrappeur/Cours/M1S2/PojetTutoré/final/Fractal/TravelAgency/src/sharedDataTypes/Offer.java</file>
-            <file>file:/home/ninjatrappeur/Cours/M1S2/PojetTutoré/final/Fractal/TravelAgency/src/sharedDataTypes/VacationOffer.java</file>
-            <file>file:/home/ninjatrappeur/Cours/M1S2/PojetTutoré/final/Fractal/TravelAgency/src/sharedDataTypes/VacationWish.java</file>
-            <file>file:/home/ninjatrappeur/Cours/M1S2/PojetTutoré/final/Fractal/TravelAgency/src/sharedDataTypes/Client.java</file>
+            <file>file:/home/ninjatrappeur/Cours/M1S2/PojetTutoré/final/Fractal/TravelAgency/src/travelagency/travelAgency.fractal</file>
+            <file>file:/home/ninjatrappeur/Cours/M1S2/PojetTutoré/final/Fractal/TravelAgency/src/travelagency/VacationReservationManager.java</file>
         </group>
     </open-files>
 </project-private>

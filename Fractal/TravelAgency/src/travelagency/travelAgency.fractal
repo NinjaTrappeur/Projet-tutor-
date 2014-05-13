@@ -3,13 +3,12 @@
 
 
 <definition name = "travelagency.travelAgency">
-	<interface name="r" role="server" signature="java.lang.Runnable" />
+	<interface name="getOffer" role="server" signature="travelagency.interfaces.IVacationOfferBrowser" />
+        <interface name="makeReservation" role="server" signature="travelagency.interfaces.IVacationReservationManager"/>
 	<component name="vacationOfferBrowser" definition="travelagency.VacationOfferBrowser" />
 	<component name="vacationReservationManager" definition="travelagency.VacationReservationManager" />
-	<component name="webServiceProxy" definition="travelagency.WebServiceProxy" />
-	<binding client="this.r" server="webServiceProxy.r" />
-	<binding client="webServiceProxy.getProposals" server="vacationOfferBrowser.getProposals" />
-        <binding client="webServiceProxy.vacationReservationManager" server="vacationReservationManager.reserveOffer" />
+	<binding client="this.getOffer" server="vacationOfferBrowser.getProposals" />
+        <binding client="this.makeReservation" server="vacationReservationManager.reserveOffer" />
 </definition>
 
 
