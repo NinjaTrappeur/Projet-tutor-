@@ -1,6 +1,7 @@
 
 package travelagency;
 import java.util.Date;
+import javax.xml.ws.Endpoint;
 import message.IConfirmationLetter;
 import message.IOffer;
 import message.IOfferPack;
@@ -21,9 +22,12 @@ public class WebServiceProxy implements ITravelAgency, Runnable {
     
     @Override
     public void run() {
-        System.out.println("vacation offer browser: " + requestProposal(new OfferRequest(10,10,"ets",
-        new Date(), new Date(), "hola", 1000)).toString());
-        System.out.println("vacationReservation: " + reserveOffer(new Offer(10, "couco")).toString());
+        Client client = new Client(_vacationOfferBrowser, _vacationReservationManager);
+        Endpoint.publish("http://localhost:8080/VacationOffer",
+                client.getProposals(new OfferRequest(10,10,"ets",
+        new Date(), new Date(), "hola", 1000)));
+        Endpoint.publish("http://localhost:8080/VacationReservation",
+                client.reserveOffer(new Offer(100,"patrick")));
     }
     
     @Requires(name = "getProposals")
