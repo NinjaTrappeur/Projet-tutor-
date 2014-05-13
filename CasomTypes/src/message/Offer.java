@@ -13,24 +13,25 @@ import jade.core.AID;
  * @author ninjatrappeur
  */
 public class Offer implements IOffer{
-    private float _price;
-    private String _name;
-    private AID _agency;
+    protected float _price;
+    protected String _companyName;
+    protected AID _agency;
     
-    public Offer(float price, String name, AID agency) {
+    public Offer(float price, String name, AID agency)
+    {
         _price = price;
-        _name = name;
+        _companyName = name;
         _agency = agency;
     }
     
     @Override
-    public float price() {
+    public float getPrice() {
         return _price;
     }
     
     @Override
-    public String companyName() {
-        return _name;
+    public String getCompanyName() {
+        return _companyName;
     }
     @Override
     public Type getType() {
@@ -38,18 +39,36 @@ public class Offer implements IOffer{
     }
     
     @Override
-    public String toString() {
-        return "Offer from " + _name + " :" + _price + "€.";
+    public AID getAgency()
+    {
+        return _agency;
     }
+    
     @Override
     public void setAgency(AID agency)
     {
         _agency = agency;
     }
+
+    /**
+     * @param price the price to set
+     */
+    @Override
+    public void setPrice(float price) {
+        this._price = price;
+    }
+
+    /**
+     * @param name the companyName to set
+     */
+    @Override
+    public void setCompanyName(String name) {
+        this._companyName = name;
+    }
     
     @Override
-    public AID getAgency()
+    public String toString()
     {
-        return _agency;
+        return "Offer from " + _companyName + " :" + _price + "€.";
     }
 }

@@ -14,8 +14,11 @@ import jade.core.AID;
  */
 public interface IOffer  extends IMessage
 {
-    public float price();
-    public String companyName();
-    public void setAgency(AID agency);
+    public float getPrice();
+    public String getCompanyName();
     public AID getAgency();
+    
+    public void setPrice(float price);
+    public void setCompanyName(String comName);
+    public void setAgency(AID agency);
 }

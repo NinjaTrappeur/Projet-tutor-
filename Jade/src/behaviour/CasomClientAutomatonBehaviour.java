@@ -174,7 +174,7 @@ public class CasomClientAutomatonBehaviour extends jade.core.behaviours.CyclicBe
     
     private void _evaluateOffer(IOfferPack offerPack)
     {
-        IOffer offer = offerPack.lowestPrice();
+        IOffer offer = offerPack.getBestOffer();
         
         if(_firstEvaluation)
         {
@@ -184,7 +184,7 @@ public class CasomClientAutomatonBehaviour extends jade.core.behaviours.CyclicBe
         
         if(offer != null && _myAgent.getBestOffer() != null)
         {
-            if(offer.price() < _myAgent.getBestOffer().price())
+            if(offer.getPrice() < _myAgent.getBestOffer().getPrice())
             {
                 _myAgent.setBestOffer(offer);
                 System.out.println("CasomClientAutomatonBehaviour::_evaluateOffer : offer is the better.");

@@ -13,16 +13,16 @@ import java.io.Serializable;
  * @author ninjatrappeur
  */
 public class Offer implements Serializable{
-    private float price;
-    private String name;
-    private String agency;
-    private String type;
+    protected float price;
+    protected String companyName;
+    protected String agency;
+    protected String type;
     
     public Offer(float cprice, String cname, String cagency) 
     {
         super();
         price = cprice;
-        name = cname;
+        companyName = cname;
         agency = cagency;
         type = "OFFER";
     }
@@ -42,13 +42,13 @@ public class Offer implements Serializable{
         return price;
     }
     
-    public void setName(String cname) 
+    public void setCompanyName(String cname) 
     {
-        name = cname;
+        companyName = cname;
     }
-    public String getName() 
+    public String getCompanyName() 
     {
-        return name;
+        return companyName;
     }
     
     public void setType(String ctype) 
@@ -61,7 +61,7 @@ public class Offer implements Serializable{
     
     @Override
     public String toString() {
-        return "Offer from " + name + " :" + price + "€.";
+        return "Offer from " + companyName + " :" + price + "€.";
     }
     public void setAgency(String cagency)
     {

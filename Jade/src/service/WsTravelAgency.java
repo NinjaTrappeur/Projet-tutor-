@@ -7,6 +7,10 @@
 package service;
 
 import jade.core.AID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.xml.datatype.DatatypeConfigurationException;
+import message.MessUtil;
 import travelagency.ConfirmationLetter;
 import travelagency.ITravelAgency;
 import travelagency.OfferPack;
@@ -20,10 +24,21 @@ public class WsTravelAgency implements ITravelAgency
     @Override
     public message.IOfferPack requestProposal(message.IOfferRequest offerRequest)
     {
-        travelagency.OfferRequest wsOfferRequest = _wsFromMessage(offerRequest);
-        travelagency.OfferPack wsOfferPAck = this.getOffers(wsOfferRequest);
+        message.IOfferPack offerPack = null;
+        try
+        {
+            travelagency.OfferRequest wsOfferRequest = _wsFromMessage(offerRequest);
+            travelagency.OfferPack wsOfferPack = this.getOffers(wsOfferRequest);
+            
+            offerPack = _messageFromWs(wsOfferPack);
+        }
+        catch (DatatypeConfigurationException ex)
+        {
+            System.err.println("WsTravelAgency::requestProposal : webservice data error. "+ex);
+            Logger.getLogger(WsTravelAgency.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
-        return _messageFromWs(wsOfferPAck);
+        return offerPack;
     }
     
     @Override
@@ -51,34 +66,72 @@ public class WsTravelAgency implements ITravelAgency
     }
     /********* End Web services consommation **********/
     
-    private travelagency.OfferRequest _wsFromMessage(message.IOfferRequest offerRequest)
+    private travelagency.OfferRequest _wsFromMessage(message.IOfferRequest offerRequest) throws DatatypeConfigurationException
     {
         travelagency.OfferRequest wsOfferRequest = new travelagency.OfferRequest();
         
         wsOfferRequest.setClientName(offerRequest.getClientName());
-        wsOfferRequest.setDepartureDate(null);
-        wsOfferRequest.setHighestPrice(value);
-        wsOfferRequest.setLowestPrice(value);
-        wsOfferRequest.setPlaceName(null);
-        wsOfferRequest.setReturnDate(null);
-        wsOfferRequest.setTimeGuard(value);
-        wsOfferRequest.setType(null);
+        wsOfferRequest.setDepartureDate(MessUtil.DateToXMLCalendar(offerRequest.getDepartureDate()));
+        wsOfferRequest.setReturnDate(MessUtil.DateToXMLCalendar(offerRequest.getReturnDate()));
+        wsOfferRequest.setHighestPrice(offerRequest.getHighestPrice());
+        wsOfferRequest.setLowestPrice(offerRequest.getLowestPrice());
+        wsOfferRequest.setPlaceName(offerRequest.getPlaceName());
+        wsOfferRequest.setTimeGuard(offerRequest.getTimeGuard());
+        wsOfferRequest.setType(MessUtil.MessageTypeToString(offerRequest.getType()));
         
         return wsOfferRequest;
     }
     
     private travelagency.Offer _wsFromMessage(message.IOffer offer)
     {
+        travelagency.Offer wsOffer = new travelagency.Offer();
         
+        wsOffer.setAgency(offer.getAgency().getName());
+        wsOffer.setName(offer.getCompanyName());
+        wsOffer.setPrice(offer.getPrice());
+        wsOffer.setType(MessUtil.MessageTypeToString(offer.getType()));
+        
+        return wsOffer;
     }
     
     private message.IOfferPack _messageFromWs(travelagency.OfferPack wsOfferPack)
     {
+        float price;
+        String name;
+        AID agency;
+        message.IOffer offer;
         
+        message.IOfferPack offerPack = new message.OfferPack();
+        
+        travelagency.Offer [] wsAllOffers = wsOfferPack.getAllOffers();
+        
+        for(int i=0; i < wsAllOffers.length; ++i)
+        {
+            travelagency.Offer wsOffer = wsAllOffers[i];
+            
+            price = wsOffer.getPrice();
+            name = wsOffer.getName();
+            agency = new AID(wsOffer.getAgency(), AID.ISGUID);
+            
+            offer = new message.Offer(price, name, agency);
+            offerPack.addOffer(offer);
+            
+            if(wsOfferPack.setBestOffer(wsOffer) == i)
+            {
+                offerPack.setBestOffer(offer);
+            }
+        }
+        
+        return offerPack;
     }
     
     private message.IConfirmationLetter _messageFromWs(travelagency.ConfirmationLetter wsConfirmLetter)
     {
+        AID agency = new AID(wsConfirmLetter.getAgency(), AID.ISGUID);
+        float price = wsConfirmLetter.getPrice();
+        String name = wsConfirmLetter.getCompanyName();
+        message.IConfirmationLetter confirmLetter = new message.ConfirmationLetter(price, name, agency);
         
+        return confirmLetter;
     }
 }

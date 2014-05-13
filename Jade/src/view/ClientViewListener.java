@@ -33,7 +33,8 @@ public class ClientViewListener implements ActionListener
     @Override
     public void actionPerformed(ActionEvent ev)
     {
-        float hp, lp, tg;
+        float hp, lp;
+        long tg;
         String name, place;
         Date dd, rd;
         

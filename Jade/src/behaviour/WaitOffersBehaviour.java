@@ -85,10 +85,10 @@ public class WaitOffersBehaviour extends SimpleBehaviour
                         if(((IMessage)content).getType() == IMessage.Type.OFFER_PACK)
                         {
                             System.out.println("WaitOffersBehaviour::action : offer pack received.");
-                            IOffer offer = ((IOfferPack)content).lowestPrice();
+                            IOffer offer = ((IOfferPack)content).getBestOffer();
                             if(offer != null)
                             {
-                                if(offer.price() < _myAgent.getBestOffer().price())
+                                if(offer.getPrice() < _myAgent.getBestOffer().getPrice())
                                     _myAgent.setBestOffer(offer);
                             }
                         }

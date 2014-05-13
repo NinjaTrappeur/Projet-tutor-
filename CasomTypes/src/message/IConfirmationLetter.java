@@ -10,7 +10,5 @@ package message;
  *
  * @author josuah
  */
-public interface IConfirmationLetter extends IMessage
-{
-    
-}
+public interface IConfirmationLetter extends IOffer
+{}

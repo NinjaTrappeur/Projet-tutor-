@@ -2,15 +2,17 @@ package webservice.message;
 
 
 public class OfferPack {
-    private Offer bestOffer;
+    private int bestOffer;
+    private Offer [] allOffers;
     private String type;
     
-    public OfferPack(Offer cbestOffer) {
+    public OfferPack(Offer [] callOffers, int cbestOffer) {
         bestOffer = cbestOffer;
+        allOffers = callOffers;
         type = "OFFER_PACK";
     }
     
-    public Offer getBestOffer(){
+    public int getBestOffer(){
         return bestOffer;
     }
     
@@ -20,13 +22,13 @@ public class OfferPack {
     
     @Override
     public String toString() {
-        return "Lowest offer: " + getBestOffer().toString();
+        return "Lowest offer: " + allOffers[bestOffer].toString();
     }
 
     /**
      * @param bestOffer the bestOffer to set
      */
-    public void setBestOffer(Offer bestOffer) {
+    public void setBestOffer(int bestOffer) {
         this.bestOffer = bestOffer;
     }
 
@@ -35,5 +37,19 @@ public class OfferPack {
      */
     public void setType(String type) {
         this.type = type;
+    }
+
+    /**
+     * @return the allOffers
+     */
+    public Offer[] getAllOffers() {
+        return allOffers;
+    }
+
+    /**
+     * @param allOffers the allOffers to set
+     */
+    public void setAllOffers(Offer[] allOffers) {
+        this.allOffers = allOffers;
     }
 }
