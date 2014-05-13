@@ -6,10 +6,6 @@
 
 package message;
 
-import message.Offer;
-import message.IOffer;
-import message.IOfferPack;
-
 /**
  *
  * @author ninjatrappeur

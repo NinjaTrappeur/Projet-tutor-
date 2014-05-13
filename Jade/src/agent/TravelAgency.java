@@ -8,6 +8,11 @@ package agent;
 
 import behaviour.StubOfferResponseBehaviour;
 import behaviour.StubReservationResponse;
+import behaviour.TravelAgencyAutomatonBehaviour;
+import jade.domain.DFService;
+import jade.domain.FIPAAgentManagement.DFAgentDescription;
+import jade.domain.FIPAAgentManagement.ServiceDescription;
+import jade.domain.FIPAException;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.UnreadableException;
 import java.util.logging.Level;
@@ -26,38 +31,50 @@ public class TravelAgency extends jade.core.Agent
     
     static
     {
-        ServiceDescription = "Casom-TravelAgency-Agent";
-    }
-    
-    public TravelAgency()
-    {
-        
+        ServiceDescription = "Casom-TravelAgency-Stub-Agent";
     }
     
     @Override
     public void setup()
     {
-        ACLMessage msg = this.receive();
-        if(msg != null)
-        {
-            try
-            {
-                Object content = msg.getContentObject();
-                if(content instanceof IMessage)
-                switch(((IMessage)content).getType())
-                {
-                    case OFFER_REQUEST : 
-                        this.addBehaviour(new StubOfferResponseBehaviour(msg, (IOfferRequest)content));
-                        break;
-                    case RESERVATION_REQUEST :
-                        this.addBehaviour(new StubReservationResponse(msg, (IReservationRequest)content));
-                        break;
-                }
-            }
-            catch (UnreadableException ex)
-            {
-                Logger.getLogger(TravelAgency.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        // DF registration
+        try {
+            _register2DF();
+        } catch (FIPAException ex) {
+            System.err.println("TravelAgency::setup : DF registration error. "+ex);
+            Logger.getLogger(TravelAgency.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        this.addBehaviour(new TravelAgencyAutomatonBehaviour(this));
+    }
+    
+    @Override
+    protected void takeDown()
+    {
+        // Deregister from the yellow pages
+        try
+        {
+            DFService.deregister(this);
+        }
+        catch (FIPAException fe)
+        {
+            System.err.println("TravelAgency::takeDown : DF de-registration error. "+fe);
+            Logger.getLogger(TravelAgency.class.getName()).log(Level.SEVERE, null, fe);
+        }
+        // Printout a dismissal message
+        System.out.println(TravelAgency.ServiceDescription+" "+getAID().getName()+" terminating.");
+    }
+    
+    private void _register2DF() throws FIPAException
+    {
+        ServiceDescription sd = new ServiceDescription();
+        sd.setType(TravelAgency.ServiceDescription);
+        sd.setName(this.getAID().getName());
+        
+        DFAgentDescription dfd = new DFAgentDescription();
+        dfd.setName(this.getAID());
+        
+        dfd.addServices(sd);
+        DFService.register(this, dfd);
     }
 }

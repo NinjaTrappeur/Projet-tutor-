@@ -14,8 +14,8 @@ import java.util.Date;
  */
 public class OfferRequest implements IOfferRequest {
     
-    private final int _highestPrice;
-    private final int _lowestPrice;
+    private final float _highestPrice;
+    private final float _lowestPrice;
     private final String _clientName;
     private final Date _departureDate;
     private final Date _returnDate;
@@ -27,7 +27,8 @@ public class OfferRequest implements IOfferRequest {
         return _timeGuard;
     }
     
-    public OfferRequest (int hp, int lp, String name, Date dd, Date rd, String place, float tg) {
+    public OfferRequest (float hp, float lp, String name, Date dd, Date rd, String place, float tg)
+    {
         _highestPrice = hp;
         _lowestPrice = lp;
         _clientName = name;
@@ -36,12 +37,19 @@ public class OfferRequest implements IOfferRequest {
         _placeName = place;
         _timeGuard = tg;
     }
-    public int highestPrice() {
+//    
+//    public OfferRequest ()
+//    {
+//        this(2000, 1, "", new Date(), new Date(), "", 3);
+//    }
+    
+    @Override
+    public float highestPrice() {
         return _highestPrice;
     }
     
     @Override
-    public int lowestPrice() {
+    public float lowestPrice() {
         return _lowestPrice;
     }
     

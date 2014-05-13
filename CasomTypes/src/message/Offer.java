@@ -7,7 +7,6 @@
 package message;
 
 import jade.core.AID;
-import message.IOffer;
 
 /**
  *
