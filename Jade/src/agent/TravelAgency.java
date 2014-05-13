@@ -8,6 +8,10 @@ package agent;
 
 import behaviour.StubOfferResponseBehaviour;
 import behaviour.StubReservationResponse;
+import jade.domain.DFService;
+import jade.domain.FIPAAgentManagement.DFAgentDescription;
+import jade.domain.FIPAAgentManagement.ServiceDescription;
+import jade.domain.FIPAException;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.UnreadableException;
 import java.util.logging.Level;
@@ -26,17 +30,25 @@ public class TravelAgency extends jade.core.Agent
     
     static
     {
-        ServiceDescription = "Casom-TravelAgency-Agent";
+        ServiceDescription = "Casom-TravelAgency-Stub-Agent";
     }
     
-    public TravelAgency()
-    {
-        
-    }
+//    public TravelAgency()
+//    {
+//        
+//    }
     
     @Override
     public void setup()
     {
+        // DF registration
+        try {
+            _register2DF();
+        } catch (FIPAException ex) {
+            System.err.println("CasomClient::setup : DF registration error. "+ex);
+            Logger.getLogger(CasomClient.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         ACLMessage msg = this.receive();
         if(msg != null)
         {
@@ -61,5 +73,18 @@ public class TravelAgency extends jade.core.Agent
                 Logger.getLogger(TravelAgency.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+    }
+    
+    private void _register2DF() throws FIPAException
+    {
+        ServiceDescription sd = new ServiceDescription();
+        sd.setType(TravelAgency.ServiceDescription);
+        sd.setName(this.getName());
+        
+        DFAgentDescription dfd = new DFAgentDescription();
+        dfd.setName(this.getAID());
+        
+        dfd.addServices(sd);
+        DFService.register(this, dfd);
     }
 }

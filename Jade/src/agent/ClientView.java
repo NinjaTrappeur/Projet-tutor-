@@ -50,6 +50,14 @@ public class ClientView extends jade.core.Agent
         ServiceDescription sd = new ServiceDescription();
         DFAgentDescription[] result;
         
+        // DF registration
+        try {
+            _register2DF();
+        } catch (FIPAException ex) {
+            System.err.println("CasomClient::setup : DF registration error. "+ex);
+            Logger.getLogger(CasomClient.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         sd.setType(CasomClient.ServiceDescription);
         template.addServices(sd);
         try
@@ -66,6 +74,19 @@ public class ClientView extends jade.core.Agent
         _ui.setVisible(true);
         
         this.addBehaviour(new OutputUpdaterBehaviour(this));
+    }
+    
+    private void _register2DF() throws FIPAException
+    {
+        ServiceDescription sd = new ServiceDescription();
+        sd.setType(ClientView.ServiceDescription);
+        sd.setName(this.getName());
+        
+        DFAgentDescription dfd = new DFAgentDescription();
+        dfd.setName(this.getAID());
+        
+        dfd.addServices(sd);
+        DFService.register(this, dfd);
     }
     
     public ClientViewForm getForm()
