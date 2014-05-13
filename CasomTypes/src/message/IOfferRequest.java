@@ -14,11 +14,19 @@ import java.util.Date;
  */
 public interface IOfferRequest extends IMessage
 {
-    public String clientName();
-    public Date departureDate();
-    public Date returnDate();
-    public String placeName();
-    public float lowestPrice();
-    public float highestPrice();
-    public float timeGuard();
+    public String getClientName();
+    public Date getDepartureDate();
+    public Date getReturnDate();
+    public String getPlaceName();
+    public float getLowestPrice();
+    public float getHighestPrice();
+    public long getTimeGuard();
+
+    public void setClientName(String name);
+    public void setDepartureDate(Date dd);
+    public void setReturnDate(Date rd);
+    public void setPlaceName(String place);
+    public void setLowestPrice(float lp);
+    public void setHighestPrice(float hp);
+    public void setTimeGuard(long timeguard);
 }

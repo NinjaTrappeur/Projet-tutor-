@@ -41,7 +41,7 @@ public class WaitOffersBehaviour extends SimpleBehaviour
     {
         if(_myAgent.isSearchRunning())
         {
-            boolean done = 0.001F * System.currentTimeMillis() >= _startTime + _offerRequest.timeGuard();
+            boolean done = 0.001F * System.currentTimeMillis() >= _startTime + _offerRequest.getTimeGuard();
 
             if(done && _myAgent.getBestOffer() != null)
             {

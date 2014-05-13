@@ -96,7 +96,7 @@ public class CasomClientAutomatonBehaviour extends jade.core.behaviours.CyclicBe
                             _offerRequest = (IOfferRequest)content;
                             _resetStatus();
                             _requestAgenciesOffers();
-                            _timeGuard.initialize((long)_offerRequest.timeGuard());
+                            _timeGuard.initialize((long)_offerRequest.getTimeGuard());
                             break;
                         case OFFER_PACK: 
                             System.out.println("CasomClientAutomatonBehaviour::action : offer pack received.");

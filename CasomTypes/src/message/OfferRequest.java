@@ -14,20 +14,20 @@ import java.util.Date;
  */
 public class OfferRequest implements IOfferRequest {
     
-    private final float _highestPrice;
-    private final float _lowestPrice;
-    private final String _clientName;
-    private final Date _departureDate;
-    private final Date _returnDate;
-    private final String _placeName;
-    private final float _timeGuard;
+    private float _highestPrice;
+    private float _lowestPrice;
+    private String _clientName;
+    private Date _departureDate;
+    private Date _returnDate;
+    private String _placeName;
+    private long _timeGuard;
     
     @Override
-    public float timeGuard() {
+    public long getTimeGuard() {
         return _timeGuard;
     }
     
-    public OfferRequest (float hp, float lp, String name, Date dd, Date rd, String place, float tg)
+    public OfferRequest (float hp, float lp, String name, Date dd, Date rd, String place, long tg)
     {
         _highestPrice = hp;
         _lowestPrice = lp;
@@ -37,36 +37,31 @@ public class OfferRequest implements IOfferRequest {
         _placeName = place;
         _timeGuard = tg;
     }
-//    
-//    public OfferRequest ()
-//    {
-//        this(2000, 1, "", new Date(), new Date(), "", 3);
-//    }
     
     @Override
-    public float highestPrice() {
+    public float getHighestPrice() {
         return _highestPrice;
     }
     
     @Override
-    public float lowestPrice() {
+    public float getLowestPrice() {
         return _lowestPrice;
     }
     
     @Override
-    public String clientName() {
+    public String getClientName() {
         return _clientName;
     }
     @Override
-    public Date departureDate() {
+    public Date getDepartureDate() {
         return _departureDate;  
     }
     @Override
-    public Date returnDate() {
+    public Date getReturnDate() {
         return _returnDate;
     }
     @Override
-    public String placeName(){
+    public String getPlaceName(){
         return _placeName;
     }
     @Override
@@ -79,5 +74,61 @@ public class OfferRequest implements IOfferRequest {
         return "Offer request from " + _clientName + "between " + _departureDate.toString() +
                 " and " + _returnDate + " at " + _placeName + " from " + _lowestPrice + " to " + _highestPrice
                 + ".";
+    }
+
+    /**
+     * @param _highestPrice the _highestPrice to set
+     */
+    @Override
+    public void setHighestPrice(float _highestPrice) {
+        this._highestPrice = _highestPrice;
+    }
+
+    /**
+     * @param _lowestPrice the _lowestPrice to set
+     */
+    @Override
+    public void setLowestPrice(float _lowestPrice) {
+        this._lowestPrice = _lowestPrice;
+    }
+
+    /**
+     * @param _clientName the _clientName to set
+     */
+    @Override
+    public void setClientName(String _clientName) {
+        this._clientName = _clientName;
+    }
+
+    /**
+     * @param _departureDate the _departureDate to set
+     */
+    @Override
+    public void setDepartureDate(Date _departureDate) {
+        this._departureDate = _departureDate;
+    }
+
+    /**
+     * @param _returnDate the _returnDate to set
+     */
+    @Override
+    public void setReturnDate(Date _returnDate) {
+        this._returnDate = _returnDate;
+    }
+
+    /**
+     * @param _placeName the _placeName to set
+     */
+    @Override
+    public void setPlaceName(String _placeName) {
+        this._placeName = _placeName;
+    }
+
+    /**
+     * @param _timeGuard the _timeGuard to set
+     */
+    @Override
+    public void setTimeGuard(long _timeGuard) {
+        this._timeGuard = _timeGuard;
     }
 }

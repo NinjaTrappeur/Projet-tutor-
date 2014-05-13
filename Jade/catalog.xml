@@ -5,4 +5,6 @@
     <system systemId="file:/home/josuah/Documents/projet_tutore/Projet-tutor-/Jade/src/service/web/addTwoInteger.wsdl" uri="xml-resources/web-service-references/addTwoInteger/wsdl/addTwoInteger.wsdl"/>
     <system systemId="http://josuah-k43sj:8080/SimpleWebService/addTwoInteger?WSDL" uri="xml-resources/web-service-references/addTwoInteger/wsdl/josuah-k43sj_8080/SimpleWebService/addTwoInteger.wsdl"/>
     <system systemId="http://josuah-k43sj:8080/SimpleWebService/addTwoInteger?xsd=1" uri="xml-resources/web-service-references/addTwoInteger/wsdl/josuah-k43sj_8080/SimpleWebService/addTwoInteger.xsd_1.xsd"/>
+    <system systemId="http://10.8.2.129:8000/Ws?wsdl" uri="xml-resources/web-service-references/Ws/wsdl/10.8.2.129_8000/Ws.wsdl"/>
+    <system systemId="http://10.8.2.129:8000/Ws?xsd=1" uri="xml-resources/web-service-references/Ws/wsdl/10.8.2.129_8000/Ws.xsd_1.xsd"/>
 </catalog>
