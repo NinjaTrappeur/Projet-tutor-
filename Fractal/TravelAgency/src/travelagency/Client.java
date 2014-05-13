@@ -2,9 +2,10 @@ package travelagency;
 
 import java.util.Date;
 import message.IConfirmationLetter;
+import message.IOffer;
 import message.IOfferPack;
+import message.IOfferRequest;
 import message.Offer;
-import message.OfferPack;
 import message.OfferRequest;
 import org.objectweb.fractal.fraclet.annotations.Component;
 import org.objectweb.fractal.fraclet.annotations.Interface;
@@ -18,18 +19,26 @@ import travelagency.interfaces.IVacationReservationManager;
 public class Client implements Runnable{
     
     @Requires(name="getOffer")
-    private IVacationOfferBrowser getOfferInterface;
+    private IVacationOfferBrowser _getOfferInterface;
     
     @Requires(name="makeReservation")
-    private IVacationReservationManager makeReservationInterface;
+    private IVacationReservationManager _makeReservationInterface;
     
     @Override
     public void run() {
         System.out.println("Émmission d'une requête d'offres.");
-        IOfferPack offer = getOfferInterface.getProposals(new OfferRequest(100, 200, "toto", new Date(), new Date(), "", 0));
+        IOfferPack offer = _getOfferInterface.getProposals(new OfferRequest(100, 200, "toto", new Date(), new Date(), "", 0));
         System.out.println("Résultat: " + offer.toString());
         System.out.print("Émmision d'une requête de validation.");
-        IConfirmationLetter letter = makeReservationInterface.reserveOffer(new Offer(0,""));
+        IConfirmationLetter letter = _makeReservationInterface.reserveOffer(new Offer(0,""));
         System.out.println("Résultat: " + letter.toString());
+    }
+    
+    public IOfferPack getOffers(IOfferRequest request){
+        return _getOfferInterface.getProposals(request);
+    }
+    
+    public IConfirmationLetter makeReservation(IOffer offer){
+        return _makeReservationInterface.reserveOffer(offer);
     }
 }
