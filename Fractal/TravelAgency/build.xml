@@ -119,7 +119,7 @@
 	<target name="run" depends="compile">
 		<java classname="org.objectweb.fractal.adl.Launcher" fork="true" classpathref="classpath">
 			<jvmarg value="-Dfractal.provider=org.objectweb.fractal.julia.Julia" />
-			<arg line="-fractal travelagency.travelAgency"/>
+			<arg line="-fractal travelagency.casom"/>
 		</java>
 	</target>
 
