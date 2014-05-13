@@ -8,6 +8,7 @@ package agent;
 
 import behaviour.StubOfferResponseBehaviour;
 import behaviour.StubReservationResponse;
+import behaviour.TravelAgencyAutomatonBehaviour;
 import jade.domain.DFService;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
@@ -33,10 +34,6 @@ public class TravelAgency extends jade.core.Agent
         ServiceDescription = "Casom-TravelAgency-Stub-Agent";
     }
     
-//    public TravelAgency()
-//    {
-//    }
-    
     @Override
     public void setup()
     {
@@ -48,38 +45,7 @@ public class TravelAgency extends jade.core.Agent
             Logger.getLogger(TravelAgency.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        ACLMessage msg = this.receive();
-        if(msg != null)
-        {
-            try
-            {
-                Object content = msg.getContentObject();
-                if(content instanceof IMessage)
-                {
-                    switch(((IMessage)content).getType())
-                    {
-                        case OFFER_REQUEST : 
-                            System.out.println("TravelAgency::setup : offer request received.");
-                            this.addBehaviour(new StubOfferResponseBehaviour(msg, (IOfferRequest)content));
-                            break;
-                        case RESERVATION_REQUEST :
-                            this.addBehaviour(new StubReservationResponse(msg, (IReservationRequest)content));
-                            break;
-                    }
-                }
-                else
-                {
-                    if(content == null)
-                        System.err.println("TravelAgency::setup : offer request content is null.");
-                    else
-                        System.err.println("TravelAgency::setup : offer request content is of classe "+content.getClass().getName());
-                }
-            }
-            catch (UnreadableException ex)
-            {
-                Logger.getLogger(TravelAgency.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+        this.addBehaviour(new TravelAgencyAutomatonBehaviour(this));
     }
     
     @Override

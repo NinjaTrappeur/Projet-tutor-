@@ -30,7 +30,6 @@ public class CasomClient extends jade.core.Agent
 {
     private ArrayList<AID> _agencies;
     private ArrayList<AID> _views;
-    private boolean _quit;
     private boolean _searchRunning;
     private boolean _booked;
     private IOffer _bestOffer;
@@ -49,7 +48,6 @@ public class CasomClient extends jade.core.Agent
         _agencies = new ArrayList<AID>();
         _views = new ArrayList<AID>();
         
-        _quit = false;
         _searchRunning = false;
         _booked = false;
         _bestOffer = null;
@@ -58,9 +56,6 @@ public class CasomClient extends jade.core.Agent
     @Override
     public void setup()
     {
-        IOfferRequest offerRequest;
-        
-        
         // DF registration
         try {
             _register2DF();
@@ -71,52 +66,8 @@ public class CasomClient extends jade.core.Agent
         
         // Search needed agents
         this.locatePeers();
-                
-        while(!_quit)
-        {
-            ACLMessage msg = receive();
-            if(msg != null)
-            {
-                System.out.println("CasomClient::setup : message received.");
-                Object content;
-                
-                try
-                {
-                    content = msg.getContentObject();
-                    if(content instanceof IMessage)
-                    {
-                        switch(((IMessage)content).getType())
-                        {
-                            case QUIT_REQUEST: // Received quit order from view agent
-                                _quit = true;
-                                _searchRunning = false;
-                                break;
-                            case OFFER_REQUEST : // New offer request from view (user demand)
-                                System.out.println("CasomClient::setup : offer request received.");
-                                offerRequest = (IOfferRequest)content;
-                                this.addBehaviour(new RequestOfferBehaviour(this, offerRequest));
-                                this.addBehaviour(new WaitOffersBehaviour(this, offerRequest));
-                                break;
-                            case CONFIRM_LETTER : 
-                                this.addBehaviour(new FinalizeBehaviour(this, (IConfirmationLetter)content));
-                                break;
-                        }
-                    }
-                    else
-                    {
-                        if(content == null)
-                            System.err.println("CasomClient::setup : offer request content is null.");
-                        else
-                            System.err.println("CasomClient::setup : offer request content is of classe "+content.getClass().getName());
-                    }
-                }
-                catch (UnreadableException ex)
-                {
-                    System.err.println("CasomClient::setup : acl content object fetching error. "+ex);
-                    Logger.getLogger(CasomClient.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
+        
+        this.addBehaviour(new CasomClientAutomatonBehaviour(this));
     }
     
     @Override

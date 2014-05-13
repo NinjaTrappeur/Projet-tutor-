@@ -70,9 +70,11 @@ public class WaitOffersBehaviour extends Behaviour
     @Override
     public void action()
     {
+        this.block(); // wait that myAgent receives message
         if(_myAgent.isSearchRunning())
         {
             ACLMessage msg = _myAgent.receive();
+            System.out.println("WaitOffersBehaviour::action : message received.");
             if(msg != null)
             {
                 try
@@ -82,12 +84,18 @@ public class WaitOffersBehaviour extends Behaviour
                     {
                         if(((IMessage)content).getType() == IMessage.Type.OFFER_PACK)
                         {
+                            System.out.println("WaitOffersBehaviour::action : offer pack received.");
                             IOffer offer = ((IOfferPack)content).lowestPrice();
                             if(offer != null)
                             {
                                 if(offer.price() < _myAgent.getBestOffer().price())
                                     _myAgent.setBestOffer(offer);
                             }
+                        }
+                        else
+                        {
+                            _myAgent.putBack(msg); // the message is for another behaviour
+                            System.out.println("WaitOffersBehaviour::action : not for me, message put back.");
                         }
                     }
                 }

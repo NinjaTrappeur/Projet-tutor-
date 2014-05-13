@@ -29,7 +29,7 @@ public class StubOfferResponseBehaviour extends jade.core.behaviours.OneShotBeha
         _offerRequest = offerRequest;
         _receivedMsg = msg;
         
-        _remoteAgency = new fake.Agency();
+        _remoteAgency = new fake.RemoteAgency();
     }
 
     @Override

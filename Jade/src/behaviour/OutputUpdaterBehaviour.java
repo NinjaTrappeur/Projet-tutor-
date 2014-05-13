@@ -30,6 +30,7 @@ public class OutputUpdaterBehaviour extends jade.core.behaviours.CyclicBehaviour
     @Override
     public void action()
     {
+        this.block(); // wait that myAgent receives message
         ACLMessage msg = myAgent.receive();
         if(msg != null)
         {

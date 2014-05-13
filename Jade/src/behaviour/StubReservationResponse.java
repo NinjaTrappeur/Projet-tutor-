@@ -29,7 +29,7 @@ public class StubReservationResponse extends jade.core.behaviours.OneShotBehavio
         _reservationRequest = reservationRequest;
         _receivedMsg = msg;
         
-        _remoteAgency = new fake.Agency();
+        _remoteAgency = new fake.RemoteAgency();
     }
     
     @Override

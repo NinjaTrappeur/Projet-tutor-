@@ -19,7 +19,7 @@ import travelagency.ITravelAgency;
  *
  * @author josuah
  */
-public class Agency implements ITravelAgency
+public class RemoteAgency implements ITravelAgency
 {
     @Override
     public IOfferPack requestProposal(IOfferRequest offerRequest)
