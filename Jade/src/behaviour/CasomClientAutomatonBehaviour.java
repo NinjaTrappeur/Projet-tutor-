@@ -34,6 +34,7 @@ public class CasomClientAutomatonBehaviour extends jade.core.behaviours.CyclicBe
     
     private boolean _searchRunning;
     private boolean _offersRequested;
+    private boolean _waitingOffers;
     private boolean _firstEvaluation;
     private boolean _reservationRequested;
     private boolean _booked;
@@ -44,6 +45,7 @@ public class CasomClientAutomatonBehaviour extends jade.core.behaviours.CyclicBe
         
         _searchRunning = false;
         _offersRequested = false;
+        _waitingOffers = false;
         _firstEvaluation = true;
         _reservationRequested = false;
         _booked = false;
@@ -56,6 +58,7 @@ public class CasomClientAutomatonBehaviour extends jade.core.behaviours.CyclicBe
     {
         _searchRunning = false;
         _offersRequested = false;
+        _waitingOffers = false;
         _firstEvaluation = true;
         _reservationRequested = false;
         _booked = false;
@@ -64,6 +67,17 @@ public class CasomClientAutomatonBehaviour extends jade.core.behaviours.CyclicBe
     @Override
     public void action()
     {
+        this.block(50);
+        if(_waitingOffers)
+        {
+            long remainingTimeGuard = _timeGuard.remainingTime();
+            if(remainingTimeGuard <= 0)
+            {
+                _waitingOffers = false;
+                _requestReservation();
+            }
+        }
+        
         ACLMessage msg = _myAgent.receive();
         if(msg != null)
         {
@@ -83,19 +97,19 @@ public class CasomClientAutomatonBehaviour extends jade.core.behaviours.CyclicBe
                             _resetStatus();
                             _requestAgenciesOffers();
                             _timeGuard.initialize((long)_offerRequest.timeGuard());
-                            this.block(); // Wait next message
                             break;
                         case OFFER_PACK: 
                             System.out.println("CasomClientAutomatonBehaviour::action : offer pack received.");
                             long remainingTimeGuard = _timeGuard.remainingTime();
-                            if(remainingTimeGuard > 0 || _firstEvaluation)
+                            if(remainingTimeGuard > 0)
                             {
                                 System.out.println("CasomClientAutomatonBehaviour::action : evaluating offer pack");
                                 _evaluateOffer((IOfferPack)content);
                                 
                                 System.out.println("CasomClientAutomatonBehaviour::action : remaining time guard "+remainingTimeGuard);
-                                this.block(remainingTimeGuard*1000);
                             }
+                            else
+                                _waitingOffers = false;
                             break;
                         case CONFIRM_LETTER : 
                             System.out.println("CasomClientAutomatonBehaviour::action : confirm letter received.");
@@ -106,18 +120,10 @@ public class CasomClientAutomatonBehaviour extends jade.core.behaviours.CyclicBe
                                 _informUser();
                                 System.out.println("CasomClientAutomatonBehaviour::action : confirm letter forwarded.");
                             }
-                            this.block(); // Wait next message
                             break;
                         default:
                             System.err.println("CasomClientAutomatonBehaviour::action : unexpected message content, of class "+content.getClass().getName());
                     }
-                    
-                    if(_timeGuard.isOver() && !_firstEvaluation && !_reservationRequested)
-                    {
-                        System.out.println("CasomClientAutomatonBehaviour::action : sending reservation request");
-                        _requestReservation();
-                    }
-                    
                 }
                 else
                 {
@@ -125,19 +131,14 @@ public class CasomClientAutomatonBehaviour extends jade.core.behaviours.CyclicBe
                         System.err.println("CasomClientAutomatonBehaviour::action : offer request content is null.");
                     else
                         System.err.println("CasomClientAutomatonBehaviour::action : offer request content is of classe "+content.getClass().getName());
-                    
-                    this.block();
                 }
             }
             catch (UnreadableException ex)
             {
                 System.err.println("CasomClientAutomatonBehaviour::action : acl content object fetching error. "+ex);
                 Logger.getLogger(CasomClient.class.getName()).log(Level.SEVERE, null, ex);
-                this.block();
             }
         }
-        else
-            this.block();
     }
     
     private void _requestAgenciesOffers()
@@ -155,6 +156,7 @@ public class CasomClientAutomatonBehaviour extends jade.core.behaviours.CyclicBe
                 _myAgent.send(msg);
                 
                 _offersRequested = true;
+                _waitingOffers = true;
                 
                 System.out.println("CasomClientAutomatonBehaviour::_requestAgenciesOffers : offer request sent to "+_myAgent.getAgencies());
             }
