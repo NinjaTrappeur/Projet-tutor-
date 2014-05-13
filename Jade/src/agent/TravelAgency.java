@@ -59,12 +59,20 @@ public class TravelAgency extends jade.core.Agent
                     switch(((IMessage)content).getType())
                     {
                         case OFFER_REQUEST : 
+                            System.out.println("TravelAgency::setup : offer request received.");
                             this.addBehaviour(new StubOfferResponseBehaviour(msg, (IOfferRequest)content));
                             break;
                         case RESERVATION_REQUEST :
                             this.addBehaviour(new StubReservationResponse(msg, (IReservationRequest)content));
                             break;
                     }
+                }
+                else
+                {
+                    if(content == null)
+                        System.err.println("TravelAgency::setup : offer request content is null.");
+                    else
+                        System.err.println("TravelAgency::setup : offer request content is of classe "+content.getClass().getName());
                 }
             }
             catch (UnreadableException ex)

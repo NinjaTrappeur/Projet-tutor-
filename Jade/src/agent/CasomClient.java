@@ -13,6 +13,7 @@ import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
 import jade.lang.acl.ACLMessage;
+import jade.lang.acl.UnreadableException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -64,36 +65,55 @@ public class CasomClient extends jade.core.Agent
         try {
             _register2DF();
         } catch (FIPAException ex) {
-            System.err.println("CasomClient::constructor : DF registration error. "+ex);
+            System.err.println("CasomClient::setup : DF registration error. "+ex);
             Logger.getLogger(CasomClient.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         // Search needed agents
-        this.locatePairs();
+        this.locatePeers();
                 
         while(!_quit)
         {
             ACLMessage msg = receive();
             if(msg != null)
             {
-                Object content = msg.getContent();
-                if(content instanceof IMessage)
+                System.out.println("CasomClient::setup : message received.");
+                Object content;
+                
+                try
                 {
-                    switch(((IMessage)content).getType())
+                    content = msg.getContentObject();
+                    if(content instanceof IMessage)
                     {
-                        case QUIT_REQUEST: // Received quit order from view agent
-                            _quit = true;
-                            _searchRunning = false;
-                            break;
-                        case OFFER_REQUEST : // New offer request from view (user demand)
-                            offerRequest = (IOfferRequest)content;
-                            this.addBehaviour(new RequestOfferBehaviour(this, offerRequest));
-                            this.addBehaviour(new WaitOffersBehaviour(this, offerRequest));
-                            break;
-                        case CONFIRM_LETTER : 
-                            this.addBehaviour(new FinalizeBehaviour(this, (IConfirmationLetter)content));
-                            break;
+                        switch(((IMessage)content).getType())
+                        {
+                            case QUIT_REQUEST: // Received quit order from view agent
+                                _quit = true;
+                                _searchRunning = false;
+                                break;
+                            case OFFER_REQUEST : // New offer request from view (user demand)
+                                System.out.println("CasomClient::setup : offer request received.");
+                                offerRequest = (IOfferRequest)content;
+                                this.addBehaviour(new RequestOfferBehaviour(this, offerRequest));
+                                this.addBehaviour(new WaitOffersBehaviour(this, offerRequest));
+                                break;
+                            case CONFIRM_LETTER : 
+                                this.addBehaviour(new FinalizeBehaviour(this, (IConfirmationLetter)content));
+                                break;
+                        }
                     }
+                    else
+                    {
+                        if(content == null)
+                            System.err.println("CasomClient::setup : offer request content is null.");
+                        else
+                            System.err.println("CasomClient::setup : offer request content is of classe "+content.getClass().getName());
+                    }
+                }
+                catch (UnreadableException ex)
+                {
+                    System.err.println("CasomClient::setup : acl content object fetching error. "+ex);
+                    Logger.getLogger(CasomClient.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
@@ -132,7 +152,7 @@ public class CasomClient extends jade.core.Agent
     /**
      * Searches for TravelAgency and ClientView agents
      */
-    public void locatePairs()
+    public void locatePeers()
     {
         DFAgentDescription agencyTemplate = new DFAgentDescription();
         ServiceDescription agencySd = new ServiceDescription();
@@ -200,7 +220,7 @@ public class CasomClient extends jade.core.Agent
     public ArrayList<AID> getAgencies()
     {
         if(_agencies.isEmpty())
-            this.locatePairs();
+            this.locatePeers();
         
         return _agencies;
     }
@@ -208,7 +228,7 @@ public class CasomClient extends jade.core.Agent
     public ArrayList<AID> getViews()
     {
         if(_views.isEmpty())
-            this.locatePairs();
+            this.locatePeers();
         
         return _views;
     }

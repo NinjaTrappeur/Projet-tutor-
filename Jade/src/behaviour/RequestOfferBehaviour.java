@@ -49,12 +49,18 @@ public class RequestOfferBehaviour extends jade.core.behaviours.OneShotBehaviour
                     msg.addReceiver(agency);
 
                 _myAgent.send(msg);
+                
+                System.out.println("RequestOfferBehaviour::action : offer request sent to "+_myAgent.getAgencies());
             }
             catch (IOException ex)
             {
                 System.err.println("RequestOfferBehaviour::action : acl message sending error. "+ex.getLocalizedMessage());
                 Logger.getLogger(RequestOfferBehaviour.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
+        else
+        {
+            System.err.println("RequestOfferBehaviour::action : no registered agency.");
         }
     }
 }

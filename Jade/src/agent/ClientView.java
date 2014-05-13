@@ -57,7 +57,7 @@ public class ClientView extends jade.core.Agent
         }
         
         // Search needed agents
-        this.locatePairs();
+        this.locatePeers();
         
         _ui.setVisible(true);
         
@@ -94,7 +94,7 @@ public class ClientView extends jade.core.Agent
         DFService.register(this, dfd);
     }
     
-    public void locatePairs()
+    public void locatePeers()
     {
         DFAgentDescription template = new DFAgentDescription();
         ServiceDescription sd = new ServiceDescription();
@@ -124,7 +124,7 @@ public class ClientView extends jade.core.Agent
     public AID getCasomClientID()
     {
         if(_casomClient == null)
-            this.locatePairs();
+            this.locatePeers();
         
         return _casomClient;
     }

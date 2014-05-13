@@ -37,8 +37,12 @@ public class ClientViewListener implements ActionListener
         String name, place;
         Date dd, rd;
         
+        System.out.println("ClientViewListener::actionPerformed : inside actionPerformed");
+        
         if(ev.getActionCommand().equals(ClientViewForm.SearchActionCommand))
         {
+            System.out.println("ClientViewListener::actionPerformed : action command is ClientViewForm.SearchActionCommand.");
+        
             hp = (float)_viewAgent.getForm().maxPrice().getValue();
             lp = (float)_viewAgent.getForm().minPrice().getValue();
             name = "Gorges";
@@ -68,12 +72,16 @@ public class ClientViewListener implements ActionListener
                     msg.addReceiver(_viewAgent.getCasomClientID());
                     msg.setContentObject(offerRequest);
                     _viewAgent.send(msg);
+                    System.out.println("ClientViewListener::actionPerformed : offerRequest sent to "+_viewAgent.getCasomClientID().getName());
                 }
                 catch (IOException ex)
                 {
+                    System.err.println("ClientViewListener::actionPerformed : acl message sending error. "+ex);
                     Logger.getLogger(ClientViewListener.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+            else
+                System.err.println("ClientViewListener::actionPerformed, Grave: _viewAgent.getCasomClientID() is null.");
         }
     }
 }
