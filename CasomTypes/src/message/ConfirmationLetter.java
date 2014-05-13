@@ -11,7 +11,6 @@ package message;
  * @author ninjatrappeur
  */
 public class ConfirmationLetter implements IConfirmationLetter{
-    
     @Override
     public Type getType() {
         return Type.CONFIRM_LETTER;
