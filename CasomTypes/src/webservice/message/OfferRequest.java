@@ -10,13 +10,13 @@ public class OfferRequest {
     private Date returnDate;
     private String placeName;
     private String type;
-    private float timeGuard;
+    private long timeGuard;
     
-    public float getTimeGuard() {
+    public long getTimeGuard() {
         return timeGuard;
     }
     
-    public OfferRequest (float hp, float lp, String name, Date dd, Date rd, String place, float tg)
+    public OfferRequest (float hp, float lp, String name, Date dd, Date rd, String place, long tg)
     {
         highestPrice = hp;
         lowestPrice = lp;
@@ -120,7 +120,7 @@ public class OfferRequest {
     /**
      * @param timeGuard the timeGuard to set
      */
-    public void setTimeGuard(float timeGuard) {
+    public void setTimeGuard(long timeGuard) {
         this.timeGuard = timeGuard;
     }
 }
