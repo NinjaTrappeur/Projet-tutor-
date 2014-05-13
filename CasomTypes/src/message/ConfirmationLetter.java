@@ -6,8 +6,6 @@
 
 package message;
 
-import message.IConfirmationLetter;
-
 /**
  *
  * @author ninjatrappeur
