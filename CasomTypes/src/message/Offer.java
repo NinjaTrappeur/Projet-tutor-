@@ -15,10 +15,12 @@ import jade.core.AID;
 public class Offer implements IOffer{
     private float _price;
     private String _name;
+    private AID _agency;
     
-    public Offer(float price, String name) {
+    public Offer(float price, String name, AID agency) {
         _price = price;
         _name = name;
+        _agency = agency;
     }
     
     @Override
@@ -42,12 +44,12 @@ public class Offer implements IOffer{
     @Override
     public void setAgency(AID agency)
     {
-        
+        _agency = agency;
     }
     
     @Override
     public AID getAgency()
     {
-        return null;
+        return _agency;
     }
 }

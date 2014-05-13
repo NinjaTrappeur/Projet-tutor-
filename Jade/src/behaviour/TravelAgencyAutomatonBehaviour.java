@@ -34,7 +34,7 @@ public class TravelAgencyAutomatonBehaviour extends jade.core.behaviours.CyclicB
     public TravelAgencyAutomatonBehaviour(agent.TravelAgency myAgent)
     {
         _myAgent = myAgent;
-        _remoteAgencyStub = new fake.RemoteAgency();
+        _remoteAgencyStub = new fake.RemoteAgency(_myAgent);
         
         _offerRequest = null;
         _reservationRequest = null;

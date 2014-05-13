@@ -15,7 +15,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import message.IConfirmationLetter;
 import message.IMessage;
+import message.IOffer;
+import message.IOfferPack;
 import message.IOfferRequest;
+import message.ReservationRequest;
 
 /**
  *
@@ -27,9 +30,11 @@ public class CasomClientAutomatonBehaviour extends jade.core.behaviours.CyclicBe
     private IOfferRequest _offerRequest;
     private IConfirmationLetter _confirmationLetter;
     
+    private TimeGuardManager _timeGuard;
+    
     private boolean _searchRunning;
     private boolean _offersRequested;
-    private boolean _offersReceived;
+    private boolean _firstEvaluation;
     private boolean _reservationRequested;
     private boolean _booked;
     
@@ -39,17 +44,26 @@ public class CasomClientAutomatonBehaviour extends jade.core.behaviours.CyclicBe
         
         _searchRunning = false;
         _offersRequested = false;
-        _offersReceived = false;
+        _firstEvaluation = true;
         _reservationRequested = false;
         _booked = false;
         
         _myAgent = myAgent;
+        _timeGuard = new TimeGuardManager();
+    }
+    
+    private void _resetStatus()
+    {
+        _searchRunning = false;
+        _offersRequested = false;
+        _firstEvaluation = true;
+        _reservationRequested = false;
+        _booked = false;
     }
     
     @Override
     public void action()
     {
-        this.block(); // wait that myAgent receives message
         ACLMessage msg = _myAgent.receive();
         if(msg != null)
         {
@@ -66,20 +80,42 @@ public class CasomClientAutomatonBehaviour extends jade.core.behaviours.CyclicBe
                         case OFFER_REQUEST : // New offer request from view (user demand)
                             System.out.println("CasomClientAutomatonBehaviour::action : offer request received.");
                             _offerRequest = (IOfferRequest)content;
-                            
-                            _myAgent.addBehaviour(new WaitOffersBehaviour(_myAgent, _offerRequest));
+                            _resetStatus();
                             _requestAgenciesOffers();
+                            _timeGuard.initialize((long)_offerRequest.timeGuard());
+                            this.block(); // Wait next message
+                            break;
+                        case OFFER_PACK: 
+                            System.out.println("CasomClientAutomatonBehaviour::action : offer pack received.");
+                            long remainingTimeGuard = _timeGuard.remainingTime();
+                            if(remainingTimeGuard > 0 || _firstEvaluation)
+                            {
+                                System.out.println("CasomClientAutomatonBehaviour::action : evaluating offer pack");
+                                _evaluateOffer((IOfferPack)content);
+                                this.block(remainingTimeGuard);
+                            }
                             break;
                         case CONFIRM_LETTER : 
                             System.out.println("CasomClientAutomatonBehaviour::action : confirm letter received.");
-                            _confirmationLetter = (IConfirmationLetter)content;
-                            _myAgent.setBooked(true);
-                            _informUser();
+                            if(_reservationRequested)
+                            {
+                                _confirmationLetter = (IConfirmationLetter)content;
+                                _myAgent.setBooked(true);
+                                _informUser();
+                                System.out.println("CasomClientAutomatonBehaviour::action : confirm letter forwarded.");
+                            }
+                            this.block(); // Wait next message
                             break;
                         default:
-                            System.out.println("CasomClientAutomatonBehaviour::action : default -- putting back message.");
-                            _myAgent.putBack(msg); //It's not for this behaviour
+                            System.err.println("CasomClientAutomatonBehaviour::action : unexpected message content, of class "+content.getClass().getName());
                     }
+                    
+                    if(_timeGuard.isOver() && !_firstEvaluation && !_reservationRequested)
+                    {
+                        System.out.println("CasomClientAutomatonBehaviour::action : sending reservation request");
+                        _requestReservation();
+                    }
+                    
                 }
                 else
                 {
@@ -87,14 +123,19 @@ public class CasomClientAutomatonBehaviour extends jade.core.behaviours.CyclicBe
                         System.err.println("CasomClientAutomatonBehaviour::action : offer request content is null.");
                     else
                         System.err.println("CasomClientAutomatonBehaviour::action : offer request content is of classe "+content.getClass().getName());
+                    
+                    this.block();
                 }
             }
             catch (UnreadableException ex)
             {
                 System.err.println("CasomClientAutomatonBehaviour::action : acl content object fetching error. "+ex);
                 Logger.getLogger(CasomClient.class.getName()).log(Level.SEVERE, null, ex);
+                this.block();
             }
         }
+        else
+            this.block();
     }
     
     private void _requestAgenciesOffers()
@@ -111,6 +152,8 @@ public class CasomClientAutomatonBehaviour extends jade.core.behaviours.CyclicBe
 
                 _myAgent.send(msg);
                 
+                _offersRequested = true;
+                
                 System.out.println("CasomClientAutomatonBehaviour::_requestAgenciesOffers : offer request sent to "+_myAgent.getAgencies());
             }
             catch (IOException ex)
@@ -125,6 +168,55 @@ public class CasomClientAutomatonBehaviour extends jade.core.behaviours.CyclicBe
         }
     }
     
+    private void _evaluateOffer(IOfferPack offerPack)
+    {
+        IOffer offer = offerPack.lowestPrice();
+        
+        if(_firstEvaluation)
+        {
+            _firstEvaluation = false;
+            _myAgent.setBestOffer(offer);
+        }
+        
+        if(offer != null && _myAgent.getBestOffer() != null)
+        {
+            if(offer.price() < _myAgent.getBestOffer().price())
+            {
+                _myAgent.setBestOffer(offer);
+                System.out.println("CasomClientAutomatonBehaviour::_evaluateOffer : offer is the better.");
+            }
+            else
+                System.out.println("CasomClientAutomatonBehaviour::_evaluateOffer : offer is not the better.");
+        }
+        else
+            System.out.println("CasomClientAutomatonBehaviour::_evaluateOffer : myAgent.getBestOffer() is null.");
+    }
+    
+    private void _requestReservation()
+    {
+        if(_myAgent.getBestOffer() != null)
+        {
+            try
+            {
+                ACLMessage msg = new ACLMessage(ACLMessage.AGREE);
+                msg.addReceiver(_myAgent.getBestOffer().getAgency());
+                msg.setContentObject(new ReservationRequest(_myAgent.getBestOffer()));
+
+                _myAgent.send(msg);
+                _reservationRequested = true;
+                
+                System.out.println("CasomClientAutomatonBehaviour::_requestReservation : reservation request sent to "+_myAgent.getBestOffer().getAgency());
+            }
+            catch (IOException ex)
+            {
+                System.err.println("CasomClientAutomatonBehaviour::_requestReservation : acl content setting error. "+ex.getLocalizedMessage());
+                Logger.getLogger(WaitOffersBehaviour.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else
+            System.err.println("CasomClientAutomatonBehaviour::_requestReservation, Warning : myAgent.getBestOffer() is null");
+    }
+    
     private void _informUser()
     {
         try
@@ -136,6 +228,8 @@ public class CasomClientAutomatonBehaviour extends jade.core.behaviours.CyclicBe
                 msg.addReceiver(view);
             
             _myAgent.send(msg);
+            
+            _booked = true;
             
             System.out.println("CasomClientAutomatonBehaviour::_informUser : confirm letter sent to "+_myAgent.getViews());
         }

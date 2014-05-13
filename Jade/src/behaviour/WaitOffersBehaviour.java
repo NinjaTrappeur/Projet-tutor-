@@ -7,7 +7,7 @@
 package behaviour;
 
 import agent.CasomClient;
-import jade.core.behaviours.Behaviour;
+import jade.core.behaviours.SimpleBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.UnreadableException;
 import java.io.IOException;
@@ -23,10 +23,10 @@ import message.ReservationRequest;
  *
  * @author josuah
  */
-public class WaitOffersBehaviour extends Behaviour
+public class WaitOffersBehaviour extends SimpleBehaviour
 {
-    CasomClient _myAgent;
-    IOfferRequest _offerRequest;
+    private CasomClient _myAgent;
+    private IOfferRequest _offerRequest;
     private final float _startTime;
     
     public WaitOffersBehaviour(CasomClient myAgent, IOfferRequest offerRequest)

@@ -6,6 +6,7 @@
 
 package fake;
 
+import agent.TravelAgency;
 import message.ConfirmationLetter;
 import message.IConfirmationLetter;
 import message.IOffer;
@@ -21,10 +22,19 @@ import travelagency.ITravelAgency;
  */
 public class RemoteAgency implements ITravelAgency
 {
+    TravelAgency _agency;
+    
+    public RemoteAgency(TravelAgency agency)
+    {
+        _agency = agency;
+    }
+    
     @Override
     public IOfferPack requestProposal(IOfferRequest offerRequest)
     {
-        return new OfferPack(new Offer(0,"wazaa"));
+        IOffer offer = new Offer(0,"wazaa",_agency.getAID());
+        
+        return new OfferPack(offer);
     }
     
     @Override

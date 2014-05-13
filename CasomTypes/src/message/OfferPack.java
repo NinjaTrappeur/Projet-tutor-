@@ -19,7 +19,7 @@ public class OfferPack implements IOfferPack {
     
     @Override
     public IOffer lowestPrice(){
-        return new Offer(100, "Hôtel de Rogé");
+        return _bestOffer;
     }
     
     @Override
