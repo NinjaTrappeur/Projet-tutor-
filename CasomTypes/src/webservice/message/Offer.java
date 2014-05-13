@@ -6,39 +6,53 @@
 
 package webservice.message;
 
+import java.io.Serializable;
+
 /**
  *
  * @author ninjatrappeur
  */
-public class Offer {
+public class Offer implements Serializable{
     private float price;
     private String name;
     private String agency;
     private String type;
     
-    public Offer(float cprice, String cname, String cagency) {
+    public Offer(float cprice, String cname, String cagency) 
+    {
+        super();
         price = cprice;
         name = cname;
         agency = cagency;
         type = "OFFER";
     }
     
-    public void setPrice(float cprice) {
+    public Offer()
+    {
+        this(1, "", "");
+    }
+    
+    public void setPrice(float cprice) 
+    {
         price = cprice;
     }
     
-    public float getPrice() {
+    public float getPrice()
+    {
         return price;
     }
     
-    public void setName(String cname) {
+    public void setName(String cname) 
+    {
         name = cname;
     }
-    public String getName() {
+    public String getName() 
+    {
         return name;
     }
     
-    public void setType(String ctype) {
+    public void setType(String ctype) 
+    {
         type = ctype;
     }
     public String getType() {
@@ -49,28 +63,13 @@ public class Offer {
     public String toString() {
         return "Offer from " + name + " :" + price + "€.";
     }
-    public void setAgency(String cagency)
-    {
-        agency = cagency;
-    }
-    
-    public String getAgency()
-    {
-        return agency;
-    }
-
-    /**
-     * @param price the price to set
-     */
-
-
-    /**
-     * @param name the name to set
-     */
-
-
-    /**
-     * @param type the type to set
-     */
-
+//    public void setAgency(String cagency)
+//    {
+//        agency = cagency;
+//    }
+//    
+//    public String getAgency()
+//    {
+//        return agency;
+//    }
 }
