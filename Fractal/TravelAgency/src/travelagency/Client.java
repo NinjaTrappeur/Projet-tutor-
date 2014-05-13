@@ -1,11 +1,14 @@
 package travelagency;
 
 import java.util.Date;
+import javax.xml.ws.Endpoint;
+import message.ConfirmationLetter;
 import message.IConfirmationLetter;
 import message.IOffer;
 import message.IOfferPack;
 import message.IOfferRequest;
 import message.Offer;
+import message.OfferPack;
 import message.OfferRequest;
 import org.objectweb.fractal.fraclet.annotations.Component;
 import org.objectweb.fractal.fraclet.annotations.Interface;
@@ -26,19 +29,30 @@ public class Client implements Runnable{
     
     @Override
     public void run() {
-        System.out.println("Émmission d'une requête d'offres.");
-        IOfferPack offer = _getOfferInterface.getProposals(new OfferRequest(100, 200, "toto", new Date(), new Date(), "", 0));
-        System.out.println("Résultat: " + offer.toString());
-        System.out.print("Émmision d'une requête de validation.");
-        IConfirmationLetter letter = _makeReservationInterface.reserveOffer(new Offer(0,""));
-        System.out.println("Résultat: " + letter.toString());
+        WsLink webServiceLink = new WsLink(this);
+        Endpoint.publish("http://localhost:8080/Ws", webServiceLink);
+        System.out.println("Webservice lancé sur http://localhost:8080/Ws");
+//        System.out.println("Émmission d'une requête d'offres.");
+//        IOfferPack offer = _getOfferInterface.getProposals(new OfferRequest(100, 200, "toto", new Date(), new Date(), "", 0));
+//        System.out.println("Résultat: " + offer.toString());
+//        System.out.print("Émmision d'une requête de validation.");
+//        IConfirmationLetter letter = _makeReservationInterface.reserveOffer(new Offer(0,""));
+//        System.out.println("Résultat: " + letter.toString());
     }
     
-    public IOfferPack getOffers(IOfferRequest request){
-        return _getOfferInterface.getProposals(request);
+    public OfferPack getOffers(OfferRequest request){
+        IOfferPack offerPack = _getOfferInterface.getProposals(request);
+        if(!(offerPack instanceof OfferPack))
+            throw(new ClassCastException("Client.getOffers: invalid cast: result is not OfferPack."));
+        else
+            return (OfferPack) offerPack;
     }
     
-    public IConfirmationLetter makeReservation(IOffer offer){
-        return _makeReservationInterface.reserveOffer(offer);
+    public ConfirmationLetter makeReservation(IOffer offer){
+        IConfirmationLetter confirmationLetter = _makeReservationInterface.reserveOffer(offer);
+        if(!(confirmationLetter instanceof ConfirmationLetter))
+            throw(new ClassCastException("Client.makeReservation: invalid cast: result is not ConfirmationLetter."));
+        else
+            return (ConfirmationLetter) confirmationLetter;    
     }
 }
