@@ -1,5 +1,6 @@
 package travelagency;
 
+import java.net.Inet4Address;
 import java.util.Date;
 import javax.xml.ws.Endpoint;
 import message.ConfirmationLetter;
@@ -29,9 +30,17 @@ public class Client implements Runnable{
     
     @Override
     public void run() {
+        String localIp = "http://";
         WsLink webServiceLink = new WsLink(this);
-        Endpoint.publish("http://10.8.2.129:8000/Ws", webServiceLink);
-        System.out.println("Webservice lancé sur http://localhost:8000/Ws");
+        try {
+            localIp = localIp.concat(Inet4Address.getLocalHost().getHostAddress()); 
+        }
+        catch(Exception e){
+            System.err.println(e);
+        }
+        localIp = localIp.concat(":8000/Ws");
+        Endpoint.publish(localIp, webServiceLink);
+        System.out.println("Webservice lancé sur " + localIp);
 //        System.out.println("Émmission d'une requête d'offres.");
 //        IOfferPack offer = _getOfferInterface.getProposals(new OfferRequest(100, 200, "toto", new Date(), new Date(), "", 0));
 //        System.out.println("Résultat: " + offer.toString());

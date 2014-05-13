@@ -11,6 +11,7 @@ import travelagency.interfaces.IVacationReservationManager;
 public class VacationReservationManager implements IVacationReservationManager{
         @Override
         public IConfirmationLetter reserveOffer(IOffer offer) {
+            System.out.println("Validation de l'offre: " + offer.toString());
             return new ConfirmationLetter();
         }
 
