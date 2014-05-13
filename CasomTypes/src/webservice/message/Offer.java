@@ -63,13 +63,13 @@ public class Offer implements Serializable{
     public String toString() {
         return "Offer from " + name + " :" + price + "€.";
     }
-//    public void setAgency(String cagency)
-//    {
-//        agency = cagency;
-//    }
-//    
-//    public String getAgency()
-//    {
-//        return agency;
-//    }
+    public void setAgency(String cagency)
+    {
+        agency = cagency;
+    }
+    
+    public String getAgency()
+    {
+        return agency;
+    }
 }
