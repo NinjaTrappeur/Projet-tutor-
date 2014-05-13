@@ -92,7 +92,9 @@ public class CasomClientAutomatonBehaviour extends jade.core.behaviours.CyclicBe
                             {
                                 System.out.println("CasomClientAutomatonBehaviour::action : evaluating offer pack");
                                 _evaluateOffer((IOfferPack)content);
-                                this.block(remainingTimeGuard);
+                                
+                                System.out.println("CasomClientAutomatonBehaviour::action : remaining time guard "+remainingTimeGuard);
+                                this.block(remainingTimeGuard*1000);
                             }
                             break;
                         case CONFIRM_LETTER : 

@@ -35,7 +35,7 @@ public class TimeGuardManager
     
     public boolean isOver()
     {
-        return _startTime.compareTo(_endTime) == -1;
+        return _endTime.compareTo(new Date()) == -1;
     }
     
     public long remainingTime()
