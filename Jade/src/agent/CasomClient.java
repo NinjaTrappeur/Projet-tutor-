@@ -45,21 +45,13 @@ public class CasomClient extends jade.core.Agent
     {
         super();
         
-        _agencies = new ArrayList();
-        _views = new ArrayList();
+        _agencies = new ArrayList<AID>();
+        _views = new ArrayList<AID>();
         
         _quit = false;
         _searchRunning = false;
         _booked = false;
         _bestOffer = null;
-        
-        // DF registration
-        try {
-            _register2DF();
-        } catch (FIPAException ex) {
-            System.err.println("CasomClient::setup : DF registration error. "+ex);
-            Logger.getLogger(CasomClient.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
     
     @Override
@@ -67,9 +59,18 @@ public class CasomClient extends jade.core.Agent
     {
         IOfferRequest offerRequest;
         
-        // DF lookup
-        _searchDF();
         
+        // DF registration
+        try {
+            _register2DF();
+        } catch (FIPAException ex) {
+            System.err.println("CasomClient::constructor : DF registration error. "+ex);
+            Logger.getLogger(CasomClient.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        // Search needed agents
+        this.locatePairs();
+                
         while(!_quit)
         {
             ACLMessage msg = receive();
@@ -119,7 +120,7 @@ public class CasomClient extends jade.core.Agent
     {
         ServiceDescription sd = new ServiceDescription();
         sd.setType(CasomClient.ServiceDescription);
-        sd.setName(this.getName());
+        sd.setName(this.getAID().getName());
         
         DFAgentDescription dfd = new DFAgentDescription();
         dfd.setName(this.getAID());
@@ -131,7 +132,7 @@ public class CasomClient extends jade.core.Agent
     /**
      * Searches for TravelAgency and ClientView agents
      */
-    private void _searchDF()
+    public void locatePairs()
     {
         DFAgentDescription agencyTemplate = new DFAgentDescription();
         ServiceDescription agencySd = new ServiceDescription();
@@ -198,11 +199,17 @@ public class CasomClient extends jade.core.Agent
     
     public ArrayList<AID> getAgencies()
     {
+        if(_agencies.isEmpty())
+            this.locatePairs();
+        
         return _agencies;
     }
     
     public ArrayList<AID> getViews()
     {
+        if(_views.isEmpty())
+            this.locatePairs();
+        
         return _views;
     }
     

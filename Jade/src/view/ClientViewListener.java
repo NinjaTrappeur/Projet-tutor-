@@ -60,16 +60,19 @@ public class ClientViewListener implements ActionListener
             
             IOfferRequest offerRequest = new OfferRequest(hp, lp, name, dd, rd, place, tg);
             
-            try
+            if(_viewAgent.getCasomClientID() != null)
             {
-                ACLMessage msg = new ACLMessage(ACLMessage.REQUEST);
-                msg.addReceiver(_viewAgent.getCasomClientID());
-                msg.setContentObject(offerRequest);
-                _viewAgent.send(msg);
-            }
-            catch (IOException ex)
-            {
-                Logger.getLogger(ClientViewListener.class.getName()).log(Level.SEVERE, null, ex);
+                try
+                {
+                    ACLMessage msg = new ACLMessage(ACLMessage.REQUEST);
+                    msg.addReceiver(_viewAgent.getCasomClientID());
+                    msg.setContentObject(offerRequest);
+                    _viewAgent.send(msg);
+                }
+                catch (IOException ex)
+                {
+                    Logger.getLogger(ClientViewListener.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
     }

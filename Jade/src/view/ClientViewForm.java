@@ -29,8 +29,10 @@ public class ClientViewForm extends javax.swing.JFrame
     /**
      * Creates new form ClientViewForm
      */
-    public ClientViewForm() {
+    public ClientViewForm()
+    {
         initComponents();
+        this.pack();
     }
     
     public JTextField departureCity()
@@ -141,12 +143,15 @@ public class ClientViewForm extends javax.swing.JFrame
         _minPrice = new javax.swing.JSpinner();
         _maxPrice = new javax.swing.JSpinner();
         _hotelBookHotel = new javax.swing.JCheckBox();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
         _searchButton = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         _output = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setName("mainFrame"); // NOI18N
         setPreferredSize(new java.awt.Dimension(640, 480));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Flight", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, java.awt.Color.darkGray));
@@ -285,11 +290,15 @@ public class ClientViewForm extends javax.swing.JFrame
 
         _nbNights.setModel(new javax.swing.SpinnerNumberModel(1, 1, 1000, 1));
 
-        _minPrice.setModel(new javax.swing.SpinnerNumberModel(30, 1, 2000, 1));
+        _minPrice.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(30.0f), Float.valueOf(1.0f), Float.valueOf(2000.0f), Float.valueOf(1.0f)));
 
-        _maxPrice.setModel(new javax.swing.SpinnerNumberModel(200, 1, 2000, 1));
+        _maxPrice.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(200.0f), Float.valueOf(1.0f), Float.valueOf(2000.0f), Float.valueOf(1.0f)));
 
         _hotelBookHotel.setLabel("Book hotel");
+
+        jLabel8.setText("€");
+
+        jLabel9.setText("€");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -304,11 +313,17 @@ public class ClientViewForm extends javax.swing.JFrame
                             .addComponent(jLabel7))
                         .addGap(40, 40, 40)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(_maxPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(_minPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(_maxPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel9))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(_minPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel8))
                             .addComponent(_nbNights, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(_hotelBookHotel))
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 534, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -321,11 +336,13 @@ public class ClientViewForm extends javax.swing.JFrame
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(_minPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(_minPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(_maxPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(_maxPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9))
                 .addContainerGap(22, Short.MAX_VALUE))
         );
 
@@ -412,6 +429,8 @@ public class ClientViewForm extends javax.swing.JFrame
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

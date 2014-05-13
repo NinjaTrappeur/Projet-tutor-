@@ -43,7 +43,11 @@ public class ClientView extends jade.core.Agent
         _ui.searchButton().addActionListener(new ClientViewListener(this));
         
         _casomClient = null;
-        
+    }
+    
+    @Override
+    public void setup()
+    {
         // DF registration
         try {
             _register2DF();
@@ -51,12 +55,9 @@ public class ClientView extends jade.core.Agent
             System.err.println("CasomClient::setup : DF registration error. "+ex);
             Logger.getLogger(ClientView.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-    
-    @Override
-    public void setup()
-    {
-        _searchDF();
+        
+        // Search needed agents
+        this.locatePairs();
         
         _ui.setVisible(true);
         
@@ -84,7 +85,7 @@ public class ClientView extends jade.core.Agent
     {
         ServiceDescription sd = new ServiceDescription();
         sd.setType(ClientView.ServiceDescription);
-        sd.setName(this.getName());
+        sd.setName(this.getAID().getName());
         
         DFAgentDescription dfd = new DFAgentDescription();
         dfd.setName(this.getAID());
@@ -93,7 +94,7 @@ public class ClientView extends jade.core.Agent
         DFService.register(this, dfd);
     }
     
-    private void _searchDF()
+    public void locatePairs()
     {
         DFAgentDescription template = new DFAgentDescription();
         ServiceDescription sd = new ServiceDescription();
@@ -122,6 +123,9 @@ public class ClientView extends jade.core.Agent
     
     public AID getCasomClientID()
     {
+        if(_casomClient == null)
+            this.locatePairs();
+        
         return _casomClient;
     }
 }

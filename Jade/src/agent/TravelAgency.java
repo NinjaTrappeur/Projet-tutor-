@@ -33,7 +33,12 @@ public class TravelAgency extends jade.core.Agent
         ServiceDescription = "Casom-TravelAgency-Stub-Agent";
     }
     
-    public TravelAgency()
+//    public TravelAgency()
+//    {
+//    }
+    
+    @Override
+    public void setup()
     {
         // DF registration
         try {
@@ -42,11 +47,7 @@ public class TravelAgency extends jade.core.Agent
             System.err.println("TravelAgency::setup : DF registration error. "+ex);
             Logger.getLogger(TravelAgency.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-    
-    @Override
-    public void setup()
-    {
+        
         ACLMessage msg = this.receive();
         if(msg != null)
         {
@@ -94,7 +95,7 @@ public class TravelAgency extends jade.core.Agent
     {
         ServiceDescription sd = new ServiceDescription();
         sd.setType(TravelAgency.ServiceDescription);
-        sd.setName(this.getName());
+        sd.setName(this.getAID().getName());
         
         DFAgentDescription dfd = new DFAgentDescription();
         dfd.setName(this.getAID());
