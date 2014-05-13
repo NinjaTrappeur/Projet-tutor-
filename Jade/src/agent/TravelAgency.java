@@ -33,22 +33,20 @@ public class TravelAgency extends jade.core.Agent
         ServiceDescription = "Casom-TravelAgency-Stub-Agent";
     }
     
-//    public TravelAgency()
-//    {
-//        
-//    }
-    
-    @Override
-    public void setup()
+    public TravelAgency()
     {
         // DF registration
         try {
             _register2DF();
         } catch (FIPAException ex) {
-            System.err.println("CasomClient::setup : DF registration error. "+ex);
-            Logger.getLogger(CasomClient.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("TravelAgency::setup : DF registration error. "+ex);
+            Logger.getLogger(TravelAgency.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+    }
+    
+    @Override
+    public void setup()
+    {
         ACLMessage msg = this.receive();
         if(msg != null)
         {
@@ -73,6 +71,23 @@ public class TravelAgency extends jade.core.Agent
                 Logger.getLogger(TravelAgency.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+    }
+    
+    @Override
+    protected void takeDown()
+    {
+        // Deregister from the yellow pages
+        try
+        {
+            DFService.deregister(this);
+        }
+        catch (FIPAException fe)
+        {
+            System.err.println("TravelAgency::takeDown : DF de-registration error. "+fe);
+            Logger.getLogger(TravelAgency.class.getName()).log(Level.SEVERE, null, fe);
+        }
+        // Printout a dismissal message
+        System.out.println(TravelAgency.ServiceDescription+" "+getAID().getName()+" terminating.");
     }
     
     private void _register2DF() throws FIPAException

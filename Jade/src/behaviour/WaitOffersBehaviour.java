@@ -83,8 +83,11 @@ public class WaitOffersBehaviour extends Behaviour
                         if(((IMessage)content).getType() == IMessage.Type.OFFER_PACK)
                         {
                             IOffer offer = ((IOfferPack)content).lowestPrice();
-                            if(offer.price() < _myAgent.getBestOffer().price())
-                                _myAgent.setBestOffer(offer);
+                            if(offer != null)
+                            {
+                                if(offer.price() < _myAgent.getBestOffer().price())
+                                    _myAgent.setBestOffer(offer);
+                            }
                         }
                     }
                 }

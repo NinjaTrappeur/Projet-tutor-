@@ -28,6 +28,7 @@ import message.IOfferRequest;
 public class CasomClient extends jade.core.Agent
 {
     private ArrayList<AID> _agencies;
+    private ArrayList<AID> _views;
     private boolean _quit;
     private boolean _searchRunning;
     private boolean _booked;
@@ -44,15 +45,13 @@ public class CasomClient extends jade.core.Agent
     {
         super();
         
+        _agencies = new ArrayList();
+        _views = new ArrayList();
+        
         _quit = false;
         _searchRunning = false;
         _booked = false;
-    }
-    
-    @Override
-    public void setup()
-    {
-        IOfferRequest offerRequest;
+        _bestOffer = null;
         
         // DF registration
         try {
@@ -61,6 +60,15 @@ public class CasomClient extends jade.core.Agent
             System.err.println("CasomClient::setup : DF registration error. "+ex);
             Logger.getLogger(CasomClient.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    @Override
+    public void setup()
+    {
+        IOfferRequest offerRequest;
+        
+        // DF lookup
+        _searchDF();
         
         while(!_quit)
         {
@@ -90,6 +98,23 @@ public class CasomClient extends jade.core.Agent
         }
     }
     
+    @Override
+    protected void takeDown()
+    {
+        // Deregister from the yellow pages
+        try
+        {
+            DFService.deregister(this);
+        }
+        catch (FIPAException fe)
+        {
+            System.err.println("CasomClient::takeDown : DF de-registration error. "+fe);
+            Logger.getLogger(CasomClient.class.getName()).log(Level.SEVERE, null, fe);
+        }
+        // Printout a dismissal message
+        System.out.println(CasomClient.ServiceDescription+" "+getAID().getName()+" terminating.");
+    }
+
     private void _register2DF() throws FIPAException
     {
         ServiceDescription sd = new ServiceDescription();
@@ -101,6 +126,46 @@ public class CasomClient extends jade.core.Agent
         
         dfd.addServices(sd);
         DFService.register(this, dfd);
+    }
+    
+    /**
+     * Searches for TravelAgency and ClientView agents
+     */
+    private void _searchDF()
+    {
+        DFAgentDescription agencyTemplate = new DFAgentDescription();
+        ServiceDescription agencySd = new ServiceDescription();
+        
+        DFAgentDescription viewTemplate = new DFAgentDescription();
+        ServiceDescription viewSd = new ServiceDescription();
+        
+        // Template for searching TravelAgency agents from DF
+        agencySd.setType(TravelAgency.ServiceDescription);
+        agencyTemplate.addServices(agencySd);
+        
+        // Template for searching View agents from DF
+        viewSd.setType(ClientView.ServiceDescription);
+        viewTemplate.addServices(viewSd);
+        
+        try
+        {
+            // Retrieve agencies
+            DFAgentDescription[] agencyResult = DFService.search(this, agencyTemplate);
+            
+            for(int i = 0; i < agencyResult.length; ++i)
+                _agencies.add(agencyResult[i].getName());
+            
+            // Retrieve Views
+            DFAgentDescription[] viewResult = DFService.search(this, viewTemplate);
+            
+            for(int i = 0; i < viewResult.length; ++i)
+                _views.add(viewResult[i].getName());
+        }
+        catch (FIPAException fe)
+        {
+            System.err.println("CasomClient::_searchDF : DF lookup error. "+fe.getLocalizedMessage());
+            Logger.getLogger(CasomClient.class.getName()).log(Level.SEVERE, null, fe);
+        }
     }
     
     public void setBestOffer(IOffer offer)
@@ -134,6 +199,11 @@ public class CasomClient extends jade.core.Agent
     public ArrayList<AID> getAgencies()
     {
         return _agencies;
+    }
+    
+    public ArrayList<AID> getViews()
+    {
+        return _views;
     }
     
     public boolean isBooked()

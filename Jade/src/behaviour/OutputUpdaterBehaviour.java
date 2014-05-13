@@ -20,7 +20,7 @@ import message.IMessage;
  */
 public class OutputUpdaterBehaviour extends jade.core.behaviours.CyclicBehaviour
 {
-    private ClientView _myAgent;
+    private final ClientView _myAgent;
     
     public OutputUpdaterBehaviour(ClientView myAgent)
     {
@@ -33,7 +33,8 @@ public class OutputUpdaterBehaviour extends jade.core.behaviours.CyclicBehaviour
         ACLMessage msg = myAgent.receive();
         if(msg != null)
         {
-            try {
+            try
+            {
                 Object content = msg.getContentObject();
                 
                 if(content instanceof IMessage)
