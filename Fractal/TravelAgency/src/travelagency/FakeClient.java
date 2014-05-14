@@ -1,6 +1,7 @@
 package travelagency;
 
 import java.util.Date;
+import message.AgentID;
 import message.ConfirmationLetter;
 import message.IConfirmationLetter;
 import message.IOffer;
@@ -27,10 +28,10 @@ public class FakeClient implements Runnable{
     @Override
     public void run() {
         System.out.println("Émmission d'une requête d'offres.");
-        IOfferPack offer = _getOfferInterface.getProposals(new OfferRequest(100, 200, "toto", new Date(), new Date(), "", 0, ""));
+        IOfferPack offer = _getOfferInterface.getProposals(new OfferRequest(100, 200, "toto", new Date(), new Date(), "", 0, new AgentID()));
         System.out.println("Résultat: " + offer.toString());
         System.out.print("Émmision d'une requête de validation.");
-        IConfirmationLetter letter = _makeReservationInterface.reserveOffer(new Offer(0,"", ""));
+        IConfirmationLetter letter = _makeReservationInterface.reserveOffer(new Offer(0,"", new AgentID()));
         System.out.println("Résultat: " + letter.toString());
     }
     
