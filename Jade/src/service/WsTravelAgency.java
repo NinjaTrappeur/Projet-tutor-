@@ -87,7 +87,7 @@ public class WsTravelAgency implements ITravelAgency
         travelagency.Offer wsOffer = new travelagency.Offer();
         
         wsOffer.setAgency(offer.getAgency().getName());
-        wsOffer.setName(offer.getCompanyName());
+        wsOffer.setCompanyName(offer.getCompanyName());
         wsOffer.setPrice(offer.getPrice());
         wsOffer.setType(MessUtil.MessageTypeToString(offer.getType()));
         
@@ -103,20 +103,21 @@ public class WsTravelAgency implements ITravelAgency
         
         message.IOfferPack offerPack = new message.OfferPack();
         
-        travelagency.Offer [] wsAllOffers = wsOfferPack.getAllOffers();
+//        travelagency.Offer [] wsAllOffers = wsOfferPack.getAllOffers().toArray();
+        Object [] allOffers = wsOfferPack.getAllOffers().toArray();
         
-        for(int i=0; i < wsAllOffers.length; ++i)
+        for(int i=0; i < allOffers.length; ++i)
         {
-            travelagency.Offer wsOffer = wsAllOffers[i];
+            travelagency.Offer wsOffer = (travelagency.Offer) allOffers[i];
             
             price = wsOffer.getPrice();
-            name = wsOffer.getName();
+            name = wsOffer.getCompanyName();
             agency = new AID(wsOffer.getAgency(), AID.ISLOCALNAME);
             
             offer = new message.Offer(price, name, agency);
             offerPack.addOffer(offer);
             
-            if(wsOfferPack.setBestOffer(wsOffer) == i)
+            if(wsOfferPack.getBestOffer() == i)
             {
                 offerPack.setBestOffer(offer);
             }
