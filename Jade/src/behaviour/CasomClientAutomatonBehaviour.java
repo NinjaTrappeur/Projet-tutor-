@@ -67,7 +67,6 @@ public class CasomClientAutomatonBehaviour extends jade.core.behaviours.CyclicBe
     @Override
     public void action()
     {
-        this.block(50);
         if(_waitingOffers)
         {
             long remainingTimeGuard = _timeGuard.remainingTime();
@@ -76,7 +75,11 @@ public class CasomClientAutomatonBehaviour extends jade.core.behaviours.CyclicBe
                 _waitingOffers = false;
                 _requestReservation();
             }
+            else
+                this.block(remainingTimeGuard);
         }
+        else
+            this.block();
         
         ACLMessage msg = _myAgent.receive();
         if(msg != null)
