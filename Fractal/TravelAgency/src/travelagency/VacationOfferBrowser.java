@@ -27,8 +27,10 @@ public class VacationOfferBrowser implements IVacationOfferBrowser{
         nameList.add("Michel Desjoyeaux");
         nameList.add("François Gabart");
         nameList.add("Christophe Fourcault de Pavant");
+        float minPrice = offerRequest.getLowestPrice();
+        float maxPrice = offerRequest.getHighestPrice();
         int randomIndex = (int)(Math.random() * nameList.size());
-        int randomPrice = (int)(Math.random() * (1000-100)) + 100;
+        float randomPrice = (int)(Math.random() * (maxPrice-minPrice)) + minPrice;
         return new OfferPack(new Offer(randomPrice, nameList.get(randomIndex), offerRequest.getAgentID()));
     }
 }
