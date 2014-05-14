@@ -1,14 +1,11 @@
 package travelagency;
 
 import java.net.Inet4Address;
-import java.util.Date;
 import javax.xml.ws.Endpoint;
 import message.ConfirmationLetter;
 import message.IConfirmationLetter;
 import message.IOffer;
 import message.IOfferPack;
-import message.IOfferRequest;
-import message.Offer;
 import message.OfferPack;
 import message.OfferRequest;
 import org.objectweb.fractal.fraclet.annotations.Component;
