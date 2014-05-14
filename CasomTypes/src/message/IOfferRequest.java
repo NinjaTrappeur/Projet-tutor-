@@ -21,6 +21,7 @@ public interface IOfferRequest extends IMessage
     public float getLowestPrice();
     public float getHighestPrice();
     public long getTimeGuard();
+    public String getAgentID();
 
     public void setClientName(String name);
     public void setDepartureDate(Date dd);
@@ -29,4 +30,5 @@ public interface IOfferRequest extends IMessage
     public void setLowestPrice(float lp);
     public void setHighestPrice(float hp);
     public void setTimeGuard(long timeguard);
+    public void setAgentID(String agentId);
 }
