@@ -11,12 +11,14 @@ public class OfferRequest {
     private String placeName;
     private String type;
     private long timeGuard;
+    private String agentId;
     
     public long getTimeGuard() {
         return timeGuard;
     }
     
-    public OfferRequest (float hp, float lp, String name, Date dd, Date rd, String place, long tg)
+    public OfferRequest (float hp, float lp, String name, Date dd, Date rd, String place, long tg,
+            String cagentId)
     {
         highestPrice = hp;
         lowestPrice = lp;
@@ -26,6 +28,7 @@ public class OfferRequest {
         placeName = place;
         timeGuard = tg;
         type = "OFFER_REQUEST";
+        agentId = cagentId;
     }
 //    
 //    public OfferRequest ()
@@ -122,5 +125,19 @@ public class OfferRequest {
      */
     public void setTimeGuard(long timeGuard) {
         this.timeGuard = timeGuard;
+    }
+
+    /**
+     * @return the agentId
+     */
+    public String getAgentId() {
+        return agentId;
+    }
+
+    /**
+     * @param agentId the agentId to set
+     */
+    public void setAgentId(String agentId) {
+        this.agentId = agentId;
     }
 }

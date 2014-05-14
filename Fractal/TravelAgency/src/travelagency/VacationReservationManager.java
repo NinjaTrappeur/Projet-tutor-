@@ -3,6 +3,7 @@ package travelagency;
 import message.ConfirmationLetter;
 import message.IConfirmationLetter;
 import message.IOffer;
+import message.Offer;
 import org.objectweb.fractal.fraclet.annotations.Component;
 import org.objectweb.fractal.fraclet.annotations.Interface;
 import travelagency.interfaces.IVacationReservationManager;
@@ -12,7 +13,7 @@ public class VacationReservationManager implements IVacationReservationManager{
         @Override
         public IConfirmationLetter reserveOffer(IOffer offer) {
             System.out.println("Validation de l'offre: " + offer.toString());
-            return new ConfirmationLetter();
+            return new ConfirmationLetter((Offer)offer);
         }
 
 }

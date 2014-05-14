@@ -29,17 +29,24 @@ public class WsLink {
                         offerRequest.getDepartureDate(),
                         offerRequest.getReturnDate(),
                         offerRequest.getPlaceName(), 
-                        offerRequest.getTimeGuard());
+                        offerRequest.getTimeGuard(),
+                        new AID(offerRequest.getAgentId(), AID.ISLOCALNAME));
         OfferPack pack = _client.getOffers(offerRequestM);
-        IOffer offer = pack.lowestPrice();
-        return new webservice.message.OfferPack(new webservice.message.Offer(offer.price(),
-                offer.companyName(),"Composant"));
+        IOffer offer = pack.getBestOffer();
+        
+        webservice.message.Offer wsOffer = new webservice.message.Offer(offer.getPrice(), 
+                offer.getCompanyName(), 
+                offer.getAgency().getLocalName());
+        
+        webservice.message.Offer [] offers = new webservice.message.Offer[1];
+        offers[0] = wsOffer;
+        
+        return new webservice.message.OfferPack(offers,0);
     }
     
     public webservice.message.ConfirmationLetter makeReservation(@WebParam(name = "offer")webservice.message.Offer offer) {
-        //TODO, traduire AID.
-        Offer offerM = new Offer(offer.getPrice(), offer.getName(), new AID());
+        Offer offerM = new Offer(offer.getPrice(), offer.getCompanyName(), new AID());
         _client.makeReservation(offerM);
-        return new webservice.message.ConfirmationLetter();
+        return new webservice.message.ConfirmationLetter(offer.getPrice(), offer.getCompanyName(), offer.getAgency());
     }
 }
