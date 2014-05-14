@@ -84,7 +84,7 @@ public class CasomClientAutomatonBehaviour extends jade.core.behaviours.CyclicBe
         ACLMessage msg = _myAgent.receive();
         if(msg != null)
         {
-            System.out.println("CasomClientAutomatonBehaviour::action : message received.");
+            System.out.println("CasomClientAutomatonBehaviour::action : message received from "+msg.getSender());
             Object content;
 
             try
@@ -138,6 +138,7 @@ public class CasomClientAutomatonBehaviour extends jade.core.behaviours.CyclicBe
             }
             catch (UnreadableException ex)
             {
+                System.err.println("CasomClientAutomatonBehaviour::action : acl content object fetching error. "+msg);
                 System.err.println("CasomClientAutomatonBehaviour::action : acl content object fetching error. "+ex);
                 Logger.getLogger(CasomClient.class.getName()).log(Level.SEVERE, null, ex);
             }

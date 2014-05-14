@@ -28,6 +28,7 @@ public class WsTravelAgency implements ITravelAgency
         try
         {
             travelagency.OfferRequest wsOfferRequest = _wsFromMessage(offerRequest);
+            System.out.println("WsTravelAgency::requestProposal : agent id "+wsOfferRequest.getAgentId().getName()+wsOfferRequest.getAgentId().getAdresse());
             travelagency.OfferPack wsOfferPack = this.getOffers(wsOfferRequest);
             
             offerPack = _messageFromWs(wsOfferPack);
@@ -68,6 +69,7 @@ public class WsTravelAgency implements ITravelAgency
     
     private travelagency.OfferRequest _wsFromMessage(message.IOfferRequest offerRequest) throws DatatypeConfigurationException
     {
+        System.out.println("WsTravelAgency::_wsFromMessage : in");
         travelagency.OfferRequest wsOfferRequest = new travelagency.OfferRequest();
         
         wsOfferRequest.setClientName(offerRequest.getClientName());
@@ -78,6 +80,15 @@ public class WsTravelAgency implements ITravelAgency
         wsOfferRequest.setPlaceName(offerRequest.getPlaceName());
         wsOfferRequest.setTimeGuard(offerRequest.getTimeGuard());
         wsOfferRequest.setType(MessUtil.MessageTypeToString(offerRequest.getType()));
+
+        travelagency.AgentID aid = new travelagency.AgentID();
+        aid.setName(offerRequest.getAgentID().getName());
+        aid.setLocalName(offerRequest.getAgentID().getLocalName());
+        aid.setAdresse(offerRequest.getAgentID().getAdresse());
+        
+        wsOfferRequest.setAgentId(aid);
+        
+        System.out.println("WsTravelAgency::_wsFromMessage : out");
         
         return wsOfferRequest;
     }

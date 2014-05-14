@@ -47,6 +47,7 @@ public class TravelAgencyAutomatonBehaviour extends jade.core.behaviours.CyclicB
     {
         this.block(); // wait that myAgent receives message
         _receivedMsg = _myAgent.receive();
+        System.out.println("TravelAgencyAutomatonBehaviour::action : message received from "+_receivedMsg.getSender());
         if(_receivedMsg != null)
         {
             try
@@ -57,12 +58,12 @@ public class TravelAgencyAutomatonBehaviour extends jade.core.behaviours.CyclicB
                     switch(((IMessage)content).getType())
                     {
                         case OFFER_REQUEST : 
-                            System.out.println("TravelAgencyAutomatonBehaviour::action : offer request received."+((message.OfferRequest)content));
+                            System.out.println("TravelAgencyAutomatonBehaviour::action : offer request received. "+((message.OfferRequest)content));
                             _offerRequest = (IOfferRequest)content;
                             _respondOfferRequest();
                             break;
                         case RESERVATION_REQUEST :
-                            System.out.println("TravelAgencyAutomatonBehaviour::action : reservation request received."+((message.ReservationRequest)content));
+                            System.out.println("TravelAgencyAutomatonBehaviour::action : reservation request received. "+((message.ReservationRequest)content));
                             _reservationRequest = (IReservationRequest)content;
                             _respondReservationRequest();
                             break;
@@ -88,10 +89,17 @@ public class TravelAgencyAutomatonBehaviour extends jade.core.behaviours.CyclicB
         System.out.println("TravelAgencyAutomatonBehaviour::_respondOfferRequest : inside");
         if(_offerRequest != null)
         {
+            System.out.println("before");
+            
+            _offerRequest.getAgentID().setName(_myAgent.getAID().getName());
+            _offerRequest.getAgentID().setLocalName(_myAgent.getAID().getLocalName());
+            _offerRequest.getAgentID().setAdresse(_myAgent.getAID().getAddressesArray()[0]);
+            
             IOfferPack offerPack = _remoteAgencyStub.requestProposal(_offerRequest);
+            System.out.println("after");
             
             System.out.println("TravelAgencyAutomatonBehaviour::_respondOfferRequest : received offer pack: \n\t"+offerPack.toString());
-            System.out.println("TravelAgencyAutomatonBehaviour::_respondOfferRequest : anget id "+offerPack.getBestOffer().getAgencyID().toString());
+            System.out.println("TravelAgencyAutomatonBehaviour::_respondOfferRequest : agent id "+offerPack.getBestOffer().getAgencyID().toString());
 
             try
             {
