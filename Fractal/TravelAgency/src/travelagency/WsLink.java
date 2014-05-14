@@ -22,6 +22,7 @@ public class WsLink {
     }
     
     public webservice.message.OfferPack getOffers(@WebParam(name = "offerRequest")webservice.message.OfferRequest offerRequest){
+        System.out.println("Reçu requête getOffers.");
         OfferRequest offerRequestM = 
                 new OfferRequest(offerRequest.getHighestPrice(),
                         offerRequest.getLowestPrice(), 
@@ -45,6 +46,7 @@ public class WsLink {
     }
     
     public webservice.message.ConfirmationLetter makeReservation(@WebParam(name = "offer")webservice.message.Offer offer) {
+        System.out.println("Reçu requête makeReservaion.");
         Offer offerM = new Offer(offer.getPrice(), offer.getCompanyName(), new AID());
         _client.makeReservation(offerM);
         return new webservice.message.ConfirmationLetter(offer.getPrice(), offer.getCompanyName(), offer.getAgency());
