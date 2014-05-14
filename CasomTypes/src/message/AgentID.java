@@ -70,4 +70,9 @@ public class AgentID
     public void setAdresse(String allSdresses) {
         this.adresse = allSdresses;
     }
+    
+    @Override
+    public String toString () {
+        return name + localName + adresse;
+    }
 }
