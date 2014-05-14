@@ -111,7 +111,7 @@ public class WsTravelAgency implements ITravelAgency
             
             price = wsOffer.getPrice();
             name = wsOffer.getName();
-            agency = new AID(wsOffer.getAgency(), AID.ISGUID);
+            agency = new AID(wsOffer.getAgency(), AID.ISLOCALNAME);
             
             offer = new message.Offer(price, name, agency);
             offerPack.addOffer(offer);
@@ -127,7 +127,7 @@ public class WsTravelAgency implements ITravelAgency
     
     private message.IConfirmationLetter _messageFromWs(travelagency.ConfirmationLetter wsConfirmLetter)
     {
-        AID agency = new AID(wsConfirmLetter.getAgency(), AID.ISGUID);
+        AID agency = new AID(wsConfirmLetter.getAgency(), AID.ISLOCALNAME);
         float price = wsConfirmLetter.getPrice();
         String name = wsConfirmLetter.getCompanyName();
         message.IConfirmationLetter confirmLetter = new message.ConfirmationLetter(price, name, agency);
