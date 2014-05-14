@@ -14,20 +14,20 @@ public class AgentID
 {
     private String name;
     private String localName;
-    private String [] allAdresses;
+    private String adresse;
 
     public AgentID()
     {
         name = "";
         localName = "";
-        allAdresses = null;
+        adresse = "";
     }
     
-    public AgentID(String iname, String ilocalName, String [] iallAdresses)
+    public AgentID(String iname, String ilocalName, String iallAdresses)
     {
         name = iname;
         localName = ilocalName;
-        allAdresses = iallAdresses;
+        adresse = iallAdresses;
     }
     /**
      * @return the name
@@ -58,16 +58,16 @@ public class AgentID
     }
 
     /**
-     * @return the allAdresses
+     * @return the adresse
      */
-    public String[] getAllSdresses() {
-        return allAdresses;
+    public String getAdresse() {
+        return adresse;
     }
 
     /**
-     * @param allSdresses the allAdresses to set
+     * @param allSdresses the adresse to set
      */
-    public void setAllSdresses(String[] allSdresses) {
-        this.allAdresses = allSdresses;
+    public void setAdresse(String allSdresses) {
+        this.adresse = allSdresses;
     }
 }
