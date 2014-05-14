@@ -41,12 +41,6 @@ public class Client implements Runnable{
         localIp = localIp.concat(":8000/Ws");
         Endpoint.publish(localIp, webServiceLink);
         System.out.println("Webservice lancé sur " + localIp);
-//        System.out.println("Émmission d'une requête d'offres.");
-//        IOfferPack offer = _getOfferInterface.getProposals(new OfferRequest(100, 200, "toto", new Date(), new Date(), "", 0));
-//        System.out.println("Résultat: " + offer.toString());
-//        System.out.print("Émmision d'une requête de validation.");
-//        IConfirmationLetter letter = _makeReservationInterface.reserveOffer(new Offer(0,""));
-//        System.out.println("Résultat: " + letter.toString());
     }
     
     public OfferPack getOffers(OfferRequest request){
