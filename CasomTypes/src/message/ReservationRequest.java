@@ -30,4 +30,10 @@ public class ReservationRequest implements IReservationRequest
     {
         return _offer;
     }
+    
+    @Override
+    public String toString()
+    {
+        return "Reservation request. Offer: "+_offer.toString();
+    }
 }

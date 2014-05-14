@@ -46,7 +46,7 @@ public class ClientViewListener implements ActionListener
         
             hp = (float)_viewAgent.getForm().maxPrice().getValue();
             lp = (float)_viewAgent.getForm().minPrice().getValue();
-            name = "Gorges";
+            name = _viewAgent.getForm().clientName().getText();
             
             Calendar cal = Calendar.getInstance();
             

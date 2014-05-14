@@ -12,15 +12,10 @@ import jade.domain.DFService;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
-import jade.lang.acl.ACLMessage;
-import jade.lang.acl.UnreadableException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import message.IConfirmationLetter;
-import message.IMessage;
 import message.IOffer;
-import message.IOfferRequest;
 
 /**
  *

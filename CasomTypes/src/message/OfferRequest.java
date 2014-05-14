@@ -68,13 +68,6 @@ public class OfferRequest implements IOfferRequest {
     public Type getType() {
         return Type.OFFER_REQUEST;
     }
-    
-    @Override
-    public String toString() {
-        return "Offer request from " + _clientName + "between " + _departureDate.toString() +
-                " and " + _returnDate + " at " + _placeName + " from " + _lowestPrice + " to " + _highestPrice
-                + ".";
-    }
 
     /**
      * @param _highestPrice the _highestPrice to set
@@ -130,5 +123,12 @@ public class OfferRequest implements IOfferRequest {
     @Override
     public void setTimeGuard(long _timeGuard) {
         this._timeGuard = _timeGuard;
+    }
+    
+    @Override
+    public String toString() {
+        return "Offer request from " + _clientName + "between " + _departureDate.toString() +
+                " and " + _returnDate + " at " + _placeName + " from " + _lowestPrice + " to " + _highestPrice
+                + ".";
     }
 }

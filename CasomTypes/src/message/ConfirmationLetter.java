@@ -79,6 +79,6 @@ public class ConfirmationLetter implements IConfirmationLetter
     @Override
     public String toString()
     {
-        return "Offer from " + _companyName + " :" + _price + "€.";
+        return "Confirmation letter from " + _companyName + " :" + _price + "€.";
     }
 }

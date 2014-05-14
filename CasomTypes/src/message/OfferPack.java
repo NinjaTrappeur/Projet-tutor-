@@ -69,6 +69,6 @@ public class OfferPack implements IOfferPack
     
     @Override
     public String toString() {
-        return "Lowest offer: " + _bestOffer.toString();
+        return "Lowest offer: " + _bestOffer.toString()+"\n\tAll offers: "+_allOffers;
     }
 }
