@@ -1,6 +1,5 @@
 package travelagency;
 
-import jade.core.AID;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 import message.IOffer;
@@ -22,7 +21,6 @@ public class WsLink {
     }
     
     public webservice.message.OfferPack getOffers(@WebParam(name = "offerRequest")webservice.message.OfferRequest offerRequest){
-        System.out.println("Reçu requête getOffers.");
         OfferRequest offerRequestM = 
                 new OfferRequest(offerRequest.getHighestPrice(),
                         offerRequest.getLowestPrice(), 
@@ -31,24 +29,26 @@ public class WsLink {
                         offerRequest.getReturnDate(),
                         offerRequest.getPlaceName(), 
                         offerRequest.getTimeGuard(),
-                        new AID(offerRequest.getAgentId(), AID.ISLOCALNAME));
+                        null);
+        System.out.println("Reçu requête d'offres: " + offerRequestM.toString());
         OfferPack pack = _client.getOffers(offerRequestM);
         IOffer offer = pack.getBestOffer();
         
         webservice.message.Offer wsOffer = new webservice.message.Offer(offer.getPrice(), 
                 offer.getCompanyName(), 
-                offer.getAgency().getLocalName());
+                "");
         
         webservice.message.Offer [] offers = new webservice.message.Offer[1];
         offers[0] = wsOffer;
-        
+        System.out.println("Envoi de l'offer pack: " + pack.toString());
         return new webservice.message.OfferPack(offers,0);
     }
     
     public webservice.message.ConfirmationLetter makeReservation(@WebParam(name = "offer")webservice.message.Offer offer) {
-        System.out.println("Reçu requête makeReservaion.");
-        Offer offerM = new Offer(offer.getPrice(), offer.getCompanyName(), new AID());
+        Offer offerM = new Offer(offer.getPrice(), offer.getCompanyName(), null);
+        System.out.println("Reçu requête makeReservaion: " + offerM.toString());
         _client.makeReservation(offerM);
-        return new webservice.message.ConfirmationLetter(offer.getPrice(), offer.getCompanyName(), offer.getAgency());
+        System.out.println("Reservation effectuée, envoi de la confirmation.");
+        return new webservice.message.ConfirmationLetter(offer.getPrice(), offer.getCompanyName(), "");
     }
 }
