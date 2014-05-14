@@ -9,6 +9,10 @@ public class ReservationRequest {
         offer = coffer;
         type = "RESERVATION_REQUEST";
     }
+    
+    public ReservationRequest() {
+        
+    }
 
     public String getType()
     {

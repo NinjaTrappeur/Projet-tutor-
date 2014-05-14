@@ -7,4 +7,7 @@ public class ConfirmationLetter extends Offer
         super(cprice, cname, cagency);
         type = "CONFIM_LETTER";
     }
+    public ConfirmationLetter() {
+        
+    }
 }

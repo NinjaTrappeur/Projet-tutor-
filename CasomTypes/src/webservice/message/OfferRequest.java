@@ -30,11 +30,11 @@ public class OfferRequest {
         type = "OFFER_REQUEST";
         agentId = cagentId;
     }
-//    
-//    public OfferRequest ()
-//    {
-//        this(2000, 1, "", new Date(), new Date(), "", 3);
-//    }
+    
+    public OfferRequest ()
+    {
+        this(2000, 1, "", new Date(), new Date(), "", 3, "");
+    }
     
     public float getHighestPrice() {
         return highestPrice;

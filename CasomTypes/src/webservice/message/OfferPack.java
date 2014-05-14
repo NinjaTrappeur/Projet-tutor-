@@ -12,6 +12,12 @@ public class OfferPack {
         type = "OFFER_PACK";
     }
     
+    public OfferPack() {
+        bestOffer = 0;
+        allOffers = null;
+        type = "OFFER_PACK";
+    }
+    
     public int getBestOffer(){
         return bestOffer;
     }
