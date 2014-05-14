@@ -206,7 +206,7 @@ public class CasomClientAutomatonBehaviour extends jade.core.behaviours.CyclicBe
             try
             {
                 ACLMessage msg = new ACLMessage(ACLMessage.AGREE);
-                msg.addReceiver(_myAgent.getBestOffer().getAgencyID());
+                msg.addReceiver(new AID(_myAgent.getBestOffer().getAgencyID(), AID.ISGUID));
                 msg.setContentObject(new ReservationRequest(_myAgent.getBestOffer()));
 
                 _myAgent.send(msg);

@@ -32,7 +32,7 @@ public class RemoteAgency implements ITravelAgency
     @Override
     public IOfferPack requestProposal(IOfferRequest offerRequest)
     {
-        IOffer offer = new Offer(1,"wazaa",_agency.getAID());
+        IOffer offer = new Offer(1,"wazaa",_agency.getAID().getName());
         
         return new OfferPack(offer);
     }
@@ -40,6 +40,6 @@ public class RemoteAgency implements ITravelAgency
     @Override
     public IConfirmationLetter reserveOffer(IOffer offer)
     {
-        return new ConfirmationLetter(1, "wazaa", _agency.getAID());
+        return new ConfirmationLetter(1, "wazaa", _agency.getAID().getName());
     }
 }

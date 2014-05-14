@@ -86,7 +86,7 @@ public class WsTravelAgency implements ITravelAgency
     {
         travelagency.Offer wsOffer = new travelagency.Offer();
         
-        wsOffer.setAgency(offer.getAgencyID().getName());
+        wsOffer.setAgency(offer.getAgencyID());
         wsOffer.setCompanyName(offer.getCompanyName());
         wsOffer.setPrice(offer.getPrice());
         wsOffer.setType(MessUtil.MessageTypeToString(offer.getType()));
@@ -103,7 +103,6 @@ public class WsTravelAgency implements ITravelAgency
         
         message.IOfferPack offerPack = new message.OfferPack();
         
-//        travelagency.Offer [] wsAllOffers = wsOfferPack.getAllOffers().toArray();
         Object [] allOffers = wsOfferPack.getAllOffers().toArray();
         
         for(int i=0; i < allOffers.length; ++i)
@@ -112,9 +111,8 @@ public class WsTravelAgency implements ITravelAgency
             
             price = wsOffer.getPrice();
             name = wsOffer.getCompanyName();
-            agency = new AID(wsOffer.getAgency(), AID.ISLOCALNAME);
             
-            offer = new message.Offer(price, name, agency);
+            offer = new message.Offer(price, name, wsOffer.getAgency());
             offerPack.addOffer(offer);
             
             if(wsOfferPack.getBestOffer() == i)
@@ -128,10 +126,9 @@ public class WsTravelAgency implements ITravelAgency
     
     private message.IConfirmationLetter _messageFromWs(travelagency.ConfirmationLetter wsConfirmLetter)
     {
-        AID agency = new AID(wsConfirmLetter.getAgency(), AID.ISLOCALNAME);
         float price = wsConfirmLetter.getPrice();
         String name = wsConfirmLetter.getCompanyName();
-        message.IConfirmationLetter confirmLetter = new message.ConfirmationLetter(price, name, agency);
+        message.IConfirmationLetter confirmLetter = new message.ConfirmationLetter(price, name, wsConfirmLetter.getAgency());
         
         return confirmLetter;
     }
