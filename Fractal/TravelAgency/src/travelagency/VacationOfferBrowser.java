@@ -30,6 +30,6 @@ public class VacationOfferBrowser implements IVacationOfferBrowser{
         nameList.add("Christophe Fourcault de Pavant");
         int randomIndex = (int)(Math.random() * nameList.size());
         int randomPrice = (int)(Math.random() * (1000-100)) + 100;
-        return new OfferPack(new Offer(randomPrice, nameList.get(randomIndex), new AID()));
+        return new OfferPack(new Offer(randomPrice, nameList.get(randomIndex), null));
     }
 }
