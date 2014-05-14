@@ -6,7 +6,6 @@
 
 package message;
 
-import jade.core.AID;
 import java.util.Date;
 
 /**
@@ -22,7 +21,7 @@ public class OfferRequest implements IOfferRequest {
     private Date _returnDate;
     private String _placeName;
     private long _timeGuard;
-    private AID _agentID;
+    private String _agentID;
     
     @Override
     public long getTimeGuard() {
@@ -30,7 +29,7 @@ public class OfferRequest implements IOfferRequest {
     }
     
     public OfferRequest (float hp, float lp, String name, Date dd, Date rd, String place, long tg,
-            AID agentID)
+            String agentID)
     {
         _highestPrice = hp;
         _lowestPrice = lp;
@@ -140,14 +139,14 @@ public class OfferRequest implements IOfferRequest {
     /**
      * @return the _agentID
      */
-    public AID getAgentID() {
+    public String getAgentID() {
         return _agentID;
     }
 
     /**
      * @param _agentID the _agentID to set
      */
-    public void setAgentID(AID _agentID) {
+    public void setAgentID(String _agentID) {
         this._agentID = _agentID;
     }
 }

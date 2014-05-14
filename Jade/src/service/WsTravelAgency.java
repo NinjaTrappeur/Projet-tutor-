@@ -86,7 +86,7 @@ public class WsTravelAgency implements ITravelAgency
     {
         travelagency.Offer wsOffer = new travelagency.Offer();
         
-        wsOffer.setAgency(offer.getAgency().getName());
+        wsOffer.setAgency(offer.getAgencyID().getName());
         wsOffer.setCompanyName(offer.getCompanyName());
         wsOffer.setPrice(offer.getPrice());
         wsOffer.setType(MessUtil.MessageTypeToString(offer.getType()));

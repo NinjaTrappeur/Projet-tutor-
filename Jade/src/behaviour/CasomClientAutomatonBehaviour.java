@@ -206,13 +206,13 @@ public class CasomClientAutomatonBehaviour extends jade.core.behaviours.CyclicBe
             try
             {
                 ACLMessage msg = new ACLMessage(ACLMessage.AGREE);
-                msg.addReceiver(_myAgent.getBestOffer().getAgency());
+                msg.addReceiver(_myAgent.getBestOffer().getAgencyID());
                 msg.setContentObject(new ReservationRequest(_myAgent.getBestOffer()));
 
                 _myAgent.send(msg);
                 _reservationRequested = true;
                 
-                System.out.println("CasomClientAutomatonBehaviour::_requestReservation : reservation request sent to "+_myAgent.getBestOffer().getAgency());
+                System.out.println("CasomClientAutomatonBehaviour::_requestReservation : reservation request sent to "+_myAgent.getBestOffer().getAgencyID());
             }
             catch (IOException ex)
             {

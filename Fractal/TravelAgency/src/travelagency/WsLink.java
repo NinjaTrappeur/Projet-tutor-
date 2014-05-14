@@ -37,7 +37,7 @@ public class WsLink {
         
         webservice.message.Offer wsOffer = new webservice.message.Offer(offer.getPrice(), 
                 offer.getCompanyName(), 
-                offer.getAgency().getLocalName());
+                offer.getAgencyID().getLocalName());
         
         webservice.message.Offer [] offers = new webservice.message.Offer[1];
         offers[0] = wsOffer;

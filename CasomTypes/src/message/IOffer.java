@@ -6,8 +6,6 @@
 
 package message;
 
-import jade.core.AID;
-
 /**
  *
  * @author josuah
@@ -16,9 +14,9 @@ public interface IOffer  extends IMessage
 {
     public float getPrice();
     public String getCompanyName();
-    public AID getAgency();
+    public String getAgencyID();
     
     public void setPrice(float price);
     public void setCompanyName(String comName);
-    public void setAgency(AID agency);
+    public void setAgencyID(String agency);
 }

@@ -6,8 +6,6 @@
 
 package message;
 
-import jade.core.AID;
-
 /**
  *
  * @author ninjatrappeur
@@ -16,20 +14,20 @@ public class ConfirmationLetter implements IConfirmationLetter
 {
     protected float _price;
     protected String _companyName;
-    protected AID _agency;
+    protected String _agencyID;
     
     public ConfirmationLetter(Offer offer)
     {
         _price = offer.getPrice();
         _companyName = offer.getCompanyName();
-        _agency = offer.getAgency();
+        _agencyID = offer.getAgencyID();
     }
     
-    public ConfirmationLetter(float price, String name, AID agency)
+    public ConfirmationLetter(float price, String name, String agency)
     {
         _price = price;
         _companyName = name;
-        _agency = agency;
+        _agencyID = agency;
     }
     
     @Override
@@ -49,15 +47,15 @@ public class ConfirmationLetter implements IConfirmationLetter
     }
     
     @Override
-    public AID getAgency()
+    public String getAgencyID()
     {
-        return _agency;
+        return _agencyID;
     }
     
     @Override
-    public void setAgency(AID agency)
+    public void setAgencyID(String agency)
     {
-        _agency = agency;
+        _agencyID = agency;
     }
 
     /**

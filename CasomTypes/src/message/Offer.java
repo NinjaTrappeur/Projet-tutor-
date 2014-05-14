@@ -6,8 +6,6 @@
 
 package message;
 
-import jade.core.AID;
-
 /**
  *
  * @author ninjatrappeur
@@ -15,13 +13,13 @@ import jade.core.AID;
 public class Offer implements IOffer{
     protected float _price;
     protected String _companyName;
-    protected AID _agency;
+    protected String _agencyID;
     
-    public Offer(float price, String name, AID agency)
+    public Offer(float price, String name, String agency)
     {
         _price = price;
         _companyName = name;
-        _agency = agency;
+        _agencyID = agency;
     }
     
     @Override
@@ -39,15 +37,15 @@ public class Offer implements IOffer{
     }
     
     @Override
-    public AID getAgency()
+    public String getAgencyID()
     {
-        return _agency;
+        return _agencyID;
     }
     
     @Override
-    public void setAgency(AID agency)
+    public void setAgencyID(String agency)
     {
-        _agency = agency;
+        _agencyID = agency;
     }
 
     /**

@@ -46,7 +46,7 @@ public class WaitOffersBehaviour extends SimpleBehaviour
             if(done && _myAgent.getBestOffer() != null)
             {
                 ACLMessage msg = new ACLMessage(ACLMessage.AGREE);
-                msg.addReceiver(_myAgent.getBestOffer().getAgency());
+                msg.addReceiver(_myAgent.getBestOffer().getAgencyID());
                 try
                 {
                     msg.setContentObject(new ReservationRequest(_myAgent.getBestOffer()));
