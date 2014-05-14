@@ -6,11 +6,13 @@
 
 package message;
 
+import java.io.Serializable;
+
 /**
  *
  * @author josuah
  */
-public class AgentID
+public class AgentID implements Serializable
 {
     private String name;
     private String localName;

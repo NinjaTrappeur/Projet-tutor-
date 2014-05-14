@@ -57,12 +57,12 @@ public class TravelAgencyAutomatonBehaviour extends jade.core.behaviours.CyclicB
                     switch(((IMessage)content).getType())
                     {
                         case OFFER_REQUEST : 
-                            System.out.println("TravelAgencyAutomatonBehaviour::action : offer request received.");
+                            System.out.println("TravelAgencyAutomatonBehaviour::action : offer request received."+((message.OfferRequest)content));
                             _offerRequest = (IOfferRequest)content;
                             _respondOfferRequest();
                             break;
                         case RESERVATION_REQUEST :
-                            System.out.println("TravelAgencyAutomatonBehaviour::action : reservation request received.");
+                            System.out.println("TravelAgencyAutomatonBehaviour::action : reservation request received."+((message.ReservationRequest)content));
                             _reservationRequest = (IReservationRequest)content;
                             _respondReservationRequest();
                             break;
@@ -85,9 +85,13 @@ public class TravelAgencyAutomatonBehaviour extends jade.core.behaviours.CyclicB
     
     private void _respondOfferRequest()
     {
+        System.out.println("TravelAgencyAutomatonBehaviour::_respondOfferRequest : inside");
         if(_offerRequest != null)
         {
             IOfferPack offerPack = _remoteAgencyStub.requestProposal(_offerRequest);
+            
+            System.out.println("TravelAgencyAutomatonBehaviour::_respondOfferRequest : received offer pack: \n\t"+offerPack.toString());
+            System.out.println("TravelAgencyAutomatonBehaviour::_respondOfferRequest : anget id "+offerPack.getBestOffer().getAgencyID().toString());
 
             try
             {
@@ -113,13 +117,15 @@ public class TravelAgencyAutomatonBehaviour extends jade.core.behaviours.CyclicB
         if(_reservationRequest != null)
         {
             IConfirmationLetter confirmationLetter = _remoteAgencyStub.reserveOffer(_reservationRequest.getOffer());
+            
+            System.out.println("TravelAgencyAutomatonBehaviour::_respondReservationRequest : received confirmation letter: \n\t"+confirmationLetter);
 
             try
             {
                 ACLMessage msg = _receivedMsg.createReply();
                 msg.setContentObject(confirmationLetter);
                 myAgent.send(msg);
-                System.err.println("TravelAgencyAutomatonBehaviour::_respondOfferRequest : confirm letter sent to "+msg.getAllReceiver().next());
+                System.err.println("TravelAgencyAutomatonBehaviour::_respondReservationRequest : confirm letter sent to "+msg.getAllReceiver().next());
             }
             catch (IOException ex)
             {

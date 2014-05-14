@@ -7,6 +7,7 @@
 package fake;
 
 import agent.TravelAgency;
+import message.AgentID;
 import message.ConfirmationLetter;
 import message.IConfirmationLetter;
 import message.IOffer;
@@ -32,7 +33,9 @@ public class RemoteAgency implements ITravelAgency
     @Override
     public IOfferPack requestProposal(IOfferRequest offerRequest)
     {
-        IOffer offer = new Offer(1,"wazaa",_agency.getAID().getName());
+        AgentID aid = new AgentID(_agency.getAID().getName(),
+                _agency.getAID().getLocalName(), _agency.getAID().getAddressesArray()[0]);
+        IOffer offer = new Offer(1,"wazaa", aid);
         
         return new OfferPack(offer);
     }
@@ -40,6 +43,8 @@ public class RemoteAgency implements ITravelAgency
     @Override
     public IConfirmationLetter reserveOffer(IOffer offer)
     {
-        return new ConfirmationLetter(1, "wazaa", _agency.getAID().getName());
+        AgentID aid = new AgentID(_agency.getAID().getName(),
+                _agency.getAID().getLocalName(), _agency.getAID().getAddressesArray()[0]);
+        return new ConfirmationLetter(1, "wazaa", aid);
     }
 }

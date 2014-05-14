@@ -49,7 +49,13 @@ public class WaitOffersBehaviour extends SimpleBehaviour
                 try
                 {
                     ACLMessage msg = new ACLMessage(ACLMessage.AGREE);
-                    msg.addReceiver(new AID(_myAgent.getBestOffer().getAgencyID(), AID.ISGUID));
+                    
+                    AID receiver = new AID();
+                    receiver.setName(_myAgent.getBestOffer().getAgencyID().getName());
+                    receiver.setLocalName(_myAgent.getBestOffer().getAgencyID().getLocalName());
+                    receiver.addAddresses(_myAgent.getBestOffer().getAgencyID().getAdresse());
+                    
+                    msg.addReceiver(receiver);
                     msg.setContentObject(new ReservationRequest(_myAgent.getBestOffer()));
                     
                     _myAgent.send(msg);

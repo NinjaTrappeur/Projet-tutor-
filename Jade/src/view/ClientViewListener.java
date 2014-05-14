@@ -62,7 +62,7 @@ public class ClientViewListener implements ActionListener
             rd = cal.getTime();
             
             place = (String)_viewAgent.getForm().arrivalCity().getText();
-            tg = 30;
+            tg = 5;
             
             IOfferRequest offerRequest = new OfferRequest(hp, lp, name, dd, rd, place, tg,
                     new AgentID(
