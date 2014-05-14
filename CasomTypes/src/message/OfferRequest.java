@@ -21,7 +21,7 @@ public class OfferRequest implements IOfferRequest {
     private Date _returnDate;
     private String _placeName;
     private long _timeGuard;
-    private String _agentID;
+    private AgentID _agentID;
     
     @Override
     public long getTimeGuard() {
@@ -29,7 +29,7 @@ public class OfferRequest implements IOfferRequest {
     }
     
     public OfferRequest (float hp, float lp, String name, Date dd, Date rd, String place, long tg,
-            String agentID)
+            AgentID agentID)
     {
         _highestPrice = hp;
         _lowestPrice = lp;
@@ -139,14 +139,14 @@ public class OfferRequest implements IOfferRequest {
     /**
      * @return the _agentID
      */
-    public String getAgentID() {
+    public AgentID getAgentID() {
         return _agentID;
     }
 
     /**
      * @param _agentID the _agentID to set
      */
-    public void setAgentID(String _agentID) {
+    public void setAgentID(AgentID _agentID) {
         this._agentID = _agentID;
     }
 }

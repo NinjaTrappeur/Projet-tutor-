@@ -7,6 +7,7 @@
 package webservice.message;
 
 import java.io.Serializable;
+import message.AgentID;
 
 /**
  *
@@ -15,10 +16,10 @@ import java.io.Serializable;
 public class Offer implements Serializable{
     protected float price;
     protected String companyName;
-    protected String agency;
+    protected AgentID agency;
     protected String type;
     
-    public Offer(float cprice, String cname, String cagency) 
+    public Offer(float cprice, String cname, AgentID cagency) 
     {
         super();
         price = cprice;
@@ -29,7 +30,7 @@ public class Offer implements Serializable{
     
     public Offer()
     {
-        this(1, "", "");
+        this(1, "", new AgentID());
     }
     
     public void setPrice(float cprice) 
@@ -63,12 +64,12 @@ public class Offer implements Serializable{
     public String toString() {
         return "Offer from " + companyName + " :" + price + "€.";
     }
-    public void setAgency(String cagency)
+    public void setAgency(AgentID cagency)
     {
         agency = cagency;
     }
     
-    public String getAgency()
+    public AgentID getAgency()
     {
         return agency;
     }

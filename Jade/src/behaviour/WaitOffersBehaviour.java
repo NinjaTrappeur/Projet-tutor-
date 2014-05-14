@@ -46,19 +46,21 @@ public class WaitOffersBehaviour extends SimpleBehaviour
 
             if(done && _myAgent.getBestOffer() != null)
             {
-                ACLMessage msg = new ACLMessage(ACLMessage.AGREE);
-                msg.addReceiver(new AID(_myAgent.getBestOffer().getAgencyID(), AID.ISGUID));
                 try
                 {
+                    ACLMessage msg = new ACLMessage(ACLMessage.AGREE);
+                    msg.addReceiver(new AID(_myAgent.getBestOffer().getAgencyID(), AID.ISGUID));
                     msg.setContentObject(new ReservationRequest(_myAgent.getBestOffer()));
+                    
+                    _myAgent.send(msg);
+                    
+                    System.out.println("WaitOffersBehaviour::done : sending reservation request.");
                 }
                 catch (IOException ex)
                 {
                     System.err.println("WaitOffersBehaviour::done : acl content setting error. "+ex.getLocalizedMessage());
                     Logger.getLogger(WaitOffersBehaviour.class.getName()).log(Level.SEVERE, null, ex);
                 }
-
-                _myAgent.send(msg);
             }
 
             return done;

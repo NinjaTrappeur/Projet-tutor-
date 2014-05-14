@@ -15,6 +15,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import message.AgentID;
 import message.IOfferRequest;
 import message.OfferRequest;
 
@@ -63,7 +64,7 @@ public class ClientViewListener implements ActionListener
             place = (String)_viewAgent.getForm().arrivalCity().getText();
             tg = 30;
             
-            IOfferRequest offerRequest = new OfferRequest(hp, lp, name, dd, rd, place, tg, _viewAgent.getAID().getName());
+            IOfferRequest offerRequest = new OfferRequest(hp, lp, name, dd, rd, place, tg, new AgentID(_viewAgent.getAID().getName(),_viewAgent.getAID().getLocalName(), _viewAgent.getAID().getAddressesArray()));
             
             if(_viewAgent.getCasomClientID() != null)
             {

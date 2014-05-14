@@ -14,7 +14,7 @@ public class ConfirmationLetter implements IConfirmationLetter
 {
     protected float _price;
     protected String _companyName;
-    protected String _agencyID;
+    protected AgentID _agencyID;
     
     public ConfirmationLetter(Offer offer)
     {
@@ -23,7 +23,7 @@ public class ConfirmationLetter implements IConfirmationLetter
         _agencyID = offer.getAgencyID();
     }
     
-    public ConfirmationLetter(float price, String name, String agency)
+    public ConfirmationLetter(float price, String name, AgentID agency)
     {
         _price = price;
         _companyName = name;
@@ -47,13 +47,13 @@ public class ConfirmationLetter implements IConfirmationLetter
     }
     
     @Override
-    public String getAgencyID()
+    public AgentID getAgencyID()
     {
         return _agencyID;
     }
     
     @Override
-    public void setAgencyID(String agency)
+    public void setAgencyID(AgentID agency)
     {
         _agencyID = agency;
     }

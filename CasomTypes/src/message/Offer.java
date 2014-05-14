@@ -13,9 +13,9 @@ package message;
 public class Offer implements IOffer{
     protected float _price;
     protected String _companyName;
-    protected String _agencyID;
+    protected AgentID _agencyID;
     
-    public Offer(float price, String name, String agency)
+    public Offer(float price, String name, AgentID agency)
     {
         _price = price;
         _companyName = name;
@@ -37,13 +37,13 @@ public class Offer implements IOffer{
     }
     
     @Override
-    public String getAgencyID()
+    public AgentID getAgencyID()
     {
         return _agencyID;
     }
     
     @Override
-    public void setAgencyID(String agency)
+    public void setAgencyID(AgentID agency)
     {
         _agencyID = agency;
     }

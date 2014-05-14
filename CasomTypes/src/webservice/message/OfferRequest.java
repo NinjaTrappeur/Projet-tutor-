@@ -1,6 +1,7 @@
 package webservice.message;
 
 import java.util.Date;
+import message.AgentID;
 
 public class OfferRequest {
     private float highestPrice;
@@ -11,14 +12,14 @@ public class OfferRequest {
     private String placeName;
     private String type;
     private long timeGuard;
-    private String agentId;
+    private AgentID agentId;
     
     public long getTimeGuard() {
         return timeGuard;
     }
     
     public OfferRequest (float hp, float lp, String name, Date dd, Date rd, String place, long tg,
-            String cagentId)
+            AgentID cagentId)
     {
         highestPrice = hp;
         lowestPrice = lp;
@@ -33,7 +34,7 @@ public class OfferRequest {
     
     public OfferRequest ()
     {
-        this(2000, 1, "", new Date(), new Date(), "", 3, "");
+        this(2000, 1, "", new Date(), new Date(), "", 3, new AgentID());
     }
     
     public float getHighestPrice() {
@@ -130,14 +131,14 @@ public class OfferRequest {
     /**
      * @return the agentId
      */
-    public String getAgentId() {
+    public AgentID getAgentId() {
         return agentId;
     }
 
     /**
      * @param agentId the agentId to set
      */
-    public void setAgentId(String agentId) {
+    public void setAgentId(AgentID agentId) {
         this.agentId = agentId;
     }
 }

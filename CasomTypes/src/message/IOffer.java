@@ -14,9 +14,9 @@ public interface IOffer  extends IMessage
 {
     public float getPrice();
     public String getCompanyName();
-    public String getAgencyID();
+    public AgentID getAgencyID();
     
     public void setPrice(float price);
     public void setCompanyName(String comName);
-    public void setAgencyID(String agency);
+    public void setAgencyID(AgentID agency);
 }
