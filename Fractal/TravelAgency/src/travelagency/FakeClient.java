@@ -1,5 +1,6 @@
 package travelagency;
 
+import jade.core.AID;
 import java.net.Inet4Address;
 import java.util.Date;
 import javax.xml.ws.Endpoint;
@@ -7,7 +8,6 @@ import message.ConfirmationLetter;
 import message.IConfirmationLetter;
 import message.IOffer;
 import message.IOfferPack;
-import message.IOfferRequest;
 import message.Offer;
 import message.OfferPack;
 import message.OfferRequest;
@@ -18,9 +18,8 @@ import travelagency.interfaces.IVacationOfferBrowser;
 import travelagency.interfaces.IVacationReservationManager;
 
 
-
 @Component(provides=@Interface(name="r", signature = java.lang.Runnable.class))
-public class Client implements Runnable{
+public class FakeClient implements Runnable{
     
     @Requires(name="getOffer")
     private IVacationOfferBrowser _getOfferInterface;
@@ -30,23 +29,12 @@ public class Client implements Runnable{
     
     @Override
     public void run() {
-        String localIp = "http://";
-        WsLink webServiceLink = new WsLink(this);
-        try {
-            localIp = localIp.concat(Inet4Address.getLocalHost().getHostAddress()); 
-        }
-        catch(Exception e){
-            System.err.println(e);
-        }
-        localIp = localIp.concat(":8000/Ws");
-        Endpoint.publish(localIp, webServiceLink);
-        System.out.println("Webservice lancé sur " + localIp);
-//        System.out.println("Émmission d'une requête d'offres.");
-//        IOfferPack offer = _getOfferInterface.getProposals(new OfferRequest(100, 200, "toto", new Date(), new Date(), "", 0));
-//        System.out.println("Résultat: " + offer.toString());
-//        System.out.print("Émmision d'une requête de validation.");
-//        IConfirmationLetter letter = _makeReservationInterface.reserveOffer(new Offer(0,""));
-//        System.out.println("Résultat: " + letter.toString());
+        System.out.println("Émmission d'une requête d'offres.");
+        IOfferPack offer = _getOfferInterface.getProposals(new OfferRequest(100, 200, "toto", new Date(), new Date(), "", 0));
+        System.out.println("Résultat: " + offer.toString());
+        System.out.print("Émmision d'une requête de validation.");
+        IConfirmationLetter letter = _makeReservationInterface.reserveOffer(new Offer(0,"", new AID()));
+        System.out.println("Résultat: " + letter.toString());
     }
     
     public OfferPack getOffers(OfferRequest request){
