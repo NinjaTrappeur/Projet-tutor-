@@ -401,6 +401,8 @@ public class ClientViewForm extends javax.swing.JFrame
 
         jLabel10.setText("Name");
 
+        _clientName.setText("Georges");
+
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
