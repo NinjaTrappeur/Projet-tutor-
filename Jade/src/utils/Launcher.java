@@ -25,7 +25,7 @@ import jade.util.Logger;
  * jade.wrapper.AgentContainer container = Launcher.boot(args);
  * 
  * String [] agentArgs = new String [0];
- * AgentController agent = container.createNewAgent(new AID("client", AID.ISLOCALNAME),"agent.Client", args);
+ * jade.wrapper.AgentController agent = container.createNewAgent(new AID("client", AID.ISLOCALNAME), "agent.CasomClient", args);
  * agent.start(); // not sure about this one
  * 
  */
