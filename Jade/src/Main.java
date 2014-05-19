@@ -1,5 +1,6 @@
 
 import jade.wrapper.StaleProxyException;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import utils.Launcher;
@@ -20,6 +21,10 @@ public class Main
     public static void main(String [] args)
     {
         jade.wrapper.AgentController controller;
+        Boolean localClient=true, remoteMode=false;
+        
+        parseCmdLine(args, localClient, remoteMode);
+        
         String [] containerArgs = {"-gui"};
 
         jade.wrapper.AgentContainer mainContainer = Launcher.boot(containerArgs);
@@ -28,12 +33,18 @@ public class Main
         {
             agent.CasomClient client = new agent.CasomClient();
             agent.ClientView view = new agent.ClientView();
-            agent.TravelAgency agency = new agent.TravelAgency();
+            agent.TravelAgency agency = new agent.TravelAgency(remoteMode);
             
-            controller = mainContainer.acceptNewAgent("client", client);
-            controller.start();
+            // Add agents
+            if(localClient)
+            {
+                controller = mainContainer.acceptNewAgent("client", client);
+                controller.start();
+            }
+            
             controller = mainContainer.acceptNewAgent("agency", agency);
             controller.start();
+            
             controller = mainContainer.acceptNewAgent("view", view);
             controller.start();
         }
@@ -41,6 +52,25 @@ public class Main
         {
             Logger.getLogger(TestLauncher.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+    }
+    
+    public static void parseCmdLine(String [] args, Boolean localClient, Boolean remoteAgency)
+    {
+        int i = 0;
+        while(i < args.length)
+        {
+            switch(args[i])
+            {
+                case "-client":
+                    localClient = true;
+                    break;
+                case "-noclient":
+                    localClient = false;
+                    break;
+                case "-remote":
+                    remoteAgency = true;
+                    break;
+            }
+        }
     }
 }

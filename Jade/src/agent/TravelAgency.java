@@ -13,6 +13,7 @@ import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import travelagency.ITravelAgency;
 
 
 
@@ -23,11 +24,24 @@ import java.util.logging.Logger;
  */
 public class TravelAgency extends jade.core.Agent
 {
+    private boolean _remoteMode;
+    
     public static final String ServiceDescription;
     
     static
     {
         ServiceDescription = "Casom-TravelAgency-Stub-Agent";
+    }
+    
+    public TravelAgency(boolean remoteMode)
+    {
+        super();
+        _remoteMode = remoteMode;
+    }
+    
+    public TravelAgency()
+    {
+        this(false);
     }
     
     @Override
@@ -41,7 +55,8 @@ public class TravelAgency extends jade.core.Agent
             Logger.getLogger(TravelAgency.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        this.addBehaviour(new TravelAgencyAutomatonBehaviour(this));
+        ITravelAgency remoteAgencyStub = (_remoteMode) ? new service.WsTravelAgency() : new fake.RemoteAgency(this);
+        this.addBehaviour(new TravelAgencyAutomatonBehaviour(this, remoteAgencyStub));
     }
     
     @Override
@@ -72,5 +87,10 @@ public class TravelAgency extends jade.core.Agent
         
         dfd.addServices(sd);
         DFService.register(this, dfd);
+    }
+    
+    public boolean isRemoteMode()
+    {
+        return _remoteMode;
     }
 }

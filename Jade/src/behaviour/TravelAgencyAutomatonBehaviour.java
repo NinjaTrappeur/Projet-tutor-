@@ -31,11 +31,10 @@ public class TravelAgencyAutomatonBehaviour extends jade.core.behaviours.CyclicB
     IReservationRequest _reservationRequest;
     ACLMessage _receivedMsg;
     
-    public TravelAgencyAutomatonBehaviour(agent.TravelAgency myAgent)
+    public TravelAgencyAutomatonBehaviour(agent.TravelAgency myAgent, ITravelAgency remoteAgencyStub)
     {
         _myAgent = myAgent;
-        _remoteAgencyStub = new fake.RemoteAgency(_myAgent);
-//        _remoteAgencyStub = new service.WsTravelAgency();
+        _remoteAgencyStub = remoteAgencyStub;
         
         _offerRequest = null;
         _reservationRequest = null;
