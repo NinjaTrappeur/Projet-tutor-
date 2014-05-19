@@ -39,6 +39,7 @@ public class WsTravelAgency implements ITravelAgency
             Logger.getLogger(WsTravelAgency.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+        System.out.println("WsTravelAgency::requestProposal : returnning offerPack "+offerPack);
         return offerPack;
     }
     
@@ -48,6 +49,7 @@ public class WsTravelAgency implements ITravelAgency
         travelagency.Offer wsOffer = _wsFromMessage(offer);
         travelagency.ConfirmationLetter wsConfirmLetter = this.makeReservation(wsOffer);
         
+        System.out.println("WsTravelAgency::reserveOffer : returning confirmation letter "+_messageFromWs(wsConfirmLetter));
         return _messageFromWs(wsConfirmLetter);
     }
 
@@ -114,7 +116,6 @@ public class WsTravelAgency implements ITravelAgency
     {
         float price;
         String name;
-        AID agency;
         message.IOffer offer;
         
         message.IOfferPack offerPack = new message.OfferPack();

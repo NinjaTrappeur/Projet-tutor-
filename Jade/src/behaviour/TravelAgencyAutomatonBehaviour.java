@@ -47,7 +47,7 @@ public class TravelAgencyAutomatonBehaviour extends jade.core.behaviours.CyclicB
     {
         this.block(); // wait that myAgent receives message
         _receivedMsg = _myAgent.receive();
-        System.out.println("TravelAgencyAutomatonBehaviour::action : message received from "+_receivedMsg.getSender());
+        System.out.println("TravelAgencyAutomatonBehaviour::action : message received from "+_receivedMsg);
         if(_receivedMsg != null)
         {
             try
@@ -91,6 +91,7 @@ public class TravelAgencyAutomatonBehaviour extends jade.core.behaviours.CyclicB
         {
             System.out.println("before");
             
+            System.out.println("TravelAgencyAutomatonBehaviour::_respondOfferRequest : MAking AID. Name: "+_myAgent.getAID().getName());
             _offerRequest.getAgentID().setName(_myAgent.getAID().getName());
             _offerRequest.getAgentID().setLocalName(_myAgent.getAID().getLocalName());
             _offerRequest.getAgentID().setAdresse(_myAgent.getAID().getAddressesArray()[0]);
