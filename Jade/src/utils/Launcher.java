@@ -17,6 +17,17 @@ import jade.util.Logger;
 /**
  *
  * @author josuah
+ * 
+ * The launching code would look like the following:
+ * 
+ * String [] args = {"-cp", "lib/jade.jar:Jade/build", "-container"};
+ * 
+ * jade.wrapper.AgentContainer container = Launcher.boot(args);
+ * 
+ * String [] agentArgs = new String [0];
+ * AgentController agent = container.createNewAgent(new AID("client", AID.ISLOCALNAME),"agent.Client", args);
+ * agent.start(); // not sure about this one
+ * 
  */
 public class Launcher
 {
