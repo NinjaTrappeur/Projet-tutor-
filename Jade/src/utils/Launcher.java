@@ -11,7 +11,6 @@ import jade.core.ProfileImpl;
 import jade.core.ProfileException;
 
 import jade.util.leap.Properties;
-import jade.util.Logger;
 
 /**
  *
@@ -25,7 +24,6 @@ public class Launcher
 {
 
     public static final String DEFAULT_FILENAME = "leap.properties";
-    private static final Logger logger = Logger.getMyLogger("jade.Boot");
 
     /**
      * Fires up the <b><em>JADE</em></b> system. This method initializes the
