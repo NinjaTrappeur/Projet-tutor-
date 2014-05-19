@@ -18,7 +18,7 @@ public class TestLauncher
 {
     public static void main(String [] args)
     {
-        String [] containerArgs = {"-cp", "lib/jade.jar:Jade/build", "-container", "-host", "10.12.22.15", "-port", "1099"};
+        String [] containerArgs = {"-container", "-host", "10.12.22.15", "-port", "1099"};
 
         jade.wrapper.AgentContainer container = Launcher.boot(containerArgs);
 
