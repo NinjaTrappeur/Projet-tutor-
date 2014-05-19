@@ -27,8 +27,8 @@ public class TestLauncher
         jade.wrapper.AgentController agent;
         try
         {
-            agent = container.createNewAgent("client", "agent.CasomClient", agentArgs);
-            //agent.start(); // not sure about this one
+            agent.CasomClient client = new agent.CasomClient();
+            container.acceptNewAgent("client", client);
         }
         catch (StaleProxyException ex)
         {
