@@ -6,7 +6,6 @@
 
 package utils;
 
-import jade.core.AID;
 import jade.wrapper.StaleProxyException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,8 +22,6 @@ public class TestLauncher
 
         jade.wrapper.AgentContainer container = Launcher.boot(containerArgs);
 
-        String [] agentArgs = new String [0];
-        jade.wrapper.AgentController agent;
         try
         {
             agent.CasomClient client = new agent.CasomClient();
