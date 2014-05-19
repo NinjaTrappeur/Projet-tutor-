@@ -34,8 +34,8 @@ public class TravelAgencyAutomatonBehaviour extends jade.core.behaviours.CyclicB
     public TravelAgencyAutomatonBehaviour(agent.TravelAgency myAgent)
     {
         _myAgent = myAgent;
-//        _remoteAgencyStub = new fake.RemoteAgency(_myAgent);
-        _remoteAgencyStub = new service.WsTravelAgency();
+        _remoteAgencyStub = new fake.RemoteAgency(_myAgent);
+//        _remoteAgencyStub = new service.WsTravelAgency();
         
         _offerRequest = null;
         _reservationRequest = null;
@@ -94,7 +94,8 @@ public class TravelAgencyAutomatonBehaviour extends jade.core.behaviours.CyclicB
             System.out.println("TravelAgencyAutomatonBehaviour::_respondOfferRequest : MAking AID. Name: "+_myAgent.getAID().getName());
             _offerRequest.getAgentID().setName(_myAgent.getAID().getName());
             _offerRequest.getAgentID().setLocalName(_myAgent.getAID().getLocalName());
-            _offerRequest.getAgentID().setAdresse(_myAgent.getAID().getAddressesArray()[0]);
+            String address = (_myAgent.getAID().getAddressesArray().length > 0) ? _myAgent.getAID().getAddressesArray()[0] : "";
+            _offerRequest.getAgentID().setAdresse(address);
             
             IOfferPack offerPack = _remoteAgencyStub.requestProposal(_offerRequest);
             System.out.println("after");

@@ -58,15 +58,7 @@ public class CasomClient extends jade.core.Agent
             System.err.println("CasomClient::setup : DF registration error. "+ex);
             Logger.getLogger(CasomClient.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        message.AgentID id = new message.AgentID(this.getAID().getName(), this.getAID().getLocalName(), this.getAID().getAddressesArray()[0]);
-        AID aid  = new AID();
-        aid.setName(id.getName());
-        aid.setLocalName(id.getLocalName());
-        aid.addAddresses(id.getAdresse());
-        System.out.println(this.getAID());
-        System.out.println(aid);
-        
+                
         // Search needed agents
         this.locatePeers();
         

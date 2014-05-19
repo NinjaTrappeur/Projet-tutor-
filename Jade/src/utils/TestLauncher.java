@@ -25,7 +25,8 @@ public class TestLauncher
         try
         {
             agent.CasomClient client = new agent.CasomClient();
-            container.acceptNewAgent("client", client);
+            
+            container.acceptNewAgent("client", client).start();
         }
         catch (StaleProxyException ex)
         {

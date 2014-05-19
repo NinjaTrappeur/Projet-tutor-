@@ -64,11 +64,12 @@ public class ClientViewListener implements ActionListener
             place = (String)_viewAgent.getForm().arrivalCity().getText();
             tg = 5;
             
+            String address = (_viewAgent.getAID().getAddressesArray().length > 0) ? _viewAgent.getAID().getAddressesArray()[0] : "";
             IOfferRequest offerRequest = new OfferRequest(hp, lp, name, dd, rd, place, tg,
                     new AgentID(
                             _viewAgent.getAID().getName(),
                             _viewAgent.getAID().getLocalName(),
-                            _viewAgent.getAID().getAddressesArray()[0]));
+                            address));
             
             if(_viewAgent.getCasomClientID() != null)
             {

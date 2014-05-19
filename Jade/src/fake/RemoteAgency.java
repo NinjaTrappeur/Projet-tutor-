@@ -33,8 +33,9 @@ public class RemoteAgency implements ITravelAgency
     @Override
     public IOfferPack requestProposal(IOfferRequest offerRequest)
     {
+        String address = (_agency.getAID().getAddressesArray().length > 0) ? _agency.getAID().getAddressesArray()[0] : "";
         AgentID aid = new AgentID(_agency.getAID().getName(),
-                _agency.getAID().getLocalName(), _agency.getAID().getAddressesArray()[0]);
+                _agency.getAID().getLocalName(), address);
         IOffer offer = new Offer(1,"wazaa", aid);
         
         return new OfferPack(offer);
@@ -43,8 +44,9 @@ public class RemoteAgency implements ITravelAgency
     @Override
     public IConfirmationLetter reserveOffer(IOffer offer)
     {
+        String address = (_agency.getAID().getAddressesArray().length > 0) ? _agency.getAID().getAddressesArray()[0] : "";
         AgentID aid = new AgentID(_agency.getAID().getName(),
-                _agency.getAID().getLocalName(), _agency.getAID().getAddressesArray()[0]);
+                _agency.getAID().getLocalName(), address);
         return new ConfirmationLetter(1, "wazaa", aid);
     }
 }
