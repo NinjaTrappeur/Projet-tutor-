@@ -20,8 +20,27 @@ public class Main
     public static void main(String [] args)
     {
         jade.wrapper.AgentController controller;
-        String [] containerArgs = {"-gui", "-agents", "client:agent.CasomClient;agency:agent.TravelAgency;view:agent.ClientView"};
+        String [] containerArgs = {"-gui"};
 
-        Launcher.boot(containerArgs);
+        jade.wrapper.AgentContainer mainContainer = Launcher.boot(containerArgs);
+
+        try
+        {
+            agent.CasomClient client = new agent.CasomClient();
+            agent.ClientView view = new agent.ClientView();
+            agent.TravelAgency agency = new agent.TravelAgency();
+            
+            controller = mainContainer.acceptNewAgent("client", client);
+            controller.start();
+            controller = mainContainer.acceptNewAgent("agency", agency);
+            controller.start();
+            controller = mainContainer.acceptNewAgent("view", view);
+            controller.start();
+        }
+        catch (StaleProxyException ex)
+        {
+            Logger.getLogger(TestLauncher.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 }
