@@ -235,7 +235,7 @@ public class CasomClientAutomatonBehaviour extends jade.core.behaviours.CyclicBe
                 AID receiver = new AID();
                 receiver.setName(_myAgent.getBestOffer().getAgencyID().getName());
                 receiver.setLocalName(_myAgent.getBestOffer().getAgencyID().getLocalName());
-                receiver.addAddresses(_myAgent.getBestOffer().getAgencyID().getAdresse());
+                receiver.addAddresses(_myAgent.getBestOffer().getAgencyID().getAddress());
                 
                 msg.addReceiver(receiver);
                 msg.setContentObject(new ReservationRequest(_myAgent.getBestOffer()));

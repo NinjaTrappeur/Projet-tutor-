@@ -1,36 +1,35 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package message;
 
 import java.io.Serializable;
 
 /**
  *
- * @author josuah
+ * Represents an AID as a JavaBean.
  */
 public class AgentID implements Serializable
 {
-    private String name;
-    private String localName;
-    private String adresse;
-
-    public AgentID()
-    {
-        name = "";
-        localName = "";
-        adresse = "";
-    }
+    private String name; /*!< The name of the agent (prefix:address).*/
+    private String localName; /*!< The local name of the agent. */
+    private String address; /*!< The address of the agent (AID.getAllAddresses). */
     
+    /**
+     * Constructor
+     * @param iname the name of the agent.
+     * @param ilocalName the localname of the agent.
+     * @param iallAdresses  the address of the agent.
+     */
     public AgentID(String iname, String ilocalName, String iallAdresses)
     {
         name = iname;
         localName = ilocalName;
-        adresse = iallAdresses;
+        address = iallAdresses;
     }
+
+    public AgentID()
+    {
+        this("", "", "");
+    }
+
     /**
      * @return the name
      */
@@ -60,21 +59,21 @@ public class AgentID implements Serializable
     }
 
     /**
-     * @return the adresse
+     * @return the address
      */
-    public String getAdresse() {
-        return adresse;
+    public String getAddress() {
+        return address;
     }
 
     /**
-     * @param allSdresses the adresse to set
+     * @param allSdresses the address to set
      */
-    public void setAdresse(String allSdresses) {
-        this.adresse = allSdresses;
+    public void setAddress(String allSdresses) {
+        this.address = allSdresses;
     }
     
     @Override
     public String toString () {
-        return name + localName + adresse;
+        return name + localName + address;
     }
 }

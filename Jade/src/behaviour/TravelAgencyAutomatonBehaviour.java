@@ -103,7 +103,7 @@ public class TravelAgencyAutomatonBehaviour extends jade.core.behaviours.CyclicB
             _offerRequest.getAgentID().setName(_myAgent.getAID().getName());
             _offerRequest.getAgentID().setLocalName(_myAgent.getAID().getLocalName());
             String address = (_myAgent.getAID().getAddressesArray().length > 0) ? _myAgent.getAID().getAddressesArray()[0] : "";
-            _offerRequest.getAgentID().setAdresse(address);
+            _offerRequest.getAgentID().setAddress(address);
             
             IOfferPack offerPack = _serviceProvider.requestProposal(_offerRequest);
             
@@ -115,7 +115,7 @@ public class TravelAgencyAutomatonBehaviour extends jade.core.behaviours.CyclicB
                 ACLMessage msg = _receivedMsg.createReply();
                 msg.setContentObject(offerPack);
                 myAgent.send(msg);
-                System.err.println("TravelAgencyAutomatonBehaviour::_respondOfferRequest : offer sent to "+msg.getAllReceiver().next());
+                System.out.println("TravelAgencyAutomatonBehaviour::_respondOfferRequest : offer sent to "+msg.getAllReceiver().next());
             }
             catch (IOException ex)
             {

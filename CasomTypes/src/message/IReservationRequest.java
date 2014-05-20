@@ -1,16 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package message;
 
 /**
  *
- * @author josuah
+ * A message to book a vacation offer.
  */
 public interface IReservationRequest extends IMessage
 {
+    /**
+     * gets the offer that is to be booked.
+     * @return the offer to be booked.
+     */
     public IOffer getOffer();
 }
