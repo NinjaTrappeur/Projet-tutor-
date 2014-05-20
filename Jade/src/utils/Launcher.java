@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package utils;
 
 import jade.core.Runtime;
@@ -14,11 +9,11 @@ import jade.util.leap.Properties;
 
 /**
  *
- * @author josuah
+ * An agent container launcher.
+ * The Jade.Boot class does not allow to get the reference of the newly created agent container.
+ * This class allows to get a controller on an agent container created at runtime.
  * 
- * The launching code would look like the following:
- * 
- * See TestLauncher for an example.
+ * See utils.TestLauncher for an example.
  */
 public class Launcher
 {
@@ -26,12 +21,10 @@ public class Launcher
     public static final String DEFAULT_FILENAME = "leap.properties";
 
     /**
-     * Fires up the <b><em>JADE</em></b> system. This method initializes the
-     * Profile Manager and then starts the bootstrap process for the
-     * <B><em>JADE</em></b>
-     * agent platform.
-     * @param args
-     * @return 
+     * Boot an agent container.
+     * Does the same job as jade.Boot.main, but returns a reference on a wrapper for the agent controller.
+     * @param args agent container boot arguments. -h for details.
+     * @return wrapper on the created agent container.
      */
     public static jade.wrapper.AgentContainer boot(String args[])
     {
@@ -70,7 +63,7 @@ public class Launcher
 
             // Start a new JADE runtime system
             Runtime.instance().setCloseVM(true);
-			//#PJAVA_EXCLUDE_BEGIN
+            
             // Check whether this is the Main Container or a peripheral container
             if (p.getBooleanProperty(Profile.MAIN, true)) 
             {
@@ -86,7 +79,6 @@ public class Launcher
             System.err.println("Error creating the Profile [" + pe.getMessage() + "]");
             pe.printStackTrace();
             jade.Boot.printUsage();
-            //System.err.println("Usage: java jade.Launcher <filename>");
             System.exit(-1);
         }
         catch (IllegalArgumentException iae)
@@ -94,7 +86,6 @@ public class Launcher
             System.err.println("Command line arguments format error. " + iae.getMessage());
             iae.printStackTrace();
             jade.Boot.printUsage();
-            //System.err.println("Usage: java jade.Launcher <filename>");
             System.exit(-1);
         }
         

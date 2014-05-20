@@ -60,7 +60,7 @@ public class TravelAgency extends jade.core.Agent
             Logger.getLogger(TravelAgency.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        ITravelAgency remoteAgencyStub = (_remoteMode) ? new service.WsTravelAgency() : new fake.RemoteAgency(this);
+        ITravelAgency remoteAgencyStub = (_remoteMode) ? new ws.ServiceProvider() : new fake.ServiceProvider(this);
         this.addBehaviour(new TravelAgencyAutomatonBehaviour(this, remoteAgencyStub));
     }
     

@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package view;
 
 import agent.ClientView;
@@ -21,23 +15,34 @@ import message.OfferRequest;
 
 /**
  *
- * @author josuah
+ * Event listener for the view.
  */
 public class ClientViewListener implements ActionListener
 {
-    ClientView _viewAgent;
+    ClientView _viewAgent; /*!< The agent that manages the view.*/
+    
+    /**
+     * Constructor.
+     * @param view the agent that manages the view.
+     */
     public ClientViewListener(ClientView view)
     {
         _viewAgent = view;
     }
     
+    /**
+     * Manage events.
+     * Event listener API.
+     * Forwards offer request from the user (via the GUI) to the <i>client agent</i>.
+     * @param ev 
+     */
     @Override
     public void actionPerformed(ActionEvent ev)
     {
-        float hp, lp;
-        long tg;
-        String name, place;
-        Date dd, rd;
+        float hp, lp; /*!< Highest prices, lowest prices.*/
+        long tg; /*!< Time guard.*/
+        String name, place; /*!< Client name, vacation place.*/
+        Date dd, rd; /*!< departure date, return date.*/
         
         System.out.println("ClientViewListener::actionPerformed : inside actionPerformed");
         
@@ -45,6 +50,7 @@ public class ClientViewListener implements ActionListener
         {
             System.out.println("ClientViewListener::actionPerformed : action command is ClientViewForm.SearchActionCommand.");
         
+            // Format offer request fields from GUI values
             hp = (float)_viewAgent.getForm().maxPrice().getValue();
             lp = (float)_viewAgent.getForm().minPrice().getValue();
             name = _viewAgent.getForm().clientName().getText();
@@ -71,6 +77,7 @@ public class ClientViewListener implements ActionListener
                             _viewAgent.getAID().getLocalName(),
                             address));
             
+            // Send offer request.
             if(_viewAgent.getCasomClientID() != null)
             {
                 try

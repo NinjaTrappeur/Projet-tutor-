@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package travelagency;
 
 import message.IConfirmationLetter;
@@ -13,10 +7,23 @@ import message.IOfferPack;
 
 /**
  *
- * @author josuah
+ * Interface of service provider entities.
+ * Service providers are entities that are typically to be used be the travel agency agent, to actually provide it's services.
+ * This can be anything, a web service, a simple object, etc.
  */
 public interface ITravelAgency
 {
+    /**
+     * Responds to a request for proposal.
+     * @param offerRequest the request for proposal message.
+     * @return IOfferPack a set of vacation offers.
+     */
     public IOfferPack requestProposal(IOfferRequest offerRequest);
+    
+    /**
+     * Responds to a reservation request.
+     * @param offer the offer to be booked.
+     * @return IConfirmationLetter a confirmation letter for the reservation.
+     */
     public IConfirmationLetter reserveOffer(IOffer offer);
 }

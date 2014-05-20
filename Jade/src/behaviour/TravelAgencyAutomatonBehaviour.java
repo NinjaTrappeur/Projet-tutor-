@@ -21,7 +21,7 @@ import travelagency.ITravelAgency;
 public class TravelAgencyAutomatonBehaviour extends jade.core.behaviours.CyclicBehaviour
 {
     agent.TravelAgency _myAgent; /*!< The agent to wich this behaviour is added. In contrary of the 'myAgent' property from the Behaviour class, allow to call specific extended methods on the agent. */
-    ITravelAgency _remoteAgencyStub; /*!< An objet that actually implements the services offered by the agent to which this behaviour is added. */
+    ITravelAgency _serviceProvider; /*!< An objet that actually implements the services offered by the agent to which this behaviour is added. */
     IOfferRequest _offerRequest; /*!< The last offer request the agent received. */
     IReservationRequest _reservationRequest; /*!< The last reservation request the agent received. */
     ACLMessage _receivedMsg; /*!< The last ACL message the agent received. */
@@ -34,7 +34,7 @@ public class TravelAgencyAutomatonBehaviour extends jade.core.behaviours.CyclicB
     public TravelAgencyAutomatonBehaviour(agent.TravelAgency myAgent, ITravelAgency remoteAgencyStub)
     {
         _myAgent = myAgent;
-        _remoteAgencyStub = remoteAgencyStub;
+        _serviceProvider = remoteAgencyStub;
         
         _offerRequest = null;
         _reservationRequest = null;
@@ -46,7 +46,7 @@ public class TravelAgencyAutomatonBehaviour extends jade.core.behaviours.CyclicB
      * Implements the <i>travel agency</i> automaton.
      * <ul>
      * <li>Concurrently waits a request for proposal and request for reservation from the <i>client</i> agent.</li>
-     * <li>When a request for porposal is received: uses the entity <i>_remoteAgencyStub</i> to actually provide an offer.</li>
+     * <li>When a request for porposal is received: uses the entity <i>_serviceProvider</i> to actually provide an offer.</li>
      * <li>When a reservation request is received: sends a confirmation letter to the client.</li>
      * <ul>
      * See the project reports for more details about the automaton.
@@ -105,7 +105,7 @@ public class TravelAgencyAutomatonBehaviour extends jade.core.behaviours.CyclicB
             String address = (_myAgent.getAID().getAddressesArray().length > 0) ? _myAgent.getAID().getAddressesArray()[0] : "";
             _offerRequest.getAgentID().setAdresse(address);
             
-            IOfferPack offerPack = _remoteAgencyStub.requestProposal(_offerRequest);
+            IOfferPack offerPack = _serviceProvider.requestProposal(_offerRequest);
             
             System.out.println("TravelAgencyAutomatonBehaviour::_respondOfferRequest : received offer pack: \n\t"+offerPack.toString());
             System.out.println("TravelAgencyAutomatonBehaviour::_respondOfferRequest : agent id "+offerPack.getBestOffer().getAgencyID().toString());
@@ -136,7 +136,7 @@ public class TravelAgencyAutomatonBehaviour extends jade.core.behaviours.CyclicB
     {
         if(_reservationRequest != null)
         {
-            IConfirmationLetter confirmationLetter = _remoteAgencyStub.reserveOffer(_reservationRequest.getOffer());
+            IConfirmationLetter confirmationLetter = _serviceProvider.reserveOffer(_reservationRequest.getOffer());
             
             System.out.println("TravelAgencyAutomatonBehaviour::_respondReservationRequest : received confirmation letter: \n\t"+confirmationLetter);
 

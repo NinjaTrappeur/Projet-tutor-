@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package utils;
 
 import jade.wrapper.StaleProxyException;
@@ -12,7 +6,9 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author josuah
+ * Test the utils.Launcher class.
+ * This class shows some argument for launching an agent container, adding agents to this container
+ * and starting the agents (using the agents controllers).
  */
 public class TestLauncher
 {

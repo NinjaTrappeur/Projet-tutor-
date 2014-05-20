@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package view;
 
 import javax.swing.JButton;
@@ -15,11 +9,12 @@ import javax.swing.JTextField;
 
 /**
  *
- * @author josuah
+ * Form for the view.
+ * A NetBeans JFrame form, with some getters added.
  */
 public class ClientViewForm extends javax.swing.JFrame
 {
-    public static final String SearchActionCommand;
+    public static final String SearchActionCommand; /*!< Action command for the listener (view.ClientViewListener)*/
     
     static
     {
@@ -35,81 +30,145 @@ public class ClientViewForm extends javax.swing.JFrame
         this.pack();
     }
     
+    /**
+     * Gets the departure city field.
+     * @return JtextField the departure city text field.
+     */
     public JTextField departureCity()
     {
         return _departureCity;
     }
     
+    /**
+     * Gets the departure day field.
+     * @return JSpinner the departure day spinner field.
+     */
     public JSpinner departureDay()
     {
         return _departureDay;
     }
     
+    /**
+     * Gets the departure month field.
+     * @return JComboBox the departure month drop down field.
+     */
     public JComboBox departureMonth()
     {
         return _departureMonth;
     }
     
+    /**
+     * Gets the departure year field.
+     * @return JSpinner the departure year spinner field.
+     */
     public JSpinner departureYear()
     {
         return _departureYear;
     }
     
+    /**
+     * Gets the arrival city field.
+     * @return JTextField the arrival city text field.
+     */
     public JTextField arrivalCity()
     {
         return _arrivalCity;
     }
     
+    /**
+     * Gets the return field.
+     * @return JCheckBox the return check box field.
+     */
     public JCheckBox returnCheckBox()
     {
         return _arrivalReturn;
     }
     
+    /**
+     * Gets the return day field.
+     * @return JSpinner the return day spinner field.
+     */
     public JSpinner returnDay()
     {
-        return _departureDay;
+        return _returnDate;
     }
     
+    /**
+     * Gets the return month field.
+     * @return JComboBox the return month drop down field.
+     */
     public JComboBox returnMonth()
     {
-        return _departureMonth;
+        return _returnMonth;
     }
     
+    /**
+     * Gets the return year field.
+     * @return JSpinner the return year spinner field.
+     */
     public JSpinner returnYear()
     {
-        return _departureYear;
+        return _returnYear;
     }
     
+    /**
+     * Gets the hotel booking switch.
+     * @return JCheckBox hotel booking check box field.
+     */
     public JCheckBox bookHotelCheckBox()
     {
         return _hotelBookHotel;
     }
     
+    /**
+     * Gets the number of nights field.
+     * @return JSpinner the number of nights spinner field.
+     */
     public JSpinner nbNights()
     {
         return _nbNights;
     }
     
+    /**
+     * Gets the min price field.
+     * @return JSpinner the min price spinner field.
+     */
     public JSpinner minPrice()
     {
         return _minPrice;
     }
     
+    /**
+     * Gets the max price field.
+     * @return JSpinner the max price spinner field.
+     */
     public JSpinner maxPrice()
     {
         return _maxPrice;
     }
     
+    /**
+     * Gets the result output field.
+     * @return JTextArea the results output text area field.
+     */
     public JTextArea output()
     {
         return _output;
     }
     
+    /**
+     * Gets the search button field.
+     * @return JButton the search button.
+     */
     public JButton searchButton()
     {
         return _searchButton;
     }
     
+    /**
+     * Gets the client name field.
+     * @return JtextField the client name text field.
+     */
     public JTextField clientName()
     {
         return _clientName;
