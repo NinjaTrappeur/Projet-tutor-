@@ -161,7 +161,6 @@ public class ClientViewForm extends javax.swing.JFrame
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setName("mainFrame"); // NOI18N
-        setPreferredSize(new java.awt.Dimension(640, 480));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Flight", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, java.awt.Color.darkGray));
 

@@ -21,9 +21,9 @@ public class Main
     public static void main(String [] args)
     {
         jade.wrapper.AgentController controller;
-        Boolean localClient=true, remoteMode=false;
         
-        parseCmdLine(args, localClient, remoteMode);
+        System.out.println("Yahoo");
+        HashMap<String, Boolean> switches = Main.parseCmdLine(args);
         
         String [] containerArgs = {"-gui"};
 
@@ -31,20 +31,18 @@ public class Main
 
         try
         {
-            agent.CasomClient client = new agent.CasomClient();
-            agent.ClientView view = new agent.ClientView();
-            agent.TravelAgency agency = new agent.TravelAgency(remoteMode);
-            
-            // Add agents
-            if(localClient)
+            if(switches.get("localClient"))
             {
+                agent.CasomClient client = new agent.CasomClient();
                 controller = mainContainer.acceptNewAgent("client", client);
                 controller.start();
             }
             
+            agent.TravelAgency agency = new agent.TravelAgency(switches.get("remoteMode"));
             controller = mainContainer.acceptNewAgent("agency", agency);
             controller.start();
             
+            agent.ClientView view = new agent.ClientView();
             controller = mainContainer.acceptNewAgent("view", view);
             controller.start();
         }
@@ -54,23 +52,27 @@ public class Main
         }
     }
     
-    public static void parseCmdLine(String [] args, Boolean localClient, Boolean remoteAgency)
+    public static HashMap<String, Boolean> parseCmdLine(String [] args)
     {
+        HashMap<String, Boolean> switches = new HashMap();
+        switches.put("localClient", true);
+        switches.put("remoteMode", false);
+        
+        System.out.println(switches);
+        
         int i = 0;
         while(i < args.length)
         {
-            switch(args[i])
-            {
-                case "-client":
-                    localClient = true;
-                    break;
-                case "-noclient":
-                    localClient = false;
-                    break;
-                case "-remote":
-                    remoteAgency = true;
-                    break;
-            }
+            if(args[i].equalsIgnoreCase("-noclient"))
+                switches.put("localClient", false);
+            else if(args[i].equalsIgnoreCase("-remote"))
+                switches.put("remoteMode", true);
+            
+            ++i;
         }
+        
+        System.out.println(switches);
+        
+        return switches;
     }
 }
