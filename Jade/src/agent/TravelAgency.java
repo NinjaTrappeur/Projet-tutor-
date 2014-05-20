@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package agent;
 
 import behaviour.TravelAgencyAutomatonBehaviour;
@@ -19,31 +13,42 @@ import travelagency.ITravelAgency;
 
 
 /**
- *
- * @author josuah
+ * <h1>Travel agency agent.</h1>
+ * An agent that represents the travel agency.
  */
 public class TravelAgency extends jade.core.Agent
 {
-    private boolean _remoteMode;
+    private boolean _remoteMode; /*!< Tell whether we get our actual services from remote web service.*/
     
-    public static final String ServiceDescription;
+    public static final String ServiceDescription; /*!< Unique String allowing to register and retrieve this agent in the DF */
     
     static
     {
         ServiceDescription = "Casom-TravelAgency-Stub-Agent";
     }
     
+    /**
+     * Constructor.
+     * @param remoteMode should be true when we want to get actual services from the remote web service.
+     */
     public TravelAgency(boolean remoteMode)
     {
         super();
         _remoteMode = remoteMode;
     }
     
+    /**
+     * Default constructor.
+     * remote mode is false by default.
+     */
     public TravelAgency()
     {
         this(false);
     }
     
+    /**
+     * Register to DF, locate needed agents from DF and add my behaviour.
+     */
     @Override
     public void setup()
     {
@@ -59,6 +64,9 @@ public class TravelAgency extends jade.core.Agent
         this.addBehaviour(new TravelAgencyAutomatonBehaviour(this, remoteAgencyStub));
     }
     
+    /**
+     * Deregister from DF.
+     */
     @Override
     protected void takeDown()
     {
@@ -74,8 +82,13 @@ public class TravelAgency extends jade.core.Agent
         }
         // Printout a dismissal message
         System.out.println(TravelAgency.ServiceDescription+" "+getAID().getName()+" terminating.");
+        super.takeDown();
     }
     
+    /**
+     * Add a description of this agent's services to the DF.
+     * @throws FIPAException when an error occurs.
+     */
     private void _register2DF() throws FIPAException
     {
         ServiceDescription sd = new ServiceDescription();
@@ -89,6 +102,10 @@ public class TravelAgency extends jade.core.Agent
         DFService.register(this, dfd);
     }
     
+    /**
+     * Tells whether this agent is working in remote mode, ie get the actual services from a remote web service.
+     * @return 
+     */
     public boolean isRemoteMode()
     {
         return _remoteMode;

@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package agent;
 
 import behaviour.OutputUpdaterBehaviour;
@@ -18,21 +12,24 @@ import view.ClientViewForm;
 import view.ClientViewListener;
 
 /**
- *
- * @author josuah
+ *<h1>View Agent.</h1>
+ * An agent that holds the view.
  */
 public class ClientView extends jade.core.Agent
 {
-    ClientViewForm _ui;
-    AID _casomClient;
+    ClientViewForm _ui; /*!< The Jframe form.*/
+    AID _casomClient; /*!< The client we get updates from.*/
     
-    public final static String ServiceDescription;
+    public final static String ServiceDescription; /*!< Unique String allowing to register and retrieve this agent in the DF */
     
     static
     {
         ServiceDescription = "Casom-View-Agent";
     }
     
+    /**
+     * Constructor.
+     */
     public ClientView()
     {
         super();
@@ -45,6 +42,9 @@ public class ClientView extends jade.core.Agent
         _casomClient = null;
     }
     
+    /**
+     * Register to DF, locate needed agents from DF and add my behaviour.
+     */
     @Override
     public void setup()
     {
@@ -64,6 +64,9 @@ public class ClientView extends jade.core.Agent
         this.addBehaviour(new OutputUpdaterBehaviour(this));
     }
     
+    /**
+     * Deregister from DF.
+     */
     @Override
     protected void takeDown()
     {
@@ -79,8 +82,13 @@ public class ClientView extends jade.core.Agent
         }
         // Printout a dismissal message
         System.out.println(ClientView.ServiceDescription+" "+getAID().getName()+" terminating.");
+        super.takeDown();
     }
     
+    /**
+     * Add a description of this agent's services to the DF.
+     * @throws FIPAException when an error occurs.
+     */
     private void _register2DF() throws FIPAException
     {
         ServiceDescription sd = new ServiceDescription();
@@ -94,6 +102,10 @@ public class ClientView extends jade.core.Agent
         DFService.register(this, dfd);
     }
     
+    /**
+     * Retrives the agents (AIDs) with which this agent needs to communicate.
+     * Searches for TravelAgency and ClientView agents
+     */
     public void locatePeers()
     {
         DFAgentDescription template = new DFAgentDescription();
@@ -116,11 +128,19 @@ public class ClientView extends jade.core.Agent
         }
     }
     
+    /**
+     * Gets the ClientViewFrom form managed by this agent.
+     * @return ClientViewFrom  the form.
+     */
     public ClientViewForm getForm()
     {
         return _ui;
     }
     
+    /**
+     * Get the AID of the client agent we wait updates from.
+     * @return AID the AID of the bounded client agent.
+     */
     public AID getCasomClientID()
     {
         if(_casomClient == null)

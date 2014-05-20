@@ -6,15 +6,24 @@ import java.util.logging.Logger;
 import utils.Launcher;
 import utils.TestLauncher;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
- *
- * @author josuah
+ * 
+ * <h1>Entry point</h1>
+ * Agent-side applicaiton entry point.
+ * <h2>Start-up actions</h2>
+ * <ul>
+ * <li>Launches the main container, using the utils.Launcher class.</li>
+ * <li>Creates the 3 agents of the application: Client, TravelAgency and View.</li>
+ * <li>Adds the agents to the container.</li>
+ * <li>Starts the agents using the controllers returned by the container when adding agents to it.</li>
+ * </ul>
+ * 
+ * <h2>Command line options</h2>
+ * <ul>
+ * <li>-noclient: do not start the agent Client.</li>
+ * <li>-remoteMode: start the TravelAgency agent in remote mode, which means it will get its services from a web service.</li>
+ * <li>-h: show usage.</li>
+ * </ul>
  */
 public class Main
 {
@@ -22,13 +31,13 @@ public class Main
     {
         jade.wrapper.AgentController controller;
         
-        System.out.println("Yahoo");
         HashMap<String, Boolean> switches = Main.parseCmdLine(args);
         
+        // Create the main container
         String [] containerArgs = {"-gui"};
-
         jade.wrapper.AgentContainer mainContainer = Launcher.boot(containerArgs);
 
+        // Add agents
         try
         {
             if(switches.get("localClient"))
@@ -67,6 +76,8 @@ public class Main
                 switches.put("localClient", false);
             else if(args[i].equalsIgnoreCase("-remote"))
                 switches.put("remoteMode", true);
+            else
+                usage();
             
             ++i;
         }
@@ -74,5 +85,13 @@ public class Main
         System.out.println(switches);
         
         return switches;
+    }
+    
+    public static void usage()
+    {
+        System.out.println("{executable} [-noclient] [-remoteMode] [-h]");
+        System.out.println("\t-noclient: do not start the agent 'Client'.");
+        System.out.println("\t-remoteMode: start the 'TravelAgency' agent in remote mode, which means it will get its services from a web service.");
+        System.out.println("\t-h: show usage.");
     }
 }

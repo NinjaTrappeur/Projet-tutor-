@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package behaviour;
 
@@ -16,17 +11,31 @@ import message.IMessage;
 
 /**
  *
- * @author josuah
+ * <h1>View agent automaton.</h1>
+ * A behaviour that represent the automaton for the 'view' agent.
  */
 public class OutputUpdaterBehaviour extends jade.core.behaviours.CyclicBehaviour
 {
-    private final ClientView _myAgent;
+    private final ClientView _myAgent; /*!< The agent to wich this behaviour is added. In contrary of the 'myAgent' property from the Behaviour class, allow to call specific extended methods on the agent. */
     
+    /**
+     * Constructor.
+     * @param myAgent  the agent this behaviour is added to.
+     */
     public OutputUpdaterBehaviour(ClientView myAgent)
     {
         _myAgent = myAgent;
     }
     
+    /**
+     * API 'action' method.
+     * Implements the client automaton.
+     * <ul>
+     * <li>Waits for a message.</li>
+     * <li>When a message i received: if it's a confirmation letter, then updates the view.</li>
+     * <ul>
+     * See the project reports for more details about the automaton.
+     */
     @Override
     public void action()
     {

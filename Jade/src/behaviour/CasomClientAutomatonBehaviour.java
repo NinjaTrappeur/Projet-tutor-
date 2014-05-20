@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package behaviour;
 
 import agent.CasomClient;
@@ -22,23 +16,28 @@ import message.ReservationRequest;
 
 /**
  *
- * @author josuah
+ * <h1>Client agent automaton.</h1>
+ * A behaviour that represent the automaton for the 'client' agent.
  */
 public class CasomClientAutomatonBehaviour extends jade.core.behaviours.CyclicBehaviour
 {
-    private final CasomClient _myAgent;
-    private IOfferRequest _offerRequest;
-    private IConfirmationLetter _confirmationLetter;
+    private final CasomClient _myAgent; /*!< The agent to wich this behaviour is added. In contrary of the 'myAgent' property from the Behaviour class, allow to call specific extended methods on the agent. */
+    private IOfferRequest _offerRequest; /*!< The last received offer request.*/
+    private IConfirmationLetter _confirmationLetter; /*!< The last received confirmation letter.*/
     
-    private TimeGuardManager _timeGuard;
+    private TimeGuardManager _timeGuard; /*!< For time guards management.*/
     
-    private boolean _searchRunning;
-    private boolean _offersRequested;
-    private boolean _waitingOffers;
-    private boolean _firstEvaluation;
-    private boolean _reservationRequested;
-    private boolean _booked;
+    private boolean _searchRunning; /*!< Tells whether a request for proposal has been sent and not yet satisfied.*/
+    private boolean _offersRequested; /*!< Tells whether any request for proposal has been sent.*/
+    private boolean _waitingOffers; /*!< Tell if the agent is waiting for proposals.*/
+    private boolean _firstEvaluation; /*!< Tell is any offer evaluation has already been done since the last request for proposal has been sent.*/
+    private boolean _reservationRequested; /*!< Tell if the agent asked an agency to reserve a vacation.*/
+    private boolean _booked; /*!< Tells if a vacation has been booked.*/
     
+    /**
+     * Constructor.
+     * @param myAgent the agent this behaviour is added to.
+     */
     public CasomClientAutomatonBehaviour(CasomClient myAgent)
     {
         _offerRequest = null;
@@ -54,6 +53,9 @@ public class CasomClientAutomatonBehaviour extends jade.core.behaviours.CyclicBe
         _timeGuard = new TimeGuardManager();
     }
     
+    /**
+     * Reset the status of the behaviour to default.
+     */
     private void _resetStatus()
     {
         _searchRunning = false;
@@ -64,6 +66,18 @@ public class CasomClientAutomatonBehaviour extends jade.core.behaviours.CyclicBe
         _booked = false;
     }
     
+    /**
+     * API 'action' method.
+     * Implements the client automaton.
+     * <ul>
+     * <li>Waits a request for proposal (offer request) from the View agent (which represents the user).</li>
+     * <li>When a request for porposal is received: forwards to agencies and wait offers (activates time guard).</li>
+     * <li>When an offer is received: evaluated the offer and updates best offer.</li>
+     * <li>When time guard is over: sends reservation request to the best offer's agency and wait a confirmation letter.</li>
+     * <li>When the confirmation letter is received: set state to booked and forwards letter to the view.</li>
+     * <ul>
+     * See the project reports for more details about the automaton.
+     */
     @Override
     public void action()
     {
@@ -145,6 +159,9 @@ public class CasomClientAutomatonBehaviour extends jade.core.behaviours.CyclicBe
         }
     }
     
+    /**
+     * Sends offer request to all known travel agency agents.
+     */
     private void _requestAgenciesOffers()
     {
         if(!_myAgent.getAgencies().isEmpty())
@@ -167,7 +184,7 @@ public class CasomClientAutomatonBehaviour extends jade.core.behaviours.CyclicBe
             catch (IOException ex)
             {
                 System.err.println("CasomClientAutomatonBehaviour::_requestAgenciesOffers : acl message sending error. "+ex.getLocalizedMessage());
-                Logger.getLogger(RequestOfferBehaviour.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(CasomClientAutomatonBehaviour.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         else
@@ -176,6 +193,10 @@ public class CasomClientAutomatonBehaviour extends jade.core.behaviours.CyclicBe
         }
     }
     
+    /**
+     * Evaluates whether an offer is the best offer or not.
+     * @param offerPack the received offer pack.
+     */
     private void _evaluateOffer(IOfferPack offerPack)
     {
         IOffer offer = offerPack.getBestOffer();
@@ -200,6 +221,9 @@ public class CasomClientAutomatonBehaviour extends jade.core.behaviours.CyclicBe
             System.out.println("CasomClientAutomatonBehaviour::_evaluateOffer : myAgent.getBestOffer() is null.");
     }
     
+    /**
+     * Sends a reservation request to the agency which made the best offer.
+     */
     private void _requestReservation()
     {
         if(_myAgent.getBestOffer() != null)
@@ -224,13 +248,16 @@ public class CasomClientAutomatonBehaviour extends jade.core.behaviours.CyclicBe
             catch (IOException ex)
             {
                 System.err.println("CasomClientAutomatonBehaviour::_requestReservation : acl content setting error. "+ex.getLocalizedMessage());
-                Logger.getLogger(WaitOffersBehaviour.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(CasomClientAutomatonBehaviour.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         else
             System.err.println("CasomClientAutomatonBehaviour::_requestReservation, Warning : myAgent.getBestOffer() is null");
     }
     
+    /**
+     * Forwards the confirmation to the View agent.
+     */
     private void _informUser()
     {
         try
@@ -250,7 +277,7 @@ public class CasomClientAutomatonBehaviour extends jade.core.behaviours.CyclicBe
         catch (IOException ex)
         {
             System.err.println("CasomClientAutomatonBehaviour::_informUser : ACL message content setting error. "+ex.getLocalizedMessage());
-            Logger.getLogger(FinalizeBehaviour.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CasomClientAutomatonBehaviour.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
