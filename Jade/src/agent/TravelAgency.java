@@ -15,6 +15,8 @@ import travelagency.ITravelAgency;
 /**
  * <h1>Travel agency agent.</h1>
  * An agent that represents the travel agency.
+ * It internaly uses a class that implements travelagency.ITravelAgency, to provides it's services.
+ * This implementor of ITravelAgency is passed to the automaton behaviour of the agent.
  */
 public class TravelAgency extends jade.core.Agent
 {

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Développement d'un application mixte composant-agent.</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+    </head>
+    <body>
+        <h1>Architecture</h1>
+        <h2>L'application</h2>
+        <h2>Architecture générale</h2>
+        <p>Cette application est la partie agent de l'implémentation du sous ensemble
+        CASOM présenté à la figure ci-après.</p>
+        <p><img alt="image: Sous-ensemble CASOM" src="../../doc-files/subCasom.svg"/></p>
+
+        <p>Deux versions, correspondant à deux itérations de la réalisation, ont
+            été réalisées. La première concerne l'exposition de services, et est illustrée ci-dessous:</p>
+        <p><img alt="image: Implémentation web service" src="../../doc-files/implementation_total.svg"/></p>
+        
+        <p>La seconde est la composition physique d'un agent dans un composant:</p>
+        <p><img alt="image: Agent composé dans un composite." src="../../doc-files/agent_composant_composite.svg"/></p>
+        
+        <p>
+            Nous avons voulu que les deux parties de l'application psuissent éventuellement
+            fonctionner iindépendamment. Ainsi, l'application côté agent peut être lancé seule
+            pour des tests par exemple.
+        </p>
+        
+        <h3>Architecture côté agents</h3>
+        <p>
+            L'application comporte 3 agents:
+        </p>
+        <ul>
+            <li><b>CasomClient</b>: joue le rôle du client.</li>
+            <li><b>ClientView:</b> gère la vue (GUI).</li>
+            <li><b>TravelAgency:</b> Représente l'agence de voyage.</li>
+        </ul>
+        
+        <p>Le fonctionnement général est le suivant:</p>
+        <ol>
+            <li>Après initialisation, l'agent ClientView se met en attente d'une
+                requête de la part de l'utilisateur au travers de la GUI.</li>
+            <li>
+                Une fois cette requête pour une proposition d'offre reçue, l'agent
+                ClientView la fait suivre à l'agent CasomClient, qui lui-même la fait
+                suivre à toutes les agences de voyage qu'il connait.
+            </li>
+            <li>Les agences de voyage envoient des offres à l'agent CasomClient.</li>
+            <li>
+                Ce dernier choisit une offre parmi celles reçues et envoie une demande
+                de réservation pour cette offre à l'agence de voyage émettrice.
+            </li>
+            <li>
+                Une fois la lettre de confirmation de la réservation reçue, l'agent
+                CasomClient la fait suivre à ClientView, qui met à jour l'affichage
+                (section output).
+            </li>
+        </ol>
+        
+        <p>La figure suivante présente la diagramme d'état de l'agent CasomClient</p>
+        <p><img alt="Agent composé dans un composite." src="../../doc-files/state_chart_client.svg"/></p>
+        
+        <p>
+            La figure suivante montre le diagramme de séquence correspondant au dialogue entre
+            les agents CasomClient et TravelAgency:
+        </p>
+        <p><img alt="Agent composé dans un composite." src="../../doc-files/interactions.png"/></p>
+        
+        <p>La figure suivante présente la diagramme d'état de l'agent ClientView:</p>
+        <p><img alt="Agent composé dans un composite." src="../../doc-files/state_chart_view.svg"/></p>
+        
+        <p>Diagramme d'état de l'agent TravelAgency:</p>
+        <p><img alt="Agent composé dans un composite." src="../../doc-files/state_chart_travel_agency.svg"/></p>
+        <p>Cet agent est spécial, puisqu'il utilise en interne, une entité,
+            représentée par l'interface ITravelAgency. C'est cette dernière qui réalise effectivement
+            les service fournis par l'agent. Deux entité on été développées:
+        </p>
+        <ul>
+            <li><b>fake.ServiceProvider:</b> qui simule en local la génération d'offres et la réservation.</li>
+            <li>
+                <b>ws.ServiceProvider:</b> qui fait appel à un service web. C'est le service web qui fait réellement
+                la génération d'offres et les réservations.
+            </li>
+        </ul>
+        
+        <h2 id='dependances'>Les dépendances.</h2>
+        <p>Le projet fait appel aux programmes externes suivantes:</p>
+        <ol>
+            <li>lib/jade.jar : obtenu dans la distribution binaire de Jade.</li>
+            <li>lib/commons-codec-1.3.jar, obtenu dans la distribution des sources de Jade (jade_src/lib/comons-codec).</li>
+            <li>lib/CasomTypes.jar, obtenu par compilation du projet CasomTypes.
+                Sous Netbeans, il est possible de rajouter directement un projet
+                en librairie (sans devoir le compiler et l'archiver en jar).</li>
+        </ol>
+        
+        <h1>Compilation et exécution</h1>
+        <h2>Compilation et exécution manuelles:</h2>
+        <h3>Compilation:</h3>
+        <p>Le code pour la consomation des services web doit avoir déjà été généré
+            (voir notre tuto <i>consommation de services web sous NetBeans)</i></p>
+        <p>Le dossier Jade/build/generated-sources/jax-ws du classpath est celui
+            où est généré le code de consommation du service web.</p>
+        <pre>
+            <code>
+javac -classpath \
+  lib/jade.jar:lib/commons-codec-1.3.jar:Jade/src:CasomTypes/src:Jade/build/generated-sources/jax-ws
+  -d Jade/build Jade/src/*/*.java
+            </code>
+        </pre>
+        <h3>Exécution:</h3>
+        <pre>
+            <code>
+java -cp lib/jade.jar:Jade/build jade.Boot -gui -agents \ 
+  "client:agent.CasomClient;agency:agent.TravelAgency;view:agent.ClientView"
+            </code>
+        </pre>
+        
+        <h2>Compilation et exécution en IDE</h2>
+        <p>Sous NetBeans: rajouter les dépendances indiquées <a href="dependances" title="dépendances">plus haut</a> et exécuter le main.</p>
+        
+        <h2>Arguments de la ligne de commande</h2>
+        <p>{executable} [-no-agency] [--remote-mode] [-h]</p>
+        <pre>
+    --no-agency: do not start the agent 'Client'
+    --remote-mode: start the 'TravelAgency' agent in remote mode, which means it will get its services from a web service.
+    -h: show usage.
+        </pre>
+        
+        <h1>Applicaition mixte</h1>
+        <h2>Mode service web distant.</h2>
+        <p>Pour lancer l'application en mode mixte via services web, utiliser le switch <samp>--remote-mode</samp></p>
+        <p>Il faut s'assurer d'avoir lancé le service web au préalable.</p>
+        
+        <h2>Mode pseudo-hybride (agent composé dans un composite)</h2>
+        <p>Lancer l'application côté agent avec le switch <samp>--no-agency</samp> (car cet agent sera lancé côté Julia).</p>
+        
+    </body>
+</html>
