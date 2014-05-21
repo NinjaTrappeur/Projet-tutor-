@@ -88,7 +88,7 @@ public class TravelAgency extends jade.core.Agent
             _register2DF();
         } catch (FIPAException ex) {
             System.err.println("TravelAgency::setup : DF registration error. "+ex);
-            Logger.getLogger(TravelAgency.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
         }
         
         this.addBehaviour(new TravelAgencyAutomatonBehaviour(this, _serviceProvider));
