@@ -1,6 +1,7 @@
 package travelagency;
 
 import java.net.Inet4Address;
+import java.net.UnknownHostException;
 import javax.xml.ws.Endpoint;
 import message.ConfirmationLetter;
 import message.IConfirmationLetter;
@@ -33,7 +34,7 @@ public class Client implements Runnable, IServiceProvider{
         try {
             localIp = localIp.concat(Inet4Address.getLocalHost().getHostAddress()); 
         }
-        catch(Exception e){
+        catch(UnknownHostException e){
             System.err.println(e);
         }
         localIp = localIp.concat(":8000/Ws");
@@ -41,6 +42,7 @@ public class Client implements Runnable, IServiceProvider{
         System.out.println("Webservice lancé sur " + localIp);
     }
     
+    @Override
     public OfferPack requestProposal(IOfferRequest request){
         IOfferPack offerPack = _getOfferInterface.getProposals(request);
         if(!(offerPack instanceof OfferPack))
@@ -48,7 +50,8 @@ public class Client implements Runnable, IServiceProvider{
         else
             return (OfferPack) offerPack;
     }
-    
+   
+    @Override
     public ConfirmationLetter reserveOffer(IOffer offer){
         IConfirmationLetter confirmationLetter = _makeReservationInterface.reserveOffer(offer);
         if(!(confirmationLetter instanceof ConfirmationLetter))

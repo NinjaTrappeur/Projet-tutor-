@@ -3,14 +3,15 @@ package travelagency;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 import message.IOffer;
+import message.IOfferPack;
 import message.Offer;
-import message.OfferPack;
 import message.OfferRequest;
+import remote.IServiceProvider;
 
 
 @WebService
 public class WsLink {
-    private Client _client;
+    private IServiceProvider _client;
     
     public WsLink(Client client) {
         _client = client;
@@ -32,7 +33,7 @@ public class WsLink {
                         offerRequest.getAgentId());
         System.out.println("Reçu requête d'offres: " + offerRequestM.toString());
         System.out.println("Agent id: " + offerRequest.getAgentId().getName() + offerRequest.getAgentId().getAddress());
-        OfferPack pack = _client.requestProposal(offerRequestM);
+        IOfferPack pack = _client.requestProposal(offerRequestM);
         IOffer offer = pack.getBestOffer();
         
         webservice.message.Offer wsOffer = new webservice.message.Offer(offer.getPrice(), 
