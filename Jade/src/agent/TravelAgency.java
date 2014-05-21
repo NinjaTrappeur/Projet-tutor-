@@ -21,6 +21,7 @@ import travelagency.ITravelAgency;
 public class TravelAgency extends jade.core.Agent
 {
     private boolean _remoteMode; /*!< Tell whether we get our actual services from remote web service.*/
+    private ITravelAgency _serviceProvider;
     
     public static final String ServiceDescription; /*!< Unique String allowing to register and retrieve this agent in the DF */
     
@@ -32,16 +33,44 @@ public class TravelAgency extends jade.core.Agent
     /**
      * Constructor.
      * @param remoteMode should be true when we want to get actual services from the remote web service.
+     * @param serviceProvider an object that implements ITravalAgency, and provides the actual services for this agent.
      */
-    public TravelAgency(boolean remoteMode)
+    public TravelAgency(boolean remoteMode, ITravelAgency serviceProvider)
     {
         super();
         _remoteMode = remoteMode;
+        _serviceProvider = serviceProvider;
     }
     
     /**
+     * Constructor.
+     * The service provider for this agent is set according to the value of remoteMode:
+     * <ul>
+     *  <li>remoteMode = true => serviceProvider is ws.ServiceProvider.</li>
+     *  <li>remoteMode = false => serviceProvider is fake.ServiceProvider.</li>
+     * </ul>
+     * @param remoteMode 
+     */
+    public TravelAgency(boolean remoteMode)
+    {
+        this(remoteMode, null);
+        _serviceProvider = (remoteMode) ? new ws.ServiceProvider() : new fake.ServiceProvider(this);
+    }
+    
+    /**
+     * Constructor
+     * The remote mode is set to false by default.
+     * @param serviceProvider an object that implements ITravalAgency, and provides the actual services for this agent.
+     */
+    public TravelAgency(ITravelAgency serviceProvider)
+    {
+        this(false, serviceProvider);
+    }
+
+    /**
      * Default constructor.
      * remote mode is false by default.
+     * The service provider is set to fake.ServiceProvider.
      */
     public TravelAgency()
     {
@@ -62,8 +91,7 @@ public class TravelAgency extends jade.core.Agent
             Logger.getLogger(TravelAgency.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        ITravelAgency remoteAgencyStub = (_remoteMode) ? new ws.ServiceProvider() : new fake.ServiceProvider(this);
-        this.addBehaviour(new TravelAgencyAutomatonBehaviour(this, remoteAgencyStub));
+        this.addBehaviour(new TravelAgencyAutomatonBehaviour(this, _serviceProvider));
     }
     
     /**
