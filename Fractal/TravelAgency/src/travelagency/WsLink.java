@@ -31,7 +31,8 @@ public class WsLink {
                         offerRequest.getTimeGuard(),
                         offerRequest.getAgentId());
         System.out.println("Reçu requête d'offres: " + offerRequestM.toString());
-        OfferPack pack = _client.getOffers(offerRequestM);
+        System.out.println("Agent id: " + offerRequest.getAgentId().getName() + offerRequest.getAgentId().getAddress());
+        OfferPack pack = _client.requestProposal(offerRequestM);
         IOffer offer = pack.getBestOffer();
         
         webservice.message.Offer wsOffer = new webservice.message.Offer(offer.getPrice(), 
@@ -47,7 +48,7 @@ public class WsLink {
     public webservice.message.ConfirmationLetter makeReservation(@WebParam(name = "offer")webservice.message.Offer offer) {
         Offer offerM = new Offer(offer.getPrice(), offer.getCompanyName(), offer.getAgency());
         System.out.println("Reçu requête makeReservaion: " + offerM.toString());
-        _client.makeReservation(offerM);
+        _client.reserveOffer(offerM);
         System.out.println("Reservation effectuée, envoi de la confirmation.");
         return new webservice.message.ConfirmationLetter(offer.getPrice(), offer.getCompanyName(), offer.getAgency());
     }
