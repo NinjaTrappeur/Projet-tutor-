@@ -125,6 +125,13 @@
 		</java>
 	</target>
 
+	<target name="run-gui" depends="compile">
+		<java classname="org.objectweb.fractal.adl.Launcher" fork="true" classpathref="classpath">
+			<jvmarg value="-Dfractal.provider=org.objectweb.fractal.julia.Julia" />
+			<arg line="-fractal travelagency.gui"/>
+		</java>
+	</target>
+
 	<target name="clean" description="clean up">
 		<!-- Delete the ${build} and ${dist} directory trees -->
 		<delete dir="${build}" />
