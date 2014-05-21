@@ -21,7 +21,7 @@ import remote.IServiceProvider;
 public class TravelAgency extends jade.core.Agent
 {
     private boolean _remoteMode; /*!< Tell whether we get our actual services from remote web service.*/
-    private IServiceProvider _serviceProvider;
+    private IServiceProvider _serviceProvider; /*!< The object that actually provides the services for this agent (used in the automaton behaviour).*/
     
     public static final String ServiceDescription; /*!< Unique String allowing to register and retrieve this agent in the DF */
     
