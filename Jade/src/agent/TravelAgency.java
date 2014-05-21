@@ -7,21 +7,21 @@ import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import travelagency.ITravelAgency;
+import remote.IServiceProvider;
 
 
 
 
 /**
  * <h1>Travel agency agent.</h1>
- * An agent that represents the travel agency.
- * It internaly uses a class that implements travelagency.ITravelAgency, to provides it's services.
- * This implementor of ITravelAgency is passed to the automaton behaviour of the agent.
+ An agent that represents the travel agency.
+ It internaly uses a class that implements travelagency.IServiceProvider, to provides it's services.
+ This implementor of IServiceProvider is passed to the automaton behaviour of the agent.
  */
 public class TravelAgency extends jade.core.Agent
 {
     private boolean _remoteMode; /*!< Tell whether we get our actual services from remote web service.*/
-    private ITravelAgency _serviceProvider;
+    private IServiceProvider _serviceProvider;
     
     public static final String ServiceDescription; /*!< Unique String allowing to register and retrieve this agent in the DF */
     
@@ -35,7 +35,7 @@ public class TravelAgency extends jade.core.Agent
      * @param remoteMode should be true when we want to get actual services from the remote web service.
      * @param serviceProvider an object that implements ITravalAgency, and provides the actual services for this agent.
      */
-    public TravelAgency(boolean remoteMode, ITravelAgency serviceProvider)
+    public TravelAgency(boolean remoteMode, IServiceProvider serviceProvider)
     {
         super();
         _remoteMode = remoteMode;
@@ -62,7 +62,7 @@ public class TravelAgency extends jade.core.Agent
      * The remote mode is set to false by default.
      * @param serviceProvider an object that implements ITravalAgency, and provides the actual services for this agent.
      */
-    public TravelAgency(ITravelAgency serviceProvider)
+    public TravelAgency(IServiceProvider serviceProvider)
     {
         this(false, serviceProvider);
     }

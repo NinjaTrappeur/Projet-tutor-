@@ -5,7 +5,7 @@ import java.util.logging.Logger;
 import javax.xml.datatype.DatatypeConfigurationException;
 import message.MessUtil;
 import travelagency.ConfirmationLetter;
-import travelagency.ITravelAgency;
+import remote.IServiceProvider;
 import travelagency.OfferPack;
 
 /**
@@ -15,7 +15,7 @@ import travelagency.OfferPack;
  * This is actually a web service client, that transforms the data received from the remote web service into appropriate data for the application.
  * The type (JavaBeans) use for the network are defined in the CasomTypes project.
  */
-public class ServiceProvider implements ITravelAgency
+public class ServiceProvider implements IServiceProvider
 {
     /**
      * Responds to a request for proposal.

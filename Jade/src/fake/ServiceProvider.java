@@ -9,7 +9,7 @@ import message.IOfferPack;
 import message.IOfferRequest;
 import message.Offer;
 import message.OfferPack;
-import travelagency.ITravelAgency;
+import remote.IServiceProvider;
 
 /**
  *
@@ -18,7 +18,7 @@ import travelagency.ITravelAgency;
  * Intended for use in the agent.TravelAgency agent, as an actual service prodiver.
  * Simulates the fonctionnalities by giving a fixed value. Useful for tests and quick tour.
  */
-public class ServiceProvider implements ITravelAgency
+public class ServiceProvider implements IServiceProvider
 {
     TravelAgency _agency; /*!< The travel agency agent that uses this service provider*/
     

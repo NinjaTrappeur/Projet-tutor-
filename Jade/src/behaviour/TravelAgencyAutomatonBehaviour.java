@@ -11,7 +11,7 @@ import message.IMessage;
 import message.IOfferPack;
 import message.IOfferRequest;
 import message.IReservationRequest;
-import travelagency.ITravelAgency;
+import remote.IServiceProvider;
 
 /**
  *
@@ -21,7 +21,7 @@ import travelagency.ITravelAgency;
 public class TravelAgencyAutomatonBehaviour extends jade.core.behaviours.CyclicBehaviour
 {
     agent.TravelAgency _myAgent; /*!< The agent to wich this behaviour is added. In contrary of the 'myAgent' property from the Behaviour class, allow to call specific extended methods on the agent. */
-    ITravelAgency _serviceProvider; /*!< An objet that actually implements the services offered by the agent to which this behaviour is added. */
+    IServiceProvider _serviceProvider; /*!< An objet that actually implements the services offered by the agent to which this behaviour is added. */
     IOfferRequest _offerRequest; /*!< The last offer request the agent received. */
     IReservationRequest _reservationRequest; /*!< The last reservation request the agent received. */
     ACLMessage _receivedMsg; /*!< The last ACL message the agent received. */
@@ -31,7 +31,7 @@ public class TravelAgencyAutomatonBehaviour extends jade.core.behaviours.CyclicB
      * @param myAgent the agent this behaviour is added to.
      * @param remoteAgencyStub the entity that actually implement the agent services (may also be a local object).
      */
-    public TravelAgencyAutomatonBehaviour(agent.TravelAgency myAgent, ITravelAgency remoteAgencyStub)
+    public TravelAgencyAutomatonBehaviour(agent.TravelAgency myAgent, IServiceProvider remoteAgencyStub)
     {
         _myAgent = myAgent;
         _serviceProvider = remoteAgencyStub;

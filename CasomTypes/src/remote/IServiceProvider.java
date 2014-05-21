@@ -1,4 +1,4 @@
-package travelagency;
+package remote;
 
 import message.IConfirmationLetter;
 import message.IOffer;
@@ -11,7 +11,7 @@ import message.IOfferPack;
  * Service providers are entities that are typically to be used be the travel agency agent, to actually provide it's services.
  * This can be anything, a web service, a simple object, etc.
  */
-public interface ITravelAgency
+public interface IServiceProvider
 {
     /**
      * Responds to a request for proposal.
