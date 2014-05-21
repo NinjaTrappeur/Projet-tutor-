@@ -125,6 +125,22 @@
 		</java>
 	</target>
 
+	<target name="run-ws" depends="compile">
+		<java classname="org.objectweb.fractal.adl.Launcher" fork="true" classpathref="classpath">
+			<jvmarg value="-Dfractal.provider=org.objectweb.fractal.julia.Julia" />
+			<arg line="-fractal travelagency.casom"/>
+		</java>
+	</target>
+
+	<target name="run-hybrid" depends="compile">
+		<java classname="org.objectweb.fractal.adl.Launcher" fork="true" classpathref="classpath">
+			<jvmarg value="-Dfractal.provider=org.objectweb.fractal.julia.Julia" />
+			<arg line="-fractal travelagency.hybridCasom"/>
+		</java>
+	</target>
+
+
+
 	<target name="run-gui" depends="compile">
 		<java classname="org.objectweb.fractal.adl.Launcher" fork="true" classpathref="classpath">
 			<jvmarg value="-Dfractal.provider=org.objectweb.fractal.julia.Julia" />
