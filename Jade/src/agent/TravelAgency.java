@@ -14,9 +14,9 @@ import remote.IServiceProvider;
 
 /**
  * <h1>Travel agency agent.</h1>
- An agent that represents the travel agency.
- It internaly uses a class that implements travelagency.IServiceProvider, to provides it's services.
- This implementor of IServiceProvider is passed to the automaton behaviour of the agent.
+ * An agent that represents the travel agency.
+ * It internaly uses a class that implements travelagency.IServiceProvider, to provides it's services.
+ * This implementor of IServiceProvider is passed to the automaton behaviour of the agent.
  */
 public class TravelAgency extends jade.core.Agent
 {
