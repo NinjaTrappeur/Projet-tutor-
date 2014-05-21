@@ -6,18 +6,19 @@ import message.ConfirmationLetter;
 import message.IConfirmationLetter;
 import message.IOffer;
 import message.IOfferPack;
+import message.IOfferRequest;
 import message.OfferPack;
-import message.OfferRequest;
 import org.objectweb.fractal.fraclet.annotations.Component;
 import org.objectweb.fractal.fraclet.annotations.Interface;
 import org.objectweb.fractal.fraclet.annotations.Requires;
+import remote.IServiceProvider;
 import travelagency.interfaces.IVacationOfferBrowser;
 import travelagency.interfaces.IVacationReservationManager;
 
 
 
 @Component(provides=@Interface(name="r", signature = java.lang.Runnable.class))
-public class Client implements Runnable{
+public class Client implements Runnable, IServiceProvider{
     
     @Requires(name="getOffer")
     private IVacationOfferBrowser _getOfferInterface;
@@ -40,7 +41,7 @@ public class Client implements Runnable{
         System.out.println("Webservice lancé sur " + localIp);
     }
     
-    public OfferPack getOffers(OfferRequest request){
+    public OfferPack requestProposal(IOfferRequest request){
         IOfferPack offerPack = _getOfferInterface.getProposals(request);
         if(!(offerPack instanceof OfferPack))
             throw(new ClassCastException("Client.getOffers: invalid cast: result is not OfferPack."));
@@ -48,7 +49,7 @@ public class Client implements Runnable{
             return (OfferPack) offerPack;
     }
     
-    public ConfirmationLetter makeReservation(IOffer offer){
+    public ConfirmationLetter reserveOffer(IOffer offer){
         IConfirmationLetter confirmationLetter = _makeReservationInterface.reserveOffer(offer);
         if(!(confirmationLetter instanceof ConfirmationLetter))
             throw(new ClassCastException("Client.makeReservation: invalid cast: result is not ConfirmationLetter."));
