@@ -3,7 +3,7 @@ import jade.wrapper.StaleProxyException;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import utils.Launcher;
+import shared.utils.Launcher;
 import utils.TestLauncher;
 
 /**

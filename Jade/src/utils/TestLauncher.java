@@ -1,5 +1,6 @@
 package utils;
 
+import shared.utils.Launcher;
 import jade.wrapper.StaleProxyException;
 import java.util.logging.Level;
 import java.util.logging.Logger;

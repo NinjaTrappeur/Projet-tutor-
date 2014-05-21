@@ -1,4 +1,4 @@
-package utils;
+package shared.utils;
 
 import jade.core.Runtime;
 import jade.core.Profile;
