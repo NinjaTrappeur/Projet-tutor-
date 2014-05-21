@@ -20,8 +20,8 @@ import utils.TestLauncher;
  * 
  * <h2>Command line options</h2>
  * <ul>
- * <li>-noclient: do not start the agent Client.</li>
- * <li>-remoteMode: start the TravelAgency agent in remote mode, which means it will get its services from a web service.</li>
+ * <li>--no-agency: do not start the agent TravelAgency.</li>
+ * <li>--remote-mode: start the TravelAgency agent in remote mode, which means it will get its services from a web service.</li>
  * <li>-h: show usage.</li>
  * </ul>
  */
