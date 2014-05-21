@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Développement d'un application mixte composant-agent.</title>
+        <title>Développement d'une application mixte composant-agent.</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width">
     </head>
     <body>
         <h1>Génération de la doc</h1>
-        <p>Utiliser l'option <samp>-overview overview.html</samp>.</p>
+        <p>Compiler le projet (Build sous NetBeans) afin de générer le code de consommation des services web.</p>
+        <p>Utiliser l'option <samp>-overview overview.html</samp> pour générer la doc.</p>
         <p>Sous NetBeans, ajouter cette option dans le dialogue Properties&gt;Documenting.</p>
         
         <h1>Architecture</h1>
         <h2>L'application</h2>
         <h2>Architecture générale</h2>
-        <p>Cette application est la partie agent de l'implémentation du sous ensemble
+        <p>Cette application est la partie agent de l'implémentation du sous-ensemble
         CASOM présenté à la figure ci-après.</p>
         <p><img alt="image: Sous-ensemble CASOM" src="../../doc-files/subCasom.svg"/></p>
 
@@ -25,8 +26,8 @@
         <p><img alt="image: Agent composé dans un composite." src="../../doc-files/agent_composant_composite.svg"/></p>
         
         <p>
-            Nous avons voulu que les deux parties de l'application psuissent éventuellement
-            fonctionner iindépendamment. Ainsi, l'application côté agent peut être lancé seule
+            Nous avons voulu que les deux parties de l'application puissent éventuellement
+            fonctionner indépendamment. Ainsi, l'application côté agent peut être lancée seule
             pour des tests par exemple.
         </p>
         
@@ -42,42 +43,45 @@
         
         <p>Le fonctionnement général est le suivant:</p>
         <ol>
-            <li>Après initialisation, l'agent ClientView se met en attente d'une
-                requête de la part de l'utilisateur au travers de la GUI.</li>
+            <li>Après initialisation, l'agent <samp>ClientView</samp> se met en attente d'une
+                requête pour une proposition d'offre de vacances de la part de
+                l'utilisateur au travers de la GUI.</li>
             <li>
                 Une fois cette requête pour une proposition d'offre reçue, l'agent
-                ClientView la fait suivre à l'agent CasomClient, qui lui-même la fait
-                suivre à toutes les agences de voyage qu'il connait.
+                <samp>ClientView</samp> la fait suivre à l'agent <samp>CasomClient</samp>,
+                qui lui-même la fait suivre à toutes les agences de voyage (agents
+                <samp>TravelAgency</samp>) qu'il connait.
             </li>
-            <li>Les agences de voyage envoient des offres à l'agent CasomClient.</li>
+            <li>Les <samp>TravelAgency</samp> envoient des offres à l'agent <samp>CasomClient</samp>.</li>
             <li>
                 Ce dernier choisit une offre parmi celles reçues et envoie une demande
-                de réservation pour cette offre à l'agence de voyage émettrice.
+                de réservation pour cette offre à l'agence de voyage émettrice. Il se
+                met alors en attente d'un letter de confirmation de la réservation.
             </li>
             <li>
                 Une fois la lettre de confirmation de la réservation reçue, l'agent
-                CasomClient la fait suivre à ClientView, qui met à jour l'affichage
-                (section output).
+                <samp>CasomClient</samp> la fait suivre à <samp>ClientView</samp>,
+                qui met à jour l'affichage (section output).
             </li>
         </ol>
         
-        <p>La figure suivante présente la diagramme d'état de l'agent CasomClient</p>
+        <p>La figure suivante présente la diagramme d'état de l'agent <samp>CasomClient</samp></p>
         <p><img alt="Agent composé dans un composite." src="../../doc-files/state_chart_client.svg"/></p>
         
         <p>
             La figure suivante montre le diagramme de séquence correspondant au dialogue entre
-            les agents CasomClient et TravelAgency:
+            les agents <samp>CasomClient</samp> et <samp>TravelAgency:</samp>
         </p>
         <p><img alt="Agent composé dans un composite." src="../../doc-files/interactions.png"/></p>
         
-        <p>La figure suivante présente la diagramme d'état de l'agent ClientView:</p>
+        <p>La figure suivante présente la diagramme d'état de l'agent <samp>ClientView:</samp></p>
         <p><img alt="Agent composé dans un composite." src="../../doc-files/state_chart_view.svg"/></p>
         
-        <p>Diagramme d'état de l'agent TravelAgency:</p>
+        <p>Diagramme d'état de l'agent <samp>TravelAgency:</samp></p>
         <p><img alt="Agent composé dans un composite." src="../../doc-files/state_chart_travel_agency.svg"/></p>
         <p>Cet agent est spécial, puisqu'il utilise en interne, une entité,
-            représentée par l'interface ITravelAgency. C'est cette dernière qui réalise effectivement
-            les service fournis par l'agent. Deux entité on été développées:
+            représentée par l'interface <samp>IServiceProvider</samp>. C'est cette dernière qui réalise effectivement
+            les services fournis par l'agent. Deux entité on été développées:
         </p>
         <ul>
             <li><b>fake.ServiceProvider:</b> qui simule en local la génération d'offres et la réservation.</li>
@@ -120,7 +124,7 @@ java -cp lib/jade.jar:Jade/build jade.Boot -gui -agents \
         </pre>
         
         <h2>Compilation et exécution en IDE</h2>
-        <p>Sous NetBeans: rajouter les dépendances indiquées <a href="dependances" title="dépendances">plus haut</a> et exécuter le main.</p>
+        <p>Sous NetBeans: rajouter les dépendances indiquées <a href="dependances" title="dépendances">plus haut</a> et exécuter <samp>Main.main()</samp>.</p>
         
         <h2>Arguments de la ligne de commande</h2>
         <p>{executable} [-no-agency] [--remote-mode] [-h]</p>
