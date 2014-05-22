@@ -112,13 +112,23 @@
             <code>
 javac -classpath \
   lib/jade.jar:lib/commons-codec-1.3.jar:Jade/src:CasomTypes/src:Jade/build/generated-sources/jax-ws
-  -d Jade/build Jade/src/*/*.java
+  -d Jade/build Jade/src/*/*.java Jade/src/*.java
             </code>
         </pre>
+        <p>La ligne suivante indique deux localisations de sources: les packages et le Main.</p>
         <h3>Exécution:</h3>
+        Exécution avec la Main (possibilité de rajouter les
+        <a href="cmd-line" title="Command line arguments">arguments de la ligne de commande</a>):
         <pre>
             <code>
-java -cp lib/jade.jar:Jade/build jade.Boot -gui -agents \ 
+java -cp lib/jade.jar:lib/commons-codec-1.3.jar:Jade/build Main
+            </code>
+        </pre>
+        
+        Éxécution avec jade.Boot:
+        <pre>
+            <code>
+java -cp lib/jade.jar:lib/commons-codec-1.3.jar:Jade/build jade.Boot -gui -agents \ 
   "client:agent.CasomClient;agency:agent.TravelAgency;view:agent.ClientView"
             </code>
         </pre>
@@ -126,7 +136,7 @@ java -cp lib/jade.jar:Jade/build jade.Boot -gui -agents \
         <h2>Compilation et exécution en IDE</h2>
         <p>Sous NetBeans: rajouter les dépendances indiquées <a href="dependances" title="dépendances">plus haut</a> et exécuter <samp>Main.main()</samp>.</p>
         
-        <h2>Arguments de la ligne de commande</h2>
+        <h2 id="cmd-line">Arguments de la ligne de commande</h2>
         <p>{executable} [-no-agency] [--remote-mode] [-h]</p>
         <pre>
     --no-agency: do not start the agent 'Client'

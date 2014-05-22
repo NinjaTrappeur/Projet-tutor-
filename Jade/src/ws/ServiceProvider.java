@@ -29,7 +29,7 @@ public class ServiceProvider implements IServiceProvider
         try
         {
             travelagency.OfferRequest wsOfferRequest = _wsFromMessage(offerRequest);
-            System.out.println("WsTravelAgency::requestProposal : agent id "+wsOfferRequest.getAgentId().getName()+wsOfferRequest.getAgentId().getAdresse());
+            System.out.println("WsTravelAgency::requestProposal : agent id "+wsOfferRequest.getAgentId().getName()+wsOfferRequest.getAgentId().getAddress());
             travelagency.OfferPack wsOfferPack = this.getOffers(wsOfferRequest);
             
             offerPack = _messageFromWs(wsOfferPack);
@@ -112,7 +112,7 @@ public class ServiceProvider implements IServiceProvider
         travelagency.AgentID aid = new travelagency.AgentID();
         aid.setName(offerRequest.getAgentID().getName());
         aid.setLocalName(offerRequest.getAgentID().getLocalName());
-        aid.setAdresse(offerRequest.getAgentID().getAddress());
+        aid.setAddress(offerRequest.getAgentID().getAddress());
         
         wsOfferRequest.setAgentId(aid);
         
@@ -133,7 +133,7 @@ public class ServiceProvider implements IServiceProvider
         travelagency.AgentID id = new travelagency.AgentID();
         id.setName(offer.getAgencyID().getName());
         id.setLocalName(offer.getAgencyID().getLocalName());
-        id.setAdresse(offer.getAgencyID().getAddress());
+        id.setAddress(offer.getAgencyID().getAddress());
         
         wsOffer.setAgency(id);
         wsOffer.setCompanyName(offer.getCompanyName());
@@ -166,7 +166,7 @@ public class ServiceProvider implements IServiceProvider
             name = wsOffer.getCompanyName();
             
             message.AgentID aid = new message.AgentID(wsOffer.getAgency().getName(),
-                    wsOffer.getAgency().getLocalName(), wsOffer.getAgency().getAdresse());
+                    wsOffer.getAgency().getLocalName(), wsOffer.getAgency().getAddress());
             
             offer = new message.Offer(price, name, aid);
             offerPack.addOffer(offer);
@@ -191,7 +191,7 @@ public class ServiceProvider implements IServiceProvider
         String name = wsConfirmLetter.getCompanyName();
 
         message.AgentID aid = new message.AgentID(wsConfirmLetter.getAgency().getName(),
-                wsConfirmLetter.getAgency().getLocalName(), wsConfirmLetter.getAgency().getAdresse());
+                wsConfirmLetter.getAgency().getLocalName(), wsConfirmLetter.getAgency().getAddress());
             
         message.IConfirmationLetter confirmLetter = new message.ConfirmationLetter(price, name, aid);
         
