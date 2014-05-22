@@ -12,7 +12,20 @@
         <p>Sous NetBeans, ajouter cette option dans le dialogue Properties&gt;Documenting.</p>
         
         <h1>Architecture</h1>
-        <h2>L'application</h2>
+        <h2>Description des packages</h2>
+        <ul>
+            <li><samp>agent</samp>: contient les classes des 3 agents de l'application.</li>
+            <li><samp>behaviour</samp>: contient les classes des behaviours des
+                agents et une classe utilitaire de gestion de temps d'attente (time guard).</li>
+            <li><samp>fake</samp>: contient l'implémentation d'une classe simulant les services offerts
+            d'une agence de voyage (recherche d'offre et réservation de vacance).</li>
+            <li><samp>ws</samp>: contient l'implémentation d'une classe fournissant les services offerts
+            par une agence de voyage, service qu'elle appelle elle-même en interne depuis un service web
+            (consommation de service web).</li>
+            <li><samp>view</samp>: contient les classes pour la réalisation de la GUI (JFrame form et Listener).</li>
+            <li><samp>utils</samp>: contient un test de la classe shared.utils.Launcher, définit dans le projet CasomCommon.</li>
+        </ul>
+        
         <h2>Architecture générale</h2>
         <p>Cette application est la partie agent de l'implémentation du sous-ensemble
         CASOM présenté à la figure ci-après.</p>
@@ -31,7 +44,7 @@
             pour des tests par exemple.
         </p>
         
-        <h3>Architecture côté agents</h3>
+        <h2>Architecture côté agents</h2>
         <p>
             L'application comporte 3 agents:
         </p>
@@ -105,7 +118,8 @@
         <h2>Compilation et exécution manuelles:</h2>
         <h3>Compilation:</h3>
         <p>Le code pour la consomation des services web doit avoir déjà été généré
-            (voir notre tuto <i>consommation de services web sous NetBeans)</i></p>
+            (voir notre tuto <i>consommation de services web sous NetBeans)</i>. Il est necessaire de faire
+            un <i>build</i> du projet pour cette génération sous NetBeans.</p>
         <p>Le dossier Jade/build/generated-sources/jax-ws du classpath est celui
             où est généré le code de consommation du service web.</p>
         <pre>
