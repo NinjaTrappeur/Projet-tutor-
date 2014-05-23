@@ -9,7 +9,13 @@
         <h1>Génération de la doc</h1>
         <p>Compiler le projet (Build sous NetBeans) afin de générer le code de consommation des services web.</p>
         <p>Utiliser l'option <samp>-overview overview.html</samp> pour générer la doc.</p>
-        <p>Sous NetBeans, ajouter cette option dans le dialogue Properties&gt;Documenting.</p>
+        <p>Sous NetBeans, ajouter cette option dans le dialogue Properties&gt;Documenting. Utiliser l'une des formes:</p>
+        <pre>
+            -overview ${src.dir}/overview.html
+        </pre>
+        <pre>
+            -overview ${basedir}/${src.dir}/overview.html
+        </pre>
         
         <h1>Architecture</h1>
         <h2>Description des packages</h2>
