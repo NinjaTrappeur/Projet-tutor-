@@ -8,19 +8,38 @@ import message.Offer;
 import message.OfferRequest;
 import remote.IServiceProvider;
 
-
+/**
+ * This class is the webservice attached to the WsClient component.
+ * 
+ * Exports the services of the travel agency to the webservice format.
+ */
 @WebService
 public class WsLink {
-    private IServiceProvider _client;
+    private IServiceProvider _client; /*!< Reference to the client component.*/
     
-    public WsLink(Client client) {
+    /**
+    * Constructor.
+    * @param client Client component used by this webservice.
+    */
+    public WsLink(IServiceProvider client) {
         _client = client;
     }
     
+    /**
+     * Default constructor. 
+     * 
+     * Not used by this application (will raise a null pointer exception) but necessary
+     * to transform this class into a javabean.
+     */
     public WsLink(){
         
     }
     
+    /**
+     * Web service export of the request proposal fractal service.
+     * @param offerRequest Contains the parameters of the request.
+     * @return List of Offers that matches with the request.
+     */
     public webservice.message.OfferPack getOffers(@WebParam(name = "offerRequest")webservice.message.OfferRequest offerRequest){
         OfferRequest offerRequestM = 
                 new OfferRequest(offerRequest.getHighestPrice(),
@@ -46,6 +65,12 @@ public class WsLink {
         return new webservice.message.OfferPack(offers,0);
     }
     
+    
+    /**
+     * Web service export of the reserve offer fractal service.
+     * @param offer Offer that needs to be reserved.
+     * @return Confirmation of the reservation.
+     */
     public webservice.message.ConfirmationLetter makeReservation(@WebParam(name = "offer")webservice.message.Offer offer) {
         Offer offerM = new Offer(offer.getPrice(), offer.getCompanyName(), offer.getAgency());
         System.out.println("Reçu requête makeReservaion: " + offerM.toString());

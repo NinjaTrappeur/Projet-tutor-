@@ -118,17 +118,17 @@
 		<jar jarfile="${dist}/helloworld.jar" basedir="${build}" />
 	</target>
 	
-	<target name="run" depends="compile">
+	<target name="run-fake" depends="compile">
 		<java classname="org.objectweb.fractal.adl.Launcher" fork="true" classpathref="classpath">
 			<jvmarg value="-Dfractal.provider=org.objectweb.fractal.julia.Julia" />
-			<arg line="-fractal travelagency.casom"/>
+			<arg line="-fractal travelagency.fakeCasom"/>
 		</java>
 	</target>
 
 	<target name="run-ws" depends="compile">
 		<java classname="org.objectweb.fractal.adl.Launcher" fork="true" classpathref="classpath">
 			<jvmarg value="-Dfractal.provider=org.objectweb.fractal.julia.Julia" />
-			<arg line="-fractal travelagency.casom"/>
+			<arg line="-fractal travelagency.wsCasom"/>
 		</java>
 	</target>
 

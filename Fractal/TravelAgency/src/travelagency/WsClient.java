@@ -16,17 +16,25 @@ import remote.IServiceProvider;
 import travelagency.interfaces.IVacationOfferBrowser;
 import travelagency.interfaces.IVacationReservationManager;
 
-
-
+/**
+ * This component export the services given by the vacation browser and the
+ * vacation reservation manager in webservices.
+ * 
+ */
 @Component(provides=@Interface(name="r", signature = java.lang.Runnable.class))
-public class Client implements Runnable, IServiceProvider{
+public class WsClient implements Runnable, IServiceProvider{
     
     @Requires(name="getOffer")
-    private IVacationOfferBrowser _getOfferInterface;
+    private IVacationOfferBrowser _getOfferInterface; /*!< Reference to the vacation browser component.*/
     
     @Requires(name="makeReservation")
-    private IVacationReservationManager _makeReservationInterface;
+    private IVacationReservationManager _makeReservationInterface; /*!< Reference to the vacation reservation component.*/
     
+    /**
+     * Entry point of the application, will be launched by the ADL launcher.
+     * 
+     * This function creates a webservice (WsLink) and publish him on localhost:8000/Ws.
+     */
     @Override
     public void run() {
         String localIp = "http://";
@@ -42,6 +50,12 @@ public class Client implements Runnable, IServiceProvider{
         System.out.println("Webservice lancé sur " + localIp);
     }
     
+    /**
+     * Return the offer avalaible for a request using the vacation browser component.
+     * 
+     * @param request Offer request.
+     * @return List of offers that match with the request given in parameter.
+     */
     @Override
     public OfferPack requestProposal(IOfferRequest request){
         IOfferPack offerPack = _getOfferInterface.getProposals(request);
@@ -51,6 +65,12 @@ public class Client implements Runnable, IServiceProvider{
             return (OfferPack) offerPack;
     }
    
+    /**
+     * Make a reservation for an Offer using the vacation reservation component.
+     * 
+     * @param offer Offer that will be reserved by the client.
+     * @return Confirmation of the reservation.
+     */
     @Override
     public ConfirmationLetter reserveOffer(IOffer offer){
         IConfirmationLetter confirmationLetter = _makeReservationInterface.reserveOffer(offer);

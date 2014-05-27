@@ -20,15 +20,33 @@ import travelagency.interfaces.IVacationOfferBrowser;
 import travelagency.interfaces.IVacationReservationManager;
 import shared.utils.Launcher;
 
+
+/**
+* Hybrid client component: component that encapsulates a jade Agent.
+* 
+* This component will register himself as a jade agent to a jade platform which
+* is already running. The address and the port of this platform are entered by 
+* the user in a interactive way. Note that a jade platform need to be already created
+* to use this component.
+* 
+*/
 @Component(provides=@Interface(name="r", signature = java.lang.Runnable.class))
 public class HybridClient implements Runnable, IServiceProvider{
     
     @Requires(name="getOffer")
-    private IVacationOfferBrowser _getOfferInterface;
+    private IVacationOfferBrowser _getOfferInterface; /*!< Reference to the vacation browser component.*/
     
     @Requires(name="makeReservation")
-    private IVacationReservationManager _makeReservationInterface;
+    private IVacationReservationManager _makeReservationInterface; /*!< Reference to the vacation reservation component.*/
     
+    
+    /**
+     * This function will be called by the ADL launcher. 
+     * 
+     * The goal of this function is to create a jade agent and register him to 
+     * a jade platform. The host and the port of this platform are asked to the
+     * user using System.in.
+     */
     @Override
     public void run() {
         
@@ -56,6 +74,12 @@ public class HybridClient implements Runnable, IServiceProvider{
         }
     }
     
+    /**
+     * Return the offer avalaible for a request using the vacation browser component.
+     * 
+     * @param request Offer request.
+     * @return List of offers that match with the request given in parameter.
+     */
     @Override
     public OfferPack requestProposal(IOfferRequest request){
         IOfferPack offerPack = _getOfferInterface.getProposals(request);
@@ -65,6 +89,12 @@ public class HybridClient implements Runnable, IServiceProvider{
             return (OfferPack) offerPack;
     }
     
+    /**
+     * Make a reservation for an Offer using the vacation reservation component.
+     * 
+     * @param offer Offer that will be reserved by the client.
+     * @return Confirmation of the reservation.
+     */
     @Override
     public ConfirmationLetter reserveOffer(IOffer offer){
         IConfirmationLetter confirmationLetter = _makeReservationInterface.reserveOffer(offer);
