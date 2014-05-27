@@ -1,4 +1,4 @@
-cp ../../CasomTypes/dist/CasomTypes.jar ../../lib/
+cp ../../CasomCommon/dist/CasomCommon.jar ../../lib/
 ant compile
 ./generateWsdl.sh
 echo "Compilation finished"
